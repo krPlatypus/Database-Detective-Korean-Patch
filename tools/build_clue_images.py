@@ -33,6 +33,12 @@ OUT_DIR = os.path.join(ROOT, "dist", "images")
 
 FONT_DIR = r"C:\Windows\Fonts"
 
+# 윈도우에 없는 글꼴은 프로젝트 안에서 찾는다. 앞에서부터 본다.
+EXTRA_FONT_DIRS = [
+    os.path.join(ROOT, "dist", "fonts"),
+    ROOT,
+]
+
 # 게임 UI가 Windows 95풍이라 한글도 그 시절 시스템 폰트인 굴림 계열로 맞춘다.
 # gulim.ttc 한 파일에 네 서체가 묶여 있어 인덱스로 고른다.
 #   0 굴림(가변폭)  1 굴림체(고정폭)  2 돋움(획이 더 각짐)  3 돋움체(고정폭)
@@ -46,6 +52,7 @@ TTC_FACES = {"gulim": 0, "gulimche": 1, "dotum": 2, "dotumche": 3}
 #   ami    아미체  - 가늘고 동글동글한 손글씨
 #   gungso 궁서    - 붓글씨
 NAMED_FONTS = {
+    "mongtori": ("Griun_Mongtori-Rg.ttf", 0),
     "magic": ("HMKMMAG.TTF", 0),
     "pyunji": ("HMFMPYUN.TTF", 0),
     "ami": ("HMKMAMI.TTF", 0),
@@ -62,6 +69,15 @@ NAMED_FONTS = {
 DEFAULT_INK = {"r_min": 140, "g_max": 100, "b_max": 100}
 
 
+def locate(file_name):
+    """글꼴 파일을 윈도우 폰트 폴더와 프로젝트 안에서 차례로 찾는다."""
+    for folder in [FONT_DIR] + EXTRA_FONT_DIRS:
+        candidate = os.path.join(folder, file_name)
+        if os.path.exists(candidate):
+            return candidate
+    return None
+
+
 def load_font(name, size, index=None):
     """폰트를 연다. 사양의 font는 파일명("gulim.ttc") 또는 서체명("dotum") 둘 다 받는다."""
     key = (name or "").strip().lower()
@@ -70,12 +86,12 @@ def load_font(name, size, index=None):
                                   index=TTC_FACES[key])
     if key in NAMED_FONTS:
         file_name, face = NAMED_FONTS[key]
-        candidate = os.path.join(FONT_DIR, file_name)
-        if os.path.exists(candidate):
+        candidate = locate(file_name)
+        if candidate:
             return ImageFont.truetype(candidate, size, index=face)
 
-    path = os.path.join(FONT_DIR, name or DEFAULT_FONT)
-    if not os.path.exists(path):
+    path = locate(name or DEFAULT_FONT)
+    if not path:
         path, index = os.path.join(FONT_DIR, DEFAULT_FONT), DEFAULT_FONT_INDEX
 
     if index is None:
