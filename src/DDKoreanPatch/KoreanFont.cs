@@ -133,15 +133,24 @@ namespace DDKoreanPatch
         /// </summary>
         private static void ApplyScale()
         {
-            float scale = Plugin.FontScale.Value;
-            if (Asset == null || Mathf.Approximately(scale, 1f))
+            if (Asset == null)
             {
                 return;
             }
 
             FaceInfo info = Asset.faceInfo;
-            info.scale = scale;
+            info.scale = Plugin.FontScale.Value;
+
+            // 세로 위치도 맞춘다. TMP는 글자의 y 좌표를 이렇게 잡는다.
+            //     y = faceInfo.baseline * 글자배율 * 배수 * faceInfo.scale - 줄간격 + 기준선
+            // 양수면 위로 올라간다. 네모칸 대비 비율로 받아 글꼴 크기가 바뀌어도
+            // 같은 비율로 따라가게 한다.
+            info.baseline = Plugin.FontBaselineOffset.Value * info.pointSize;
+
             Asset.faceInfo = info;
+
+            Plugin.Log.LogInfo(
+                $"글자 크기 보정 {info.scale:0.##}, 세로 위치 보정 {Plugin.FontBaselineOffset.Value:0.###}");
         }
 
         /// <summary>
