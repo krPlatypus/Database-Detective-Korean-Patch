@@ -30,6 +30,7 @@ namespace DDKoreanPatch
         internal static ConfigEntry<bool> Diagnostics;
 
         internal static ConfigEntry<bool> EnableTranslation;
+        internal static ConfigEntry<bool> ClosePopupWithKey;
         internal static ConfigEntry<bool> EnableKoreanFont;
         internal static ConfigEntry<string> FontFamily;
         internal static ConfigEntry<string> FontStyle;
@@ -84,8 +85,15 @@ namespace DDKoreanPatch
                 true,
                 "translation.json의 한글 번역을 화면에 적용합니다.");
 
+            ClosePopupWithKey = Config.Bind(
+                "Input",
+                "ClosePopupWithKey",
+                true,
+                "알림·오류 팝업을 Esc나 Enter로 닫습니다. 원래는 X 버튼으로만 닫힙니다.");
+
             Harmony harmony = new Harmony(PluginGuid);
             harmony.PatchAll(typeof(InputFieldPatches));
+            harmony.PatchAll(typeof(PopupPatches));
 
             if (EnableTranslation.Value)
             {

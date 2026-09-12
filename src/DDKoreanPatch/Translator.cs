@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
 namespace DDKoreanPatch
@@ -15,6 +16,21 @@ namespace DDKoreanPatch
     {
         private static Dictionary<string, string> ui = new Dictionary<string, string>();
         private static Dictionary<string, string> textAssets = new Dictionary<string, string>();
+        private static List<Pattern> patterns = new List<Pattern>();
+
+        /// <summary>
+        /// 값이 끼워 넣어진 채로 만들어지는 문장을 위한 정규식 규칙.
+        /// 예: 파서 오류는 "Cannot find table named: " + 이름 + "..." 처럼
+        /// 문자열을 이어 붙여 만들기 때문에 정확 일치 사전으로는 잡히지 않는다.
+        /// </summary>
+        private class Pattern
+        {
+            public string match { get; set; }
+            public string replace { get; set; }
+
+            [JsonIgnore]
+            public Regex Compiled;
+        }
 
         internal static bool HasUiText => ui.Count > 0;
         internal static bool HasTextAssets => textAssets.Count > 0;
@@ -23,6 +39,7 @@ namespace DDKoreanPatch
         {
             public Dictionary<string, string> ui { get; set; }
             public Dictionary<string, string> textAssets { get; set; }
+            public List<Pattern> patterns { get; set; }
         }
 
         internal static void Load(string pluginDirectory)
@@ -39,7 +56,15 @@ namespace DDKoreanPatch
                 Bundle bundle = JsonConvert.DeserializeObject<Bundle>(File.ReadAllText(path));
                 ui = bundle?.ui ?? new Dictionary<string, string>();
                 textAssets = bundle?.textAssets ?? new Dictionary<string, string>();
-                Plugin.Log.LogInfo($"번역 로드: UI {ui.Count}개, TextAsset {textAssets.Count}개");
+                patterns = bundle?.patterns ?? new List<Pattern>();
+
+                foreach (Pattern pattern in patterns)
+                {
+                    pattern.Compiled = new Regex(pattern.match, RegexOptions.Compiled | RegexOptions.Singleline);
+                }
+
+                Plugin.Log.LogInfo(
+                    $"번역 로드: UI {ui.Count}개, TextAsset {textAssets.Count}개, 패턴 {patterns.Count}개");
             }
             catch (Exception e)
             {
@@ -66,6 +91,15 @@ namespace DDKoreanPatch
             {
                 int start = source.IndexOf(trimmed, StringComparison.Ordinal);
                 return source.Substring(0, start) + inner + source.Substring(start + trimmed.Length);
+            }
+
+            // 값이 끼워 넣어진 문장은 정규식으로 잡는다.
+            foreach (Pattern pattern in patterns)
+            {
+                if (pattern.Compiled != null && pattern.Compiled.IsMatch(source))
+                {
+                    return pattern.Compiled.Replace(source, pattern.replace);
+                }
             }
 
             return source;
