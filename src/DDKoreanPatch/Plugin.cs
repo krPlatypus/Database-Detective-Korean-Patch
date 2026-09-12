@@ -42,6 +42,7 @@ namespace DDKoreanPatch
         internal static ConfigEntry<int> FontPointSize;
         internal static ConfigEntry<string> FontFile;
         internal static ConfigEntry<int> FontAtlasPadding;
+        internal static ConfigEntry<float> FontScale;
 
         private void Awake()
         {
@@ -100,6 +101,16 @@ namespace DDKoreanPatch
                 "FontAtlasPadding",
                 4,
                 "글자 외곽에 두는 여백. 픽셀 글꼴은 작게 둘수록 모서리가 덜 뭉갭니다. 보통 글꼴은 9가 무난합니다.");
+
+            FontScale = Config.Bind(
+                "Font",
+                "FontScale",
+                0.8f,
+                new ConfigDescription(
+                    "한글 글자 크기 보정. 글꼴마다 네모칸 안에서 글자가 차지하는 비율이 달라, "
+                    + "같은 크기를 줘도 한글이 영문보다 커 보입니다. 1보다 작게 두면 한글이 작아집니다. "
+                    + "영문과 나란히 놓고 높이가 비슷해 보이는 값을 찾으세요.",
+                    new AcceptableValueRange<float>(0.5f, 1.5f)));
 
             EnableTranslation = Config.Bind(
                 "Translation",

@@ -3,6 +3,7 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.TextCore;
 using UnityEngine.TextCore.LowLevel;
 
 namespace DDKoreanPatch
@@ -100,6 +101,7 @@ namespace DDKoreanPatch
             Asset.name = FallbackAssetName;
             Asset.hideFlags = HideFlags.HideAndDontSave;
             Object.DontDestroyOnLoad(Asset);
+            ApplyScale();
 
             // 글리프를 필요할 때 가져오는 방식이라, 기본 오버로드는 아직 안 불러온 글자를
             // 없다고 보고한다. tryAddCharacter로 실제 공급 가능 여부를 묻는다.
@@ -116,6 +118,30 @@ namespace DDKoreanPatch
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// 폴백 글꼴의 글자 크기를 원래 글꼴에 맞춘다.
+        ///
+        /// TMP는 글자 크기를 이렇게 잡는다.
+        ///     크기 = 글꼴크기 / faceInfo.pointSize * faceInfo.scale
+        ///
+        /// 글꼴마다 네모칸(em) 안에서 글자가 차지하는 비율이 다르다.
+        /// 한글 글꼴은 네모칸을 거의 꽉 채우는 반면 라틴 글꼴은 대문자 높이가
+        /// 네모칸의 70% 안팎이라, 같은 글꼴크기를 줘도 한글이 눈에 띄게 커 보인다.
+        /// scale을 낮춰 눈으로 보이는 크기를 맞춘다.
+        /// </summary>
+        private static void ApplyScale()
+        {
+            float scale = Plugin.FontScale.Value;
+            if (Asset == null || Mathf.Approximately(scale, 1f))
+            {
+                return;
+            }
+
+            FaceInfo info = Asset.faceInfo;
+            info.scale = scale;
+            Asset.faceInfo = info;
         }
 
         /// <summary>
