@@ -42,6 +42,7 @@ namespace DDKoreanPatch
                 return;
             }
 
+            ApplyHangulLineBreaking();
             ApplyFallbacks();
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
@@ -131,6 +132,31 @@ namespace DDKoreanPatch
         /// 네모칸의 70% 안팎이라, 같은 글꼴크기를 줘도 한글이 눈에 띄게 커 보인다.
         /// scale을 낮춰 눈으로 보이는 크기를 맞춘다.
         /// </summary>
+        /// <summary>
+        /// 한글을 어절 단위로 끊게 한다.
+        ///
+        /// TMP는 이 설정이 꺼져 있으면 한글을 중국어, 일본어와 같이 보고
+        /// 글자 아무 데서나 줄을 끊는다. 그래서 "자동으로"가 "자 / 동으로"처럼
+        /// 단어 한가운데서 잘린다. 한글은 띄어쓰기를 쓰므로 그 방식이 맞지 않는다.
+        /// </summary>
+        private static void ApplyHangulLineBreaking()
+        {
+            if (!Plugin.ModernHangulLineBreaking.Value)
+            {
+                return;
+            }
+
+            try
+            {
+                TMP_Settings.useModernHangulLineBreakingRules = true;
+                Plugin.Log.LogInfo("한글을 어절 단위로 끊도록 설정했습니다.");
+            }
+            catch (System.Exception e)
+            {
+                Plugin.Log.LogWarning($"한글 줄바꿈 규칙을 켜지 못했습니다: {e.Message}");
+            }
+        }
+
         private static void ApplyScale()
         {
             if (Asset == null)

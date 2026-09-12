@@ -44,6 +44,7 @@ namespace DDKoreanPatch
         internal static ConfigEntry<int> FontAtlasPadding;
         internal static ConfigEntry<float> FontScale;
         internal static ConfigEntry<float> FontBaselineOffset;
+        internal static ConfigEntry<bool> ModernHangulLineBreaking;
 
         private void Awake()
         {
@@ -122,6 +123,13 @@ namespace DDKoreanPatch
                     + "영문과 한 줄에 섞였을 때 밑선이 어긋나 보이면 조정하세요. "
                     + "FontScale을 바꾸면 이 값도 다시 맞춰야 합니다.",
                     new AcceptableValueRange<float>(-0.5f, 0.5f)));
+
+            ModernHangulLineBreaking = Config.Bind(
+                "Font",
+                "ModernHangulLineBreaking",
+                true,
+                "한글을 어절 단위로 끊습니다. 끄면 TMP가 한글을 중국어, 일본어처럼 보고 "
+                + "글자 아무 데서나 줄을 끊어 단어 한가운데가 잘립니다.");
 
             EnableTranslation = Config.Bind(
                 "Translation",
