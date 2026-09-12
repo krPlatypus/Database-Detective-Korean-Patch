@@ -38,6 +38,9 @@
     <Reference Include="UnityEngine.TextCoreTextEngineModule">
       <HintPath>$(ManagedDir)\UnityEngine.TextCoreTextEngineModule.dll</HintPath><Private>false</Private>
     </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>$(ManagedDir)\UnityEngine.AudioModule.dll</HintPath><Private>false</Private>
+    </Reference>
     <Reference Include="UnityEngine.TextCoreFontEngineModule">
       <HintPath>$(ManagedDir)\UnityEngine.TextCoreFontEngineModule.dll</HintPath><Private>false</Private>
     </Reference>

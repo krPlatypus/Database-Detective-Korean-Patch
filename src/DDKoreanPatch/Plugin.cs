@@ -32,6 +32,9 @@ namespace DDKoreanPatch
 
         internal static ConfigEntry<bool> EnableTranslation;
         internal static ConfigEntry<bool> ClosePopupWithKey;
+        internal static ConfigEntry<bool> EnableTypingSound;
+        internal static ConfigEntry<float> TypingVolume;
+        internal static ConfigEntry<string> TypingClip;
         internal static ConfigEntry<bool> EnableClueImageToggle;
         internal static ConfigEntry<bool> EnableKoreanFont;
         internal static ConfigEntry<string> FontFamily;
@@ -120,9 +123,36 @@ namespace DDKoreanPatch
 
             PluginDirectory = System.IO.Path.GetDirectoryName(Info.Location);
 
+            EnableTypingSound = Config.Bind(
+                "Sound",
+                "EnableTypingSound",
+                true,
+                "글자를 칠 때마다 짧은 타건음을 냅니다. 게임에 이미 들어 있는 클릭 소리를 빌려 씁니다.");
+
+            TypingVolume = Config.Bind(
+                "Sound",
+                "TypingVolume",
+                0.22f,
+                new ConfigDescription(
+                    "타건음 크기. 거슬리지 않을 만큼 작게 두는 것이 기본값입니다. "
+                    + "게임 설정의 효과음 볼륨도 함께 적용됩니다.",
+                    new AcceptableValueRange<float>(0f, 1f)));
+
+            TypingClip = Config.Bind(
+                "Sound",
+                "TypingClip",
+                "pen-click-2-411631",
+                "타건음으로 쓸 게임 내 소리 이름. 찾지 못하면 이름에 click이 들어간 다른 소리를 씁니다. "
+                + "다른 후보: click 1, click 4, click down, button-3-214381");
+
             Harmony harmony = new Harmony(PluginGuid);
             harmony.PatchAll(typeof(InputFieldPatches));
             harmony.PatchAll(typeof(PopupPatches));
+
+            if (EnableTypingSound.Value)
+            {
+                harmony.PatchAll(typeof(TypingSoundPatches));
+            }
 
             if (EnableClueImageToggle.Value)
             {
