@@ -1,0 +1,9 @@
+# 디컴파일 산출물 (원저작물 — 커밋 금지)
+decompiled/
+# 추출된 원문 텍스트
+extracted/
+# 빌드 산출물
+dist/
+bin/
+obj/
+*.user
