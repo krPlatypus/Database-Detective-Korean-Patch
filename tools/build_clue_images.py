@@ -1,27 +1,28 @@
 """단서 이미지의 글자를 한글로 바꿔 번역본 PNG를 만든다.
 
 이미지마다 translation/images/<이름>.json 에 편집 사양을 둔다.
-사양은 "이 영역을 배경색으로 덮고 여기에 이 한글을 써라"의 목록이다.
 원본은 extracted/images/clues/ 에서 읽고 결과는 dist/images/ 로 나간다.
 
-원본 화풍을 살리려고 그림 전체를 다시 그리지 않고 글자 영역만 건드린다.
+원본 화풍을 살리려고 그림을 다시 그리지 않고 글자만 걷어낸 뒤 한글을 얹는다.
 이름, ID 번호, 날짜, 주소 같은 값은 플레이어가 그대로 SQL에 적어 넣는 데이터이므로
-사양에 넣지 않는다. 건드리면 사건을 풀 수 없게 된다.
+건드리지 않는다.
 
-사양 한 항목의 형태:
-  {
-    "box":  [x1, y1, x2, y2],     원본에서 지울 영역
-    "text": "유출 금지",           그 자리에 쓸 한글
-    "color": [214, 65, 24],       글자색
-    "fill":  [231, 215, 79],      덮을 배경색. 없으면 box 가장자리에서 뽑는다
-    "font":  "malgunbd.ttf",      C:/Windows/Fonts 기준. 없으면 기본값
-    "size":  44,                  없으면 box 높이에 맞춘다
-    "align": "center"             left | center | right
-  }
+지우는 방법이 두 가지다.
+
+  erase_boxes        네모 영역을 통째로 덮는다. 배경이 평평하고 주변에
+                     살릴 것이 없을 때 쓴다.
+
+  erase_ink_within   지정한 영역 안에 **완전히 들어가는** 잉크 덩어리만 지운다.
+                     글자와 화살표가 얽혀 있을 때 쓴다. 화살표나 동그라미는
+                     영역 밖으로 뻗어 나가므로 살아남는다.
+
+지운 자리는 주변에서 가장 가까운 성한 픽셀 색으로 메운다.
+배경에 그늘이나 결이 있어도 단색으로 덮은 티가 덜 난다.
 """
 import json
 import os
 import sys
+from collections import deque
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -31,68 +32,199 @@ SPEC_DIR = os.path.join(ROOT, "translation", "images")
 OUT_DIR = os.path.join(ROOT, "dist", "images")
 
 FONT_DIR = r"C:\Windows\Fonts"
-DEFAULT_FONT = "malgunbd.ttf"
+
+# 게임 UI가 Windows 95풍이라 한글도 그 시절 시스템 폰트인 굴림 계열로 맞춘다.
+# gulim.ttc 한 파일에 네 서체가 묶여 있어 인덱스로 고른다.
+#   0 굴림(가변폭)  1 굴림체(고정폭)  2 돋움(획이 더 각짐)  3 돋움체(고정폭)
+DEFAULT_FONT = "gulim.ttc"
+DEFAULT_FONT_INDEX = 0
+TTC_FACES = {"gulim": 0, "gulimche": 1, "dotum": 2, "dotumche": 3}
+
+# 손글씨 주석의 기본 잉크 판정. 사양에서 덮어쓸 수 있다.
+DEFAULT_INK = {"r_min": 140, "g_max": 100, "b_max": 100}
 
 
-def load_font(name, size):
+def load_font(name, size, index=None):
+    """폰트를 연다. 사양의 font는 파일명("gulim.ttc") 또는 서체명("dotum") 둘 다 받는다."""
+    key = (name or "").strip().lower()
+    if key in TTC_FACES:
+        return ImageFont.truetype(os.path.join(FONT_DIR, DEFAULT_FONT), size,
+                                  index=TTC_FACES[key])
+
     path = os.path.join(FONT_DIR, name or DEFAULT_FONT)
     if not os.path.exists(path):
-        path = os.path.join(FONT_DIR, DEFAULT_FONT)
-    return ImageFont.truetype(path, size)
+        path, index = os.path.join(FONT_DIR, DEFAULT_FONT), DEFAULT_FONT_INDEX
+
+    if index is None:
+        index = DEFAULT_FONT_INDEX if path.lower().endswith(".ttc") else 0
+    return ImageFont.truetype(path, size, index=index)
 
 
-def sample_fill(image, box):
-    """box 바로 위쪽 띠에서 가장 흔한 색을 배경색으로 본다."""
-    x1, y1, x2, y2 = box
-    band = image.crop((x1, max(0, y1 - 8), x2, max(1, y1 - 1)))
-    colors = band.getcolors(band.width * band.height or 1)
-    if not colors:
-        return (255, 255, 255)
-    return max(colors, key=lambda c: c[0])[1][:3]
+def is_ink(pixel, rule):
+    return (pixel[0] >= rule["r_min"]
+            and pixel[1] <= rule["g_max"]
+            and pixel[2] <= rule["b_max"])
 
 
-def fit_size(draw, text, font_name, box):
-    """box 안에 들어가는 가장 큰 글자 크기를 찾는다."""
-    x1, y1, x2, y2 = box
-    max_w, max_h = x2 - x1, y2 - y1
+def find_components(image, rule, min_pixels=40):
+    """잉크 픽셀을 이어 붙여 덩어리 목록을 만든다."""
+    width, height = image.size
+    px = image.load()
+    ink = [[is_ink(px[x, y], rule) for x in range(width)] for y in range(height)]
+    seen = [[False] * width for _ in range(height)]
+    neighbours = ((1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1))
+
+    components = []
+    for y in range(height):
+        for x in range(width):
+            if not ink[y][x] or seen[y][x]:
+                continue
+            queue = deque([(x, y)])
+            seen[y][x] = True
+            pixels = []
+            while queue:
+                cx, cy = queue.popleft()
+                pixels.append((cx, cy))
+                for dx, dy in neighbours:
+                    nx, ny = cx + dx, cy + dy
+                    if 0 <= nx < width and 0 <= ny < height and ink[ny][nx] and not seen[ny][nx]:
+                        seen[ny][nx] = True
+                        queue.append((nx, ny))
+            if len(pixels) >= min_pixels:
+                xs = [p[0] for p in pixels]
+                ys = [p[1] for p in pixels]
+                components.append({
+                    "pixels": pixels,
+                    "box": (min(xs), min(ys), max(xs), max(ys)),
+                })
+    return components
+
+
+def is_tinted(pixel, rule):
+    """진한 잉크는 아니지만 잉크 쪽으로 물든 픽셀. 획의 흐린 가장자리를 잡는다."""
+    r, g, b = pixel[0], pixel[1], pixel[2]
+    return r - max(g, b) >= rule.get("tint_gap", 35)
+
+
+def bleed(image, seed_pixels, region, margin):
+    """진한 획에서 시작해 물든 픽셀까지 번져 나가며 획 전체를 모은다.
+
+    영역 밖으로는 나가지 않게 막아, 가까이 있는 화살표나 동그라미로
+    옮겨붙지 않도록 한다.
+    """
+    width, height = image.size
+    px = image.load()
+    x1 = max(0, region[0] - margin)
+    y1 = max(0, region[1] - margin)
+    x2 = min(width - 1, region[2] + margin)
+    y2 = min(height - 1, region[3] + margin)
+
+    collected = set(seed_pixels)
+    queue = deque(seed_pixels)
+    while queue:
+        x, y = queue.popleft()
+        for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1)):
+            nx, ny = x + dx, y + dy
+            if not (x1 <= nx <= x2 and y1 <= ny <= y2):
+                continue
+            if (nx, ny) in collected:
+                continue
+            if is_tinted(px[nx, ny], {}):
+                collected.add((nx, ny))
+                queue.append((nx, ny))
+    return list(collected)
+
+
+def dilate(pixels, size, radius):
+    """지울 자리를 조금 넓힌다. 한 겹 남은 흐린 테두리를 없앤다."""
+    if radius <= 0:
+        return pixels
+
+    width, height = size
+    grown = set(pixels)
+    for _ in range(radius):
+        edge = list(grown)
+        for x, y in edge:
+            for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                nx, ny = x + dx, y + dy
+                if 0 <= nx < width and 0 <= ny < height:
+                    grown.add((nx, ny))
+    return list(grown)
+
+
+def contained(inner, outer):
+    return (inner[0] >= outer[0] and inner[1] >= outer[1]
+            and inner[2] <= outer[2] and inner[3] <= outer[3])
+
+
+def heal(image, holes):
+    """지운 자리를 가장 가까운 성한 픽셀 색으로 메운다 (다중 시작점 너비 우선)."""
+    if not holes:
+        return
+
+    width, height = image.size
+    px = image.load()
+    hole_set = set(holes)
+
+    queue = deque()
+    for x, y in holes:
+        for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            nx, ny = x + dx, y + dy
+            if 0 <= nx < width and 0 <= ny < height and (nx, ny) not in hole_set:
+                queue.append((x, y, px[nx, ny]))
+                break
+
+    filled = set()
+    while queue:
+        x, y, colour = queue.popleft()
+        if (x, y) in filled:
+            continue
+        filled.add((x, y))
+        px[x, y] = colour
+        for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            nx, ny = x + dx, y + dy
+            if (0 <= nx < width and 0 <= ny < height
+                    and (nx, ny) in hole_set and (nx, ny) not in filled):
+                queue.append((nx, ny, colour))
+
+
+def fit_size(text, font_name, max_w, max_h, font_index=None):
+    probe = ImageDraw.Draw(Image.new("RGB", (8, 8)))
     size = max_h
     while size > 6:
-        font = load_font(font_name, size)
-        left, top, right, bottom = draw.textbbox((0, 0), text, font=font)
+        font = load_font(font_name, size, font_index)
+        left, top, right, bottom = probe.textbbox((0, 0), text, font=font)
         if right - left <= max_w and bottom - top <= max_h:
             return size
         size -= 1
     return 6
 
 
-def apply_edit(image, draw, edit):
-    box = tuple(edit["box"])
-    x1, y1, x2, y2 = box
-
-    fill = tuple(edit.get("fill") or sample_fill(image, box))
-    draw.rectangle(box, fill=fill)
-
-    text = edit.get("text", "").strip()
+def draw_text(image, entry):
+    """중심점에 각도를 줘서 글자를 얹는다."""
+    text = entry.get("text", "").strip()
     if not text:
-        return   # 지우기만 하는 항목
+        return
 
-    font_name = edit.get("font")
-    size = edit.get("size") or fit_size(draw, text, font_name, box)
-    font = load_font(font_name, size)
+    font_name = entry.get("font")
+    font_index = entry.get("font_index")
+    size = entry.get("size") or fit_size(
+        text, font_name, entry.get("max_width", 400), entry.get("max_height", 80), font_index)
+    font = load_font(font_name, size, font_index)
 
-    left, top, right, bottom = draw.textbbox((0, 0), text, font=font)
-    text_w, text_h = right - left, bottom - top
+    probe = ImageDraw.Draw(Image.new("RGB", (8, 8)))
+    left, top, right, bottom = probe.textbbox((0, 0), text, font=font)
+    pad = size // 2
+    layer = Image.new("RGBA", (right - left + pad * 2, bottom - top + pad * 2), (0, 0, 0, 0))
+    ImageDraw.Draw(layer).text((pad - left, pad - top), text,
+                               font=font, fill=tuple(entry.get("color", [0, 0, 0])))
 
-    align = edit.get("align", "center")
-    if align == "left":
-        tx = x1
-    elif align == "right":
-        tx = x2 - text_w
-    else:
-        tx = x1 + (x2 - x1 - text_w) // 2
-    ty = y1 + (y2 - y1 - text_h) // 2
+    angle = entry.get("angle", 0)
+    if angle:
+        layer = layer.rotate(angle, resample=Image.BICUBIC, expand=True)
 
-    draw.text((tx - left, ty - top), text, font=font, fill=tuple(edit.get("color", [0, 0, 0])))
+    cx, cy = entry["at"]
+    image.alpha_composite(layer, (int(cx - layer.width / 2), int(cy - layer.height / 2)))
 
 
 def build(name):
@@ -108,14 +240,41 @@ def build(name):
         spec = json.load(f)
 
     image = Image.open(source).convert("RGBA")
-    draw = ImageDraw.Draw(image)
+    rule = dict(DEFAULT_INK)
+    rule.update(spec.get("ink", {}))
 
-    for edit in spec.get("edits", []):
-        apply_edit(image, draw, edit)
+    holes = []
+
+    # 네모 통째로 지우기
+    for box in spec.get("erase_boxes", []):
+        x1, y1, x2, y2 = box
+        for y in range(max(0, y1), min(image.height, y2)):
+            for x in range(max(0, x1), min(image.width, x2)):
+                holes.append((x, y))
+
+    # 영역 안에 완전히 들어가는 잉크 덩어리만 지우기
+    regions = spec.get("erase_ink_within", [])
+    if regions:
+        rgb = image.convert("RGB")
+        margin = spec.get("bleed_margin", 6)
+        for component in find_components(rgb, rule, spec.get("min_ink_pixels", 40)):
+            region = next((r for r in regions if contained(component["box"], tuple(r))), None)
+            if region is None:
+                continue
+            # 진한 속살만 지우면 흐린 테두리가 유령처럼 남는다.
+            # 느슨한 판정으로 번지게 해서 획 전체를 걷어낸다.
+            holes.extend(bleed(rgb, component["pixels"], region, margin))
+
+    if holes:
+        holes = dilate(holes, image.size, spec.get("ink_dilate", 2))
+
+    heal(image, holes)
+
+    for entry in spec.get("texts", []):
+        draw_text(image, entry)
 
     os.makedirs(OUT_DIR, exist_ok=True)
-    out = os.path.join(OUT_DIR, name + ".png")
-    image.save(out)
+    image.convert("RGBA").save(os.path.join(OUT_DIR, name + ".png"))
     return None
 
 
@@ -124,9 +283,7 @@ def main():
         print(f"사양 폴더가 없습니다: {SPEC_DIR}")
         return
 
-    names = sorted(
-        os.path.splitext(f)[0] for f in os.listdir(SPEC_DIR) if f.endswith(".json")
-    )
+    names = sorted(os.path.splitext(f)[0] for f in os.listdir(SPEC_DIR) if f.endswith(".json"))
     if len(sys.argv) > 1:
         names = [n for n in names if n in sys.argv[1:]]
 
@@ -137,8 +294,9 @@ def main():
             failed.append(error)
         else:
             built += 1
+            print(f"  {name}")
 
-    print(f"  번역 이미지 {built}개 생성 -> {OUT_DIR}")
+    print(f"\n  번역 이미지 {built}개 생성 -> {OUT_DIR}")
     for message in failed:
         print(f"  {message}")
 
