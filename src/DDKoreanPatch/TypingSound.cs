@@ -17,8 +17,21 @@ namespace DDKoreanPatch
     {
         private static AudioSource source;
         private static AudioClip clip;
-        private static bool searched;
+        private static bool foundPreferred;
+        private static float lastSearched = float.NegativeInfinity;
         private static float lastPlayed;
+
+        /// <summary>
+        /// 설정한 소리가 아직 메모리에 없을 때 대신 쓸 것들. 앞에서부터 찾는다.
+        /// 게임에는 click이 이름에 들어간 소리가 여럿인데 그중 pop 계열은
+        /// 뽀잉 하고 튀는 소리라 타건음으로 쓰면 전혀 다른 느낌이 난다.
+        /// 짧고 꼬리 없는 것만 고른다.
+        /// </summary>
+        private static readonly string[] Fallbacks =
+        {
+            "click down", "click down 2", "pen down 1",
+            "mouse-click-290204", "click up", "click up 2",
+        };
 
         /// <summary>
         /// 키를 꾹 누르고 있을 때 소리가 기관총처럼 겹치지 않게 최소 간격을 둔다.
@@ -51,22 +64,18 @@ namespace DDKoreanPatch
 
         private static bool EnsureReady()
         {
-            if (source != null && clip != null)
+            // 지정한 소리를 아직 못 찾았으면 이따금 다시 찾는다.
+            // 소리는 쓰이는 시점에 메모리로 올라오므로, 처음 타건할 때는
+            // 없다가 나중에 생기는 경우가 있다. 한 번 실패했다고 포기하면
+            // 대신 잡은 소리를 끝까지 쓰게 된다.
+            if (!foundPreferred && Time.unscaledTime - lastSearched >= 1f)
             {
-                return true;
+                lastSearched = Time.unscaledTime;
+                Search();
             }
 
-            if (searched && clip == null)
-            {
-                return false;   // 한 번 찾아 실패했으면 매 타건마다 다시 뒤지지 않는다
-            }
-
-            searched = true;
-            clip = FindClip();
             if (clip == null)
             {
-                Plugin.Log.LogWarning(
-                    $"타자음으로 쓸 소리를 찾지 못했습니다: {Plugin.TypingClip.Value}. 타자음을 끕니다.");
                 return false;
             }
 
@@ -86,31 +95,61 @@ namespace DDKoreanPatch
             return true;
         }
 
-        private static AudioClip FindClip()
+        /// <summary>
+        /// 쓸 소리를 찾는다. 설정한 이름이 우선이고, 없으면 정해 둔 후보를 순서대로 본다.
+        /// 이름만 보고 아무 click이나 집으면 pop 계열이 걸려 뽀잉 하는 소리가 난다.
+        /// </summary>
+        private static void Search()
         {
             string wanted = Plugin.TypingClip.Value?.Trim();
-            AudioClip fallback = null;
 
-            foreach (AudioClip candidate in Resources.FindObjectsOfTypeAll<AudioClip>())
+            AudioClip[] loaded = Resources.FindObjectsOfTypeAll<AudioClip>();
+            AudioClip found = Match(loaded, wanted);
+
+            if (found != null)
             {
-                if (candidate == null)
+                foundPreferred = true;
+            }
+            else
+            {
+                foreach (string name in Fallbacks)
                 {
-                    continue;
-                }
-
-                if (!string.IsNullOrEmpty(wanted) && candidate.name == wanted)
-                {
-                    return candidate;
-                }
-
-                // 지정한 클립이 아직 안 올라왔을 수 있으니 비슷한 것을 받아 둔다
-                if (fallback == null && candidate.name.IndexOf("click", System.StringComparison.OrdinalIgnoreCase) >= 0)
-                {
-                    fallback = candidate;
+                    found = Match(loaded, name);
+                    if (found != null)
+                    {
+                        break;
+                    }
                 }
             }
 
-            return fallback;
+            if (found == null || found == clip)
+            {
+                return;
+            }
+
+            clip = found;
+            Plugin.Log.LogInfo(
+                foundPreferred
+                    ? $"타자음: {clip.name}"
+                    : $"타자음: {clip.name} (설정한 '{wanted}' 을(를) 아직 못 찾아 대신 씁니다)");
+        }
+
+        private static AudioClip Match(AudioClip[] clips, string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return null;
+            }
+
+            foreach (AudioClip candidate in clips)
+            {
+                if (candidate != null && candidate.name == name)
+                {
+                    return candidate;
+                }
+            }
+
+            return null;
         }
 
         /// <summary>게임 효과음이 쓰는 믹서 그룹을 그대로 따라간다.</summary>

@@ -141,9 +141,10 @@ namespace DDKoreanPatch
             TypingClip = Config.Bind(
                 "Sound",
                 "TypingClip",
-                "pen-click-2-411631",
-                "타건음으로 쓸 게임 내 소리 이름. 찾지 못하면 이름에 click이 들어간 다른 소리를 씁니다. "
-                + "다른 후보: click 1, click 4, click down, button-3-214381");
+                "click down",
+                "타건음으로 쓸 게임 내 소리 이름. 기본값은 0.08초짜리 짧고 마른 소리입니다. "
+                + "다른 후보: click down 2, pen down 1, mouse-click-290204, button-press-382713. "
+                + "이름에 pop이나 bubble이 들어간 소리는 뽀잉 하고 튀어서 타건음에 맞지 않습니다.");
 
             Harmony harmony = new Harmony(PluginGuid);
             harmony.PatchAll(typeof(InputFieldPatches));
