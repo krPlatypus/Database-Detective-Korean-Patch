@@ -47,6 +47,9 @@
     <Reference Include="Unity.InputSystem">
       <HintPath>$(ManagedDir)\Unity.InputSystem.dll</HintPath><Private>false</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(ManagedDir)\Newtonsoft.Json.dll</HintPath><Private>false</Private>
+    </Reference>
     <Reference Include="Scripts">
       <HintPath>$(ManagedDir)\Scripts.dll</HintPath><Private>false</Private>
     </Reference>

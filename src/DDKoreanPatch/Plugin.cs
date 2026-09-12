@@ -29,6 +29,7 @@ namespace DDKoreanPatch
         internal static ConfigEntry<EnterBehavior> EnterMode;
         internal static ConfigEntry<bool> Diagnostics;
 
+        internal static ConfigEntry<bool> EnableTranslation;
         internal static ConfigEntry<bool> EnableKoreanFont;
         internal static ConfigEntry<string> FontFamily;
         internal static ConfigEntry<string> FontStyle;
@@ -77,7 +78,20 @@ namespace DDKoreanPatch
                 90,
                 "폰트 샘플링 크기. 키우면 선명해지지만 메모리를 더 씁니다.");
 
-            new Harmony(PluginGuid).PatchAll(typeof(InputFieldPatches));
+            EnableTranslation = Config.Bind(
+                "Translation",
+                "EnableTranslation",
+                true,
+                "translation.json의 한글 번역을 화면에 적용합니다.");
+
+            Harmony harmony = new Harmony(PluginGuid);
+            harmony.PatchAll(typeof(InputFieldPatches));
+
+            if (EnableTranslation.Value)
+            {
+                Translator.Load(System.IO.Path.GetDirectoryName(Info.Location));
+                harmony.PatchAll(typeof(TranslationPatches));
+            }
 
             Logger.LogInfo($"로드 완료. EnterBehavior={EnterMode.Value}");
         }
@@ -111,6 +125,18 @@ namespace DDKoreanPatch
             catch (System.Exception e)
             {
                 Logger.LogError($"한글 폰트 설치 실패: {e}");
+            }
+
+            if (EnableTranslation.Value)
+            {
+                try
+                {
+                    TranslationPatches.HookSceneSweep();
+                }
+                catch (System.Exception e)
+                {
+                    Logger.LogError($"번역 적용 실패: {e}");
+                }
             }
         }
 

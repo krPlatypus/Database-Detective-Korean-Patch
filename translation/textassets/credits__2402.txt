@@ -1,0 +1,91 @@
+main_credits;Thomas Hsu;Programming/Writing/Art/Design
+main_credits;SQLite;SQL Library
+main_credits;Unity;Game Engine
+voice_credits;Thomas Hsu;Police Chief
+voice_credits;Yerim Heo;Assistant Moleman
+voice_credits;Yerim Heo;Scarred Waitress
+font_credits;FontsArena;System Font;W95FA
+font_credits;Sebastian Kosch;Arrest Warrant Font;Crimson
+font_credits;datagoblin;Search Tables Query Font;monogram
+font_credits;Georg Duffner, Octavio Pardo;Book Font;EB Garamond
+font_credits;Claus Eggers Sorensen;Website Font;Playfair Display
+font_credits;athy!!;Website Font;Handwriting
+font_credits;mazaya niar;Website Font;Helium
+font_credits;Caca;Website Font;Shaabyla
+font_credits;Morris Fuller Benton;Website Font;Franklin Gothic
+font_credits;fsuarez913;Website Font;Super Dream
+font_credits;Sven Pels;Website Font;The Bold Font
+font_credits;Debut Studio;Website Font;Abbasy Calligraphy Typeface
+font_credits;Mooniak;Website Font;Abhaya Libre
+font_credits;GUST e-foundry;Website Font;TeX Gyre Termes
+font_credits;Vincent Connare;Website Font;Comic Sans
+font_credits;Sandylukee;Website Font;Tango Sans
+font_credits;Lauren Thompson;Website Font;Caviar Dreams
+font_credits;Steve Matteson;Website/Evidence Font;Liberation Serif
+font_credits;Dieter Steffmann;Website Font;Canterbury
+font_credits;Christoph Mueller;Website Font;Moms Typewriter
+font_credits;Manfred Klein;Website Font;Old Newspaper Types
+font_credits;Tart Workshop;Website Font;Mountains of Christmas
+font_credits;Tup Wanders;Website Font;Evil Empire
+font_credits;Hanken Design Co.;Website Font;Glacial Indifference
+font_credits;Adrian Jordanov;Website Font;Theater
+font_credits;Vernon Adams;Website Font;Carter One
+font_credits;Robin Nicholas, Patricia Saunders;Website Font;Arial
+font_credits;Manfred Klein;Website Font;Optimus Princeps
+font_credits;Apostrophic Labs;Website Font;Day Roman
+font_credits;Fajarisha Phonna;Website Font;Belgiano Serif
+font_credits;ingoFonts;Level 7 Evidence;DePixel (OT1)
+font_credits;Zeh Fernando;Level 7 Evidence;Nokia Cellphone FC
+music_credits;MusicByPedro;Music Player;Noire #1
+music_credits;Aaron Kenny;Music Player;The Black Cat
+music_credits;Mackey;Music Player;Coffee Shop In the Afternoon
+music_credits;Mackey;Music Player;Like Black Coffee
+music_credits;Mackey;Music Player;At the Lounge
+music_credits;Quincas Moreira;Music Player;Miles Beyond
+music_credits;Kevin MacLeod;Music Player;Night in Venice (incompetech.com)
+music_credits;plasterbrain;Arrest Music;(Bossa Nova Loop) Thank You for Shopping!
+music_credits;plasterbrain;calmail.com/help2;(Cute Loop) Pink Bunny Death Metal
+music_credits;YellowTree;Temporary Leave Music;Elevator Music
+music_credits;Dylan Owen;Ending Cutscene;Black Fingerprint
+music_credits;Nikita Kondrashev;Final Message;Motivational
+sfx_credits;Liecio;Ringing Phone;Classic 90s Ring Telefone
+sfx_credits;jack_urbanski;Startup Sound;Vibraphone Chord
+sfx_credits;Artninja;Explosion Sounds;heavy_explosive_crunchy_impact_sound
+sfx_credits;mrfriends;Delete Table Sound;pistol shot
+sfx_credits;gattoangus;Delete Table Sound;9mm pistol shoot short reverb
+sfx_credits;qubodup;Confetti Sound Effect;Puff of Smoke
+sfx_credits;FenrirFangs;Background Change;guitar strum
+sfx_credits;Leszek_Szary;Notepad Color Sound Effect;scale x6
+sfx_credits;yuliana-yurukova;Shutdown Sound;Lighter
+sfx_credits;SoundReality;Assistant Button Click;Pop Clean
+sfx_credits;floraphonic;Panel Popup Sound;UI Pop Up 1
+sfx_credits;TanwerAman;Jail Door Sound;Jail Door Closing (Heavy Door)
+sfx_credits;pfranzen;Arrest Air Horn;DJ airhorn sound
+sfx_credits;nomiqbomi;Error/Warning Popup;Vibraphone Sting
+sfx_credits;marlonnnnnn;Login Chime;Computer Chimes - Program Start.aif
+sfx_credits;SoundMaker25;Clear Internet History;Flashback
+playtesters;Graeme Ferguson
+playtesters;Chayne Rimkus
+playtesters;yattytheman
+playtesters;Mira Pharaon
+playtesters;Aclet
+playtesters;Sai Kishore Komanduri
+playtesters;Katie Olson
+playtesters;nolyel
+playtesters;Braden Gilmore
+playtesters;arvia
+playtesters;Luna Song
+playtesters;Jarda_H
+playtesters;Peter Hwang
+playtesters;Michelle Hwang
+playtesters;Francesco "Sapo" Saporito
+playtesters;Telzwin
+misc_credits;Windows 98;Web Browser Icon;Regional Settings Icon
+misc_credits;Windows 95;Music Player Icon;shell32.dll Icon
+misc_credits;Sam Boyer;Audio Message Spectrum;SimpleSpectrum
+misc_credits;Ciela Spike;Multi Threading Library;Thread Ninja
+special_thanks;Graeme Ferguson;Manual Proofreader
+special_thanks;Luna Song;Community Manager
+special_thanks;Logan Wohlers;Mac Lender
+special_thanks;Christie Zhao;Trailer Cinematographer
+special_thanks;YOU!!!;Playing my game :)
