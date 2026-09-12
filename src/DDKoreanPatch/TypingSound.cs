@@ -278,16 +278,22 @@ namespace DDKoreanPatch
     }
 
     /// <summary>
-    /// 글자가 실제로 끼워 넣어지는 지점에서 소리를 낸다.
-    /// Append가 아니라 Insert를 잡는 이유는, Append는 걸러져 버려지는 문자에도 불리지만
-    /// Insert는 화면에 실제로 들어간 글자에만 불리기 때문이다.
+    /// 글자를 넣을 때와 지울 때 모두 소리를 낸다.
+    ///
+    /// 넣는 쪽은 Append가 아니라 Insert를 잡는다. Append는 걸러져 버려지는 문자에도
+    /// 불리지만 Insert는 화면에 실제로 들어간 글자에만 불린다.
+    ///
+    /// 지우는 쪽은 백스페이스와 딜리트가 각각 다른 메서드를 탄다.
+    /// 치는 소리만 나고 지우는 소리가 없으면 중간에 끊긴 느낌이 든다.
     /// </summary>
     [HarmonyPatch]
     internal static class TypingSoundPatches
     {
         [HarmonyPostfix]
         [HarmonyPatch(typeof(TMP_InputField), "Insert")]
-        private static void InsertPostfix()
+        [HarmonyPatch(typeof(TMP_InputField), "Backspace")]
+        [HarmonyPatch(typeof(TMP_InputField), "DeleteKey")]
+        private static void KeyPostfix()
         {
             TypingSound.Play();
         }
