@@ -51,6 +51,16 @@ namespace DDKoreanPatch
             new Harmony(PluginGuid).PatchAll(typeof(InputFieldPatches));
 
             Logger.LogInfo($"로드 완료. EnterBehavior={EnterMode.Value}, VerboseInputLog={Diagnostics.Value}");
+
+            if (InputFieldPatches.ImeGuardPatched)
+            {
+                Logger.LogInfo("IME 가드 무력화 성공 - 단독 Enter가 KeyPressed까지 도달합니다.");
+            }
+            else
+            {
+                Logger.LogError(
+                    "IME 가드를 찾지 못했습니다. TMP 버전이 예상과 다릅니다 - 단독 Enter가 계속 막힐 수 있습니다.");
+            }
         }
     }
 }
