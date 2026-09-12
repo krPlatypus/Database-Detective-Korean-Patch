@@ -48,6 +48,20 @@ OS에 설치된 폰트를 `AtlasPopulationMode.DynamicOS`로 참조해 TMP 폴�
 
 기본값은 맑은 고딕. 설정에서 굴림(`Gulim`)으로 바꾸면 게임의 Windows 95풍 UI와 더 잘 어울린다.
 
+## 동봉 폰트
+
+`dist/fonts/neodgm.ttf` — **Neo둥근모** (Eunbin Jeong / Dalgona), SIL Open Font License 1.1.
+라이선스 원문은 같은 폴더의 `LICENSE.txt`에 있다. OFL은 원문 동봉을 요구하므로
+패치를 배포할 때 이 파일을 함께 넣어야 한다. 예약 글꼴 이름이 지정되어 있으니
+글꼴을 고쳐 쓸 경우 이름을 바꿔야 한다.
+
+옛 윈도우의 각진 한글 느낌은 글꼴에 미리 그려 넣은 비트맵 글리프에서 나왔다.
+요즘 렌더링은 외곽선을 부드럽게 그려내고 TMP는 SDF로 한 번 더 다듬으므로
+같은 굴림 파일을 써도 그 느낌이 나지 않는다. 외곽선 자체가 계단 모양인
+픽셀 글꼴을 쓰면 SDF를 통과해도 결이 살아남는다.
+
+`FontFile`을 비우면 OS에 설치된 `FontFamily` 글꼴(기본 굴림)을 쓴다.
+
 ## 번역 작업 흐름
 
 ```sh

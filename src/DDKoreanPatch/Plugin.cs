@@ -25,6 +25,7 @@ namespace DDKoreanPatch
         public const string PluginVersion = "0.2.0";
 
         internal static ManualLogSource Log;
+        internal static string PluginDirectory;
 
         internal static ConfigEntry<EnterBehavior> EnterMode;
         internal static ConfigEntry<bool> Diagnostics;
@@ -36,6 +37,8 @@ namespace DDKoreanPatch
         internal static ConfigEntry<string> FontFamily;
         internal static ConfigEntry<string> FontStyle;
         internal static ConfigEntry<int> FontPointSize;
+        internal static ConfigEntry<string> FontFile;
+        internal static ConfigEntry<int> FontAtlasPadding;
 
         private void Awake()
         {
@@ -77,8 +80,23 @@ namespace DDKoreanPatch
             FontPointSize = Config.Bind(
                 "Font",
                 "FontPointSize",
-                90,
-                "폰트 샘플링 크기. 키우면 선명해지지만 메모리를 더 씁니다.");
+                64,
+                "폰트 샘플링 크기. 키우면 선명해지지만 메모리를 더 씁니다. "
+                + "픽셀 글꼴은 원래 크기의 배수로 두어야 계단이 고르게 나옵니다(neodgm은 16의 배수).");
+
+            FontFile = Config.Bind(
+                "Font",
+                "FontFile",
+                "neodgm.ttf",
+                "플러그인의 fonts/ 폴더에 있는 폰트 파일 이름. 있으면 FontFamily보다 먼저 씁니다. "
+                + "기본값 neodgm.ttf(Neo둥근모)는 옛 윈도우의 각진 한글 느낌을 내는 픽셀 글꼴입니다. "
+                + "비워 두면 OS에 설치된 FontFamily 폰트를 씁니다.");
+
+            FontAtlasPadding = Config.Bind(
+                "Font",
+                "FontAtlasPadding",
+                4,
+                "글자 외곽에 두는 여백. 픽셀 글꼴은 작게 둘수록 모서리가 덜 뭉갭니다. 보통 글꼴은 9가 무난합니다.");
 
             EnableTranslation = Config.Bind(
                 "Translation",
@@ -100,7 +118,7 @@ namespace DDKoreanPatch
                 + "플러그인 폴더의 images/ 아래에 원본과 같은 이름으로 PNG를 두면 번역본으로 인식합니다. "
                 + "번역본이 없는 단서에는 버튼이 나오지 않습니다.");
 
-            string pluginDirectory = System.IO.Path.GetDirectoryName(Info.Location);
+            PluginDirectory = System.IO.Path.GetDirectoryName(Info.Location);
 
             Harmony harmony = new Harmony(PluginGuid);
             harmony.PatchAll(typeof(InputFieldPatches));
@@ -108,13 +126,13 @@ namespace DDKoreanPatch
 
             if (EnableClueImageToggle.Value)
             {
-                TranslatedImages.Initialize(pluginDirectory);
+                TranslatedImages.Initialize(PluginDirectory);
                 harmony.PatchAll(typeof(ClueImagePatches));
             }
 
             if (EnableTranslation.Value)
             {
-                Translator.Load(pluginDirectory);
+                Translator.Load(PluginDirectory);
                 harmony.PatchAll(typeof(TranslationPatches));
             }
 
@@ -145,7 +163,7 @@ namespace DDKoreanPatch
 
             try
             {
-                KoreanFont.Install();
+                KoreanFont.Install(PluginDirectory);
             }
             catch (System.Exception e)
             {

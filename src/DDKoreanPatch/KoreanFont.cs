@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.TextCore.LowLevel;
 
 namespace DDKoreanPatch
 {
@@ -22,6 +24,15 @@ namespace DDKoreanPatch
         private const string FallbackAssetName = "DDKoreanPatch Korean Fallback";
 
         internal static TMP_FontAsset Asset { get; private set; }
+
+        /// <summary>플러그인 폴더의 fonts/ 경로. 동봉 폰트를 여기서 찾는다.</summary>
+        private static string fontDirectory;
+
+        internal static void Install(string pluginDirectory)
+        {
+            fontDirectory = Path.Combine(pluginDirectory, "fonts");
+            Install();
+        }
 
         internal static void Install()
         {
@@ -44,8 +55,39 @@ namespace DDKoreanPatch
         {
             string family = Plugin.FontFamily.Value;
             string style = Plugin.FontStyle.Value;
+            string description;
 
-            Asset = TMP_FontAsset.CreateFontAsset(family, style, Plugin.FontPointSize.Value);
+            // 동봉 폰트가 있으면 그쪽을 먼저 쓴다.
+            // OS에 없는 글꼴(예: 픽셀 글꼴)을 쓰려면 이 길밖에 없다.
+            string bundled = BundledFontPath();
+            if (bundled != null)
+            {
+                Asset = TMP_FontAsset.CreateFontAsset(
+                    bundled,
+                    0,
+                    Plugin.FontPointSize.Value,
+                    Plugin.FontAtlasPadding.Value,
+                    GlyphRenderMode.SDFAA,
+                    1024,
+                    1024);
+                description = Path.GetFileName(bundled);
+
+                if (Asset == null)
+                {
+                    Plugin.Log.LogWarning(
+                        $"동봉 폰트를 불러오지 못했습니다: {bundled}. OS 폰트로 넘어갑니다.");
+                }
+            }
+            else
+            {
+                description = null;
+            }
+
+            if (Asset == null)
+            {
+                Asset = TMP_FontAsset.CreateFontAsset(family, style, Plugin.FontPointSize.Value);
+                description = $"{family} {style}";
+            }
 
             if (Asset == null)
             {
@@ -59,21 +101,41 @@ namespace DDKoreanPatch
             Asset.hideFlags = HideFlags.HideAndDontSave;
             Object.DontDestroyOnLoad(Asset);
 
-            // DynamicOS 폰트는 글리프를 필요할 때 OS에서 가져온다.
-            // 기본 오버로드는 이미 불러온 글자만 보므로 tryAddCharacter로 실제 공급 가능 여부를 묻는다.
+            // 글리프를 필요할 때 가져오는 방식이라, 기본 오버로드는 아직 안 불러온 글자를
+            // 없다고 보고한다. tryAddCharacter로 실제 공급 가능 여부를 묻는다.
             bool hasHangul = Asset.HasCharacter('한', false, true)
                              && Asset.HasCharacter('글', false, true);
             if (hasHangul)
             {
-                Plugin.Log.LogInfo($"한글 폰트 준비 완료: {family} {style}");
+                Plugin.Log.LogInfo($"한글 폰트 준비 완료: {description}");
             }
             else
             {
                 Plugin.Log.LogWarning(
-                    $"'{family} {style}' 폰트를 불러왔지만 한글 글리프가 없습니다. 다른 폰트를 지정하세요.");
+                    $"'{description}' 폰트를 불러왔지만 한글 글리프가 없습니다. 다른 폰트를 지정하세요.");
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// 동봉 폰트 파일 경로. 설정에 적힌 파일이 fonts/ 아래에 있을 때만 돌려준다.
+        ///
+        /// OS에 없는 글꼴을 쓰려면 파일에서 직접 읽는 수밖에 없다.
+        /// 옛 윈도우의 각진 한글 느낌은 비트맵 글리프에서 나오는데, 요즘 렌더링은
+        /// 외곽선을 부드럽게 그려내므로 그 느낌이 나지 않는다.
+        /// 외곽선 자체가 계단 모양인 픽셀 글꼴을 쓰면 그 결이 살아남는다.
+        /// </summary>
+        private static string BundledFontPath()
+        {
+            string fileName = Plugin.FontFile.Value?.Trim();
+            if (string.IsNullOrEmpty(fileName) || fontDirectory == null)
+            {
+                return null;
+            }
+
+            string path = Path.Combine(fontDirectory, fileName);
+            return File.Exists(path) ? path : null;
         }
 
         /// <summary>
