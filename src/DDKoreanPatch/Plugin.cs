@@ -31,6 +31,7 @@ namespace DDKoreanPatch
 
         internal static ConfigEntry<bool> EnableTranslation;
         internal static ConfigEntry<bool> ClosePopupWithKey;
+        internal static ConfigEntry<bool> EnableClueImageToggle;
         internal static ConfigEntry<bool> EnableKoreanFont;
         internal static ConfigEntry<string> FontFamily;
         internal static ConfigEntry<string> FontStyle;
@@ -91,13 +92,29 @@ namespace DDKoreanPatch
                 true,
                 "알림·오류 팝업을 Esc나 Enter로 닫습니다. 원래는 X 버튼으로만 닫힙니다.");
 
+            EnableClueImageToggle = Config.Bind(
+                "Translation",
+                "EnableClueImageToggle",
+                true,
+                "사진 단서 창에 원본/번역본 전환 버튼을 답니다. "
+                + "플러그인 폴더의 images/ 아래에 원본과 같은 이름으로 PNG를 두면 번역본으로 인식합니다. "
+                + "번역본이 없는 단서에는 버튼이 나오지 않습니다.");
+
+            string pluginDirectory = System.IO.Path.GetDirectoryName(Info.Location);
+
             Harmony harmony = new Harmony(PluginGuid);
             harmony.PatchAll(typeof(InputFieldPatches));
             harmony.PatchAll(typeof(PopupPatches));
 
+            if (EnableClueImageToggle.Value)
+            {
+                TranslatedImages.Initialize(pluginDirectory);
+                harmony.PatchAll(typeof(ClueImagePatches));
+            }
+
             if (EnableTranslation.Value)
             {
-                Translator.Load(System.IO.Path.GetDirectoryName(Info.Location));
+                Translator.Load(pluginDirectory);
                 harmony.PatchAll(typeof(TranslationPatches));
             }
 

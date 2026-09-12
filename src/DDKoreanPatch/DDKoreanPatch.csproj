@@ -38,6 +38,9 @@
     <Reference Include="UnityEngine.TextCoreTextEngineModule">
       <HintPath>$(ManagedDir)\UnityEngine.TextCoreTextEngineModule.dll</HintPath><Private>false</Private>
     </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>$(ManagedDir)\UnityEngine.ImageConversionModule.dll</HintPath><Private>false</Private>
+    </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
       <HintPath>$(ManagedDir)\UnityEngine.IMGUIModule.dll</HintPath><Private>false</Private>
     </Reference>
