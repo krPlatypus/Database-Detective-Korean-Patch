@@ -212,6 +212,21 @@ namespace DDKoreanPatch
                     Logger.LogError($"번역 적용 실패: {e}");
                 }
             }
+
+            // sounds/ 폴더의 음원 읽기는 시간이 걸려 코루틴으로 돌린다.
+            // Awake가 아니라 여기서 시작해야 한다. BepInEx가 플러그인을 붙이는 시점에는
+            // 플레이어 루프가 아직 돌지 않아 StartCoroutine이 네이티브 크래시를 낸다.
+            if (EnableTypingSound.Value)
+            {
+                try
+                {
+                    StartCoroutine(TypingSound.LoadExternal(PluginDirectory));
+                }
+                catch (System.Exception e)
+                {
+                    Logger.LogError($"타자음 음원 읽기 실패: {e}");
+                }
+            }
         }
 
         private bool fontInstallAttempted;

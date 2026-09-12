@@ -1,6 +1,10 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using HarmonyLib;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace DDKoreanPatch
 {
@@ -38,6 +42,13 @@ namespace DDKoreanPatch
         /// </summary>
         private const float MinimumInterval = 0.03f;
 
+        /// <summary>
+        /// sounds/ 폴더에서 읽어 온 소리들. 있으면 게임 내 소리보다 우선한다.
+        /// 여러 개면 번갈아 써서 사람이 치는 느낌을 낸다.
+        /// </summary>
+        private static readonly List<AudioClip> external = new List<AudioClip>();
+        private static int lastExternalIndex = -1;
+
         internal static void Play()
         {
             if (!Plugin.EnableTypingSound.Value)
@@ -50,7 +61,17 @@ namespace DDKoreanPatch
                 return;
             }
 
-            if (!EnsureReady())
+            AudioClip chosen = PickExternal();
+            if (chosen == null)
+            {
+                if (!EnsureReady())
+                {
+                    return;
+                }
+
+                chosen = clip;
+            }
+            else if (source == null && !EnsureSource())
             {
                 return;
             }
@@ -59,7 +80,30 @@ namespace DDKoreanPatch
 
             // 같은 소리가 그대로 반복되면 기계처럼 들린다. 음높이를 조금씩 흔든다.
             source.pitch = Random.Range(0.94f, 1.06f);
-            source.PlayOneShot(clip, Plugin.TypingVolume.Value);
+            source.PlayOneShot(chosen, Plugin.TypingVolume.Value);
+        }
+
+        /// <summary>바로 앞에 쓴 소리는 피해서 고른다. 같은 소리가 연달아 나면 티가 난다.</summary>
+        private static AudioClip PickExternal()
+        {
+            if (external.Count == 0)
+            {
+                return null;
+            }
+
+            if (external.Count == 1)
+            {
+                return external[0];
+            }
+
+            int index = Random.Range(0, external.Count);
+            if (index == lastExternalIndex)
+            {
+                index = (index + 1) % external.Count;
+            }
+
+            lastExternalIndex = index;
+            return external[index];
         }
 
         private static bool EnsureReady()
@@ -74,25 +118,90 @@ namespace DDKoreanPatch
                 Search();
             }
 
-            if (clip == null)
+            return clip != null && EnsureSource();
+        }
+
+        private static bool EnsureSource()
+        {
+            if (source != null)
             {
-                return false;
+                return true;
             }
 
-            if (source == null)
-            {
-                GameObject holder = new GameObject("DDKoreanPatch 타자음");
-                Object.DontDestroyOnLoad(holder);
-                holder.hideFlags = HideFlags.HideAndDontSave;
+            GameObject holder = new GameObject("DDKoreanPatch 타자음");
+            Object.DontDestroyOnLoad(holder);
+            holder.hideFlags = HideFlags.HideAndDontSave;
 
-                source = holder.AddComponent<AudioSource>();
-                source.playOnAwake = false;
-                source.spatialBlend = 0f;            // 화면 UI 소리라 방향감이 없어야 한다
-                source.outputAudioMixerGroup = BorrowMixerGroup();
-            }
-
-            Plugin.Log.LogInfo($"타자음 준비 완료: {clip.name}");
+            source = holder.AddComponent<AudioSource>();
+            source.playOnAwake = false;
+            source.spatialBlend = 0f;            // 화면 UI 소리라 방향감이 없어야 한다
+            source.outputAudioMixerGroup = BorrowMixerGroup();
             return true;
+        }
+
+        /// <summary>
+        /// 플러그인 폴더의 sounds/ 아래에 있는 음원을 읽어 들인다.
+        ///
+        /// 게임 자산에는 진짜 키보드 소리가 없고 마우스·펜 계열만 있다.
+        /// 직접 넣은 음원이 있으면 그쪽이 훨씬 낫다.
+        /// 읽기는 시간이 걸리므로 코루틴으로 돌리고, 끝날 때까지는 게임 내 소리를 쓴다.
+        /// </summary>
+        internal static IEnumerator LoadExternal(string pluginDirectory)
+        {
+            string root = Path.Combine(pluginDirectory, "sounds");
+            if (!Directory.Exists(root))
+            {
+                yield break;
+            }
+
+            foreach (string path in Directory.GetFiles(root, "*.*", SearchOption.AllDirectories))
+            {
+                AudioType type = TypeOf(path);
+                if (type == AudioType.UNKNOWN)
+                {
+                    continue;
+                }
+
+                using (UnityWebRequest request =
+                       UnityWebRequestMultimedia.GetAudioClip("file:///" + path.Replace('\\', '/'), type))
+                {
+                    yield return request.SendWebRequest();
+
+                    if (request.result != UnityWebRequest.Result.Success)
+                    {
+                        Plugin.Log.LogWarning($"소리를 읽지 못했습니다 {Path.GetFileName(path)}: {request.error}");
+                        continue;
+                    }
+
+                    AudioClip loaded = DownloadHandlerAudioClip.GetContent(request);
+                    if (loaded == null)
+                    {
+                        continue;
+                    }
+
+                    loaded.name = Path.GetFileNameWithoutExtension(path);
+                    Object.DontDestroyOnLoad(loaded);
+                    external.Add(loaded);
+                }
+            }
+
+            if (external.Count > 0)
+            {
+                Plugin.Log.LogInfo($"타자음으로 쓸 외부 음원 {external.Count}개를 읽었습니다: {root}");
+            }
+        }
+
+        private static AudioType TypeOf(string path)
+        {
+            switch (Path.GetExtension(path).ToLowerInvariant())
+            {
+                case ".mp3": return AudioType.MPEG;
+                case ".wav": return AudioType.WAV;
+                case ".ogg": return AudioType.OGGVORBIS;
+                case ".aiff":
+                case ".aif": return AudioType.AIFF;
+                default: return AudioType.UNKNOWN;
+            }
         }
 
         /// <summary>
