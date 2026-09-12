@@ -40,6 +40,24 @@ DEFAULT_FONT = "gulim.ttc"
 DEFAULT_FONT_INDEX = 0
 TTC_FACES = {"gulim": 0, "gulimche": 1, "dotum": 2, "dotumche": 3}
 
+# 손으로 쓴 주석에는 정자체보다 손글씨체가 맞는다. 윈도우에 기본으로 깔린 것들.
+#   magic  매직체  - 마커펜으로 그은 획. 현장 사진의 빨간 주석에 잘 맞는다
+#   pyunji 편지체  - 펜으로 쓴 편지 글씨. 일기나 쪽지에 어울린다
+#   ami    아미체  - 가늘고 동글동글한 손글씨
+#   gungso 궁서    - 붓글씨
+NAMED_FONTS = {
+    "magic": ("HMKMMAG.TTF", 0),
+    "pyunji": ("HMFMPYUN.TTF", 0),
+    "ami": ("HMKMAMI.TTF", 0),
+    "yet": ("HMFMOLD.TTF", 0),
+    "headline": ("HMKMRHD.TTF", 0),
+    "gungso": ("H2GSRB.TTF", 0),
+    "post": ("H2PORM.TTF", 0),
+    "malgun": ("malgun.ttf", 0),
+    "malgunbd": ("malgunbd.ttf", 0),
+    "batang": ("batang.ttc", 0),
+}
+
 # 손글씨 주석의 기본 잉크 판정. 사양에서 덮어쓸 수 있다.
 DEFAULT_INK = {"r_min": 140, "g_max": 100, "b_max": 100}
 
@@ -50,6 +68,11 @@ def load_font(name, size, index=None):
     if key in TTC_FACES:
         return ImageFont.truetype(os.path.join(FONT_DIR, DEFAULT_FONT), size,
                                   index=TTC_FACES[key])
+    if key in NAMED_FONTS:
+        file_name, face = NAMED_FONTS[key]
+        candidate = os.path.join(FONT_DIR, file_name)
+        if os.path.exists(candidate):
+            return ImageFont.truetype(candidate, size, index=face)
 
     path = os.path.join(FONT_DIR, name or DEFAULT_FONT)
     if not os.path.exists(path):

@@ -80,8 +80,10 @@ namespace DDKoreanPatch
             rect.anchoredPosition = new Vector2(-Inset, -Inset);
             rect.sizeDelta = new Vector2(Width, Height);
 
+            // 색조는 ColorBlock이 곱해서 입힌다. 바탕은 흰색으로 두어야
+            // 각 상태의 색이 그대로 나온다. 검은색을 바탕에 두면 곱해도 검은색뿐이다.
             Image background = root.AddComponent<Image>();
-            background.color = new Color(0f, 0f, 0f, 0.55f);   // 그림을 가리지 않게 반투명
+            background.color = Color.white;
 
             GameObject textObject = new GameObject("Label", typeof(RectTransform));
             textObject.transform.SetParent(root.transform, false);
@@ -102,6 +104,17 @@ namespace DDKoreanPatch
 
             Button button = root.AddComponent<Button>();
             button.targetGraphic = background;
+            button.transition = Selectable.Transition.ColorTint;
+            button.colors = new ColorBlock
+            {
+                normalColor = new Color(0f, 0f, 0f, 0.55f),        // 그림을 가리지 않게 반투명
+                highlightedColor = new Color(0.30f, 0.30f, 0.34f, 0.85f),
+                pressedColor = new Color(0.72f, 0.72f, 0.76f, 0.95f),
+                selectedColor = new Color(0f, 0f, 0f, 0.55f),
+                disabledColor = new Color(0f, 0f, 0f, 0.25f),
+                colorMultiplier = 1f,
+                fadeDuration = 0.08f,
+            };
             button.onClick.AddListener(toggle.Toggle);
 
             root.transform.SetAsLastSibling();   // 그림 위에 오도록
@@ -122,6 +135,26 @@ namespace DDKoreanPatch
         {
             preferTranslated = !preferTranslated;
             Apply(preferTranslated);
+            PlayClick();
+        }
+
+        /// <summary>
+        /// 게임이 쓰는 토글 효과음을 그대로 빌려 쓴다. 따로 만든 소리는 이질감이 난다.
+        /// </summary>
+        private static void PlayClick()
+        {
+            try
+            {
+                Notification player = SoundEffectUtils.GetNotificationPlayer();
+                if (player != null)
+                {
+                    player.PlayToggle(preferTranslated);
+                }
+            }
+            catch (System.Exception)
+            {
+                // 소리는 있으면 좋은 것이지 없으면 안 되는 것이 아니다
+            }
         }
 
         private void Apply(bool showTranslated)
