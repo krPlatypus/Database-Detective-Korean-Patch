@@ -1,4 +1,0 @@
-texts_page_1
-texts_page_2
-texts_page_3
-texts_page_4

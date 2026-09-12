@@ -80,6 +80,13 @@ def extract_tmp_text():
     return entries
 
 
+def _body(data):
+    try:
+        return data.m_Script.encode("utf-8", "surrogateescape").decode("utf-8")
+    except Exception:
+        return str(data.m_Script)
+
+
 def extract_text_assets():
     """TextAsset을 번역 대상과 원문 유지로 나눠 뽑는다."""
     env = common.load("resources.assets")
@@ -93,11 +100,14 @@ def extract_text_assets():
         if name in SKIP:
             continue
 
-        try:
-            body = data.m_Script.encode("utf-8", "surrogateescape").decode("utf-8")
-        except Exception:
-            body = str(data.m_Script)
+        # 숫자 이름 TextAsset('0'~'9')은 챕터별 단서 이미지의 애셋 이름 목록이다.
+        # 번역하면 게임이 단서 이미지를 찾지 못한다.
+        if name.isdigit():
+            keep.append({"name": name, "source": f"resources.assets:{obj.path_id}",
+                         "text": _body(data)})
+            continue
 
+        body = _body(data)
         if not body.strip():
             continue
 
