@@ -1,140 +1,140 @@
-0;1;0;I'm not sure, but I think it <i>might</i>\\nbe the guy covered in blue paint.
-0;1;1;I still think it's the guy covered in\\nblue paint.
-1;1;0;We might be able to use the information\\non the suspect's ID card to figure out\\nwho they are.
-1;1;1;We also have a table identifying\\nall the possible suspects.\\nMaybe we can use some of this\\ninformation!
-1;1;2;We should write a query using\\nwhat we know about the suspect to\\nfind out what their full name is.
-2;1;0;There's a lot of details in the security\\nfootage that we might be able to use.
-2;1;1;The suspect was wearing some\\naccessories in the security\\nfootage!
-2;1;2;Using the security footage,\\nwe should be able to figure out our\\nsuspect's access level and how\\nmany guns they were issued.
-2;1;3;The time at which this heist took\\nplace might also be a clue!
-2;1;4;I wonder how many officers were still in\\nthe office when this heist took place!
-2;1;5;We should be able to single out our\\nsuspect based on their access level,\\nthe amount of guns they have,\\n and whether they were in the office\\nwhen the heist took place.
-3;1;0;The suspect wrote down their\\nthoughts in a couple of places.\\nMaybe we can use those pieces\\nof evidence to find out where\\nthe suspect has been!
-3;1;1;The suspect's diary tells us which\\nconventions the suspect didn't go to.\\nWe should use that information to\\nnarrow down our choices.
-3;1;2;The suspect writes that they could\\nnot enter a convention due to it\\nbeing at maximum capacity.\\nWe should be able to find out what\\nconvention that is.
-3;1;3;The suspect writes that they\\ncould have won something from\\na convention. We should be able\\nto figure out what convention\\nthe suspect is talking about.
-3;1;4;Looking at the brochures,\\nyou can only win something at a\\nconvention if you bring the most\\nof a specific item.
-3;1;5;It looks like the suspect has taken\\na photo of every item they brought\\nexcept for the dumbbells. We should\\ncount the items in the photo to see if\\nthey match any attendees.
-3;1;6;We can figure out how many\\ndumbbells the suspect brought\\nusing their note on the back\\nof the photo.
-3;1;7;There should only be one person\\nwho brought the same number of items\\nas our suspect that also attended the\\ntwo same conventions that they did.
-4;1;0;That business card looks like it might\\ncontain some helpful information.
-4;1;1;We should go to the website\\non the business card!
-4;2;0;What did the witness say again?\\nSomething about the suspect leaving\\nthe lowest percentage tip?
-4;2;1;Tip percentages are calculated by\\ndividing the amount of money tipped\\nby the total cost of the meal.
-5;1;0;We should try logging into the\\nwebsite on the post-it note.
-5;2;0;It looks like we've <i>almost</i> caught\\neveryone who left an illegal review!
-5;2;1;There's only one review left\\nto investigate. If only we knew\\nmore about <i>anon78</i>!
-5;2;2;Have you submitted a positive\\nreview for Zoran before? Just\\nvisit <i>rateyourdictator.gov</i> and then\\nafterwards submit your review\\non the bottom of the page!
-5;2;3;We need to look and see which\\nIP address could have left a\\nrating at <i>rateyourdictator.gov</i>\\nwhen our suspect did.
-5;2;4;We need to check which IP address\\nwent to <i>rateyourdictator.gov</i> on\\nthe day the review was left.
-5;2;5;We also need to check which IP\\naddress went to <i>rateyourdictator.gov</i>\\n<b>before</b> the time the review was left.
-5;3;0;We should look more into the websites\\nthe suspect visited - it might\\nreveal more information about their identity.
-5;4;0;Looks like our suspect signed up for\\na dating service. I wonder what their\\nprofile says!
-5;4;1;It looks like answering three specific\\nquestions about yourself is required\\nto create a <i>selectyourstar.com</i> profile.
-5;99;0;We should visit more websites in\\nthe suspect's search history.
-5;100;0;Our suspect was invited to Jim's\\nbirthday! I bet their favorite food is\\nlisted on there!
-5;100;1;Does our suspect have any dietary\\nrestrictions? We should go through\\ntheir search history to learn more.
-5;100;2;You should go to <i>frogblog.net</i> and\\nsee if the suspect left any comments!
-5;100;3;The suspect's result on <i>molemanfans.net/test</i>\\nmight tell us more about their dietary\\nlimitations!
-5;999;0;Watching movies is a common past\\ntime in the city! I bet our suspect\\nleft some clues about their favorite\\nmovie somewhere in their search\\nhistory.
-5;1000;0;Our suspect mentions that their\\nfavorite movie never won a Megacorp\\nMedal. The main page of <i>mmdb.com</i>\\nmight give us more context about\\nthis medal.
-5;9999;0;We should visit more websites in\\nthe suspect's search history.
-5;10000;0;Looks our suspect was interested\\nin making smoothies! Let's see if\\nwe can find which ingredients the\\nsuspect ordered to figure out what\\nthey were planning on making.
-5;100000;0;Has the suspect written\\nabout themselves anywhere?
-5;100000;1;People tend to divulge personal\\ninformation when writing about serious\\nthings (like politics).
-5;100000;2;Don't forget to read other reviews\\non <i>rateyourdictator.gov!</i> There might\\nbe some valuable information in there.
-6;1;0;We should visit the wiki\\npage in the screenshot.
-6;2;0;We should try to find more\\ndetails about what happened.\\nFor example, we could try to\\nfind the murder weapon and\\nidentify potential motives!
-6;2;1;What kind of weapon did the victim\\nhave? I wonder who has it now!
-6;2;2;The victim had a Rare Burning\\nSword. We should look up what\\nhappened with this weapon in the\\ndamage log table!
-6;2;3;The damage taken by our victim tells\\nus something very important about\\nthe killer!
-6;2;4;Using the damage taken by the victim\\nand the weapon that was used,\\nwe can find out what class the\\nkiller played as.
-6;2;5;The wiki should tell us how\\nto look up other players\\nusing their character name.
-6;3;0;goldtooth must have gotten the\\nvictim's weapon from somewhere!
-6;3;1;Looks like goldtooth bought the\\nvictim's weapon from another\\nplayer!
-6;3;2;We should look into the transaction\\nhistory of sefrgswrg since they\\nwere the person who goldtooth\\npurchased the Rare Burning Sword\\nfrom.
-6;4;0;sefrgswrg must have gotten the\\nvictim's weapon from somewhere!
-6;4;1;We should look into the suspicious\\npayment that sefrgswrg made in\\ntheir transaction history.
-6;4;2;The name <i>cashboys</i> sounds familiar!\\nI think they were a guild...
-6;4;3;I bet the victim was a member\\nof a few guilds as well!
-6;4;4;We should look up our victim's\\nplayer name to see what guilds\\nthey've joined.
-6;4;5;We should look through the forums\\nof the other guilds that our victim\\nwas a member of. That might tell us\\nsomething about getting into the\\n<i>cashboys</i> forum!
-6;4;6;It looks like we can enter the\\n<i>Lore Lovin' Merchants</i> forum by\\npassing a test!
-6;5;0;We should look through the wiki\\nto help us answer the questions\\nin lsat.net!
-6;5;1;Manchester Grasslands sounds similar\\nto Manford Swamplands!
-6;5;2;It's weird how the enemies in\\nManford Swamplands keep\\nregenerating! I wonder what causes that!
-6;5;3;If we knew the damage, weapon, and\\nclass of someone with a Cursed\\neffect, we can calculate how much\\nthe effect adds!
-6;5;4;The word zippity only appears once\\nout of all phrases the shopkeeper says!
-6;5;5;There's a couple of phrases from\\nthe shopkeeper that mention the\\nDark Forest. We should take a look\\nat what these phrases have in\\ncommon!
-6;6;0;Let's see if any posts in the\\nLore Lovin' Merchants forums mention\\nanything about joining other guilds!
-6;6;1;The forum post titled\\n<i>Worth it to join other guilds?</i>\\nmight be worth taking a look at!
-6;6;2;It looks like our victim sold the\\npassword to enter the <i>cashboys</i>\\nforum to someone else!
-6;6;3;Our victim's payup account probably\\nwould have more details about this\\ntransaction.
-6;7;0;Looks like this guild provides\\nweapons to their premium members!\\nLet's take a look at what those\\nweapons are.
-6;7;1;We should find out how to be a\\npremium member for this guild\\nand then go to the cashboys's\\npayup account to find who\\nthey are!
-6;7;2;There was also an important\\nelection in the cashboys guild\\nbefore the victim was killed!
-6;7;3;If the election was the motive,\\nthen the possible culprits must have\\nvoted differently than the victim!
-6;7;4;Let's make sure whoever we accuse\\nwas in the same location as our victim\\nwhen the crime occured.
-6;7;5;We can figure out where each player\\nwas during the time of the killing\\nthanks to the 6th rule of combat.
-6;7;6;If a player was most recently\\ndamaged by a Cursed Sword or a\\nCursed Scythe before the victim was\\nkilled then they were in the Dark\\nForest with the victim during his murder.
-6;7;7;We can also narrow down the\\nclass of the culprit based on\\nthe damage the victim took.
-6;7;8;The perpetrator must have been a\\nbard that was a premium member\\nwho was also in the Dark\\nForests at the time of the killing.
-6;7;9;We should be able to find the name\\nof the perpetrator by looking through\\ntheir payup transaction history.
-7;1;0;We should visit the website\\nmentioned in the evidence!
-7;2;0;We should look around lzu.edu to\\nsee if we can find any clues that\\nwill help us find our suspect.
-7;2;1;We should see if there's any data in\\nlzu.edu that we can download to\\nget us closer to the suspect.
-7;3;0;It looks like we don't have any\\nstudent names in our data, only\\nstudent IDs.
-7;3;1;I bet the teachers at LZU\\nhave a way of matching each\\nstudent's name with their ID!
-7;3;2;We should try to find out\\nmore about the person who set the\\npassword for the <i>Teacher Login</i> page.
-7;3;3;I think there's a clue about\\nwho set the password in the\\n<i>Teacher Login</i> page!
-7;4;0;We should visit the pages for each\\nclass to see if we can find out more\\nabout the professor mentioned in the\\n<i>Teacher Login</i> page.
-7;5;0;We should try to figure out what\\nAlan Douglas's password is using\\nwhat's mentioned in the <i>reading</i>\\nsection of the class page.
-7;5;1;We should be able to find more\\ninformation about where Alan Douglas\\nlived in his class page.
-7;5;2;We also need to figure out when\\nAlan Douglas first started working at\\nLZU. You might need to look around\\nother class pages to figure this out.
-7;6;0;Some of those buildings in reading\\npage of the history class look very\\nfamiliar!
-7;6;1;We can figure out the year\\nAlan Douglas started working at\\nLZU by looking at the arch that\\nhe's walking through.
-7;6;2;The arch looks like it's under\\nconstruction.
-7;6;3;The clothes Alan Douglas is\\nwearing might identify when\\nhe started working at LZU!
-7;6;4;The logo on Douglas' hat doesn't\\nlook like the current logo for LZU!
-7;7;0;Now we have access to all the data\\nthat teachers have access too!\\nEven still, I can't help but feel that\\nthere's more to find in this page!
-7;7;1;I'm curious about all the things\\nteachers discuss when there's no\\nstudents around!
-7;8;0;Now that we know how the youth\\ntext, we should have the full context\\nto understand the evidence!
-7;8;1;If we knew what classes were\\ntaken by the suspect and the person\\nthe suspect was texting, we would be\\nable to narrow down our possible culprits!
-7;8;2;Which classes in LZU assign\\nhomework? I wonder if any of\\nthem have answers that match\\nthe suspect's!
-7;8;3;Why did the suspect mention\\nthe front page? I bet this is\\nrelated to the meaning of "WYA"!
-7;8;4;The front page probably has\\nsomething to do with art.
-7;8;5;Once we identify who the suspect was\\ntexting, we should be able to use\\ntheir exam score to help find our\\nsuspect!
-8;1;0;Maybe we should check out the\\nwebsites mentioned in the evidence!
-8;4;0;We should take a closer look at\\nthe document in <i>bigleeks.net</i>!\\nIt could be related to the financial\\nfraud that occurred that day.
-8;4;1;It seems that <i>broker.com</i> keeps\\ntrack of every single transaction\\nrelated to stock purchases!
-8;4;2;If we find the transactions in <i>broker.com</i>\\nthat match the plan in the leaked\\ndocument, we'll be one step closer\\nto knowing who the true culprit is!
-8;4;3;Which companies did LZPPP say\\nthey would invest in? Knowing\\nthis would help us narrow down\\nthe transaction histories that we\\nwould have to look through!
-8;4;4;We should look at the transactions\\nfrom before LZPPP declared bankruptcy!
-8;4;5;Take a look at transactions made\\nfrom LZPPP. The perpetrators\\nmust be in there somewhere!
-8;5;0;The owners of Suit & Tie seem\\nto be the agents that the leaked\\ndocument is referring to!
-8;5;1;If we can find the names of each\\nagent, we'll be able to know\\nwhere they mailed the profits to!
-8;5;2;It seems that one agent uploaded a\\npicture of a flight they took. I bet\\nwe can use the details in that image\\nto figure out the agent's identity!
-8;5;3;The date of the flight can be\\ncalculated by the following:\\n1. The flight destination\\n.2. The outside weather conditions\\n3. The Big Ball game being played
-8;5;4;The agent's seat can be\\nfound using the following:\\n1. Her position in the plane\\n2. Her beverage on the table\\n3. The occupied seat in front of her.
-8;5;5;Another agent seems to enjoys\\ngambling. If we can calculate how\\nmuch this agent made from the\\ninvestment they uploaded, we'll be\\nable to figure out this agent's identity!
-8;8;0;There's a couple of places where\\nwe can discover where different\\naddresses lead to!
-8;8;1;There are specifically two websites\\nwhere you can discover who owns\\na building at a listed address.
-8;8;2;<i>realnimby.com</i> and <i>broker.com</i>\\nare the two websites that contain\\naddresses where you can also look\\nup the owner.
-8;8;3;The guide page in <i>broker.com</i>\\nmentions that the listed address\\nfor each company is the address\\nof the largest shareholder.
-8;8;4;193 Neptune Ave is the address\\nof a company listed in broker.com!
-8;8;5;To find the largest shareholder,\\nfind the trader that has bought the\\nmost shares without selling.
-8;9;0;We need to find out who\\nowns PonziScam Inc.!
-8;9;1;A grand nephew is the child of a\\nsibling's child (the child of a nephew)!
-9;1;0;We should visit the websites\\nmentioned in the evidence!
-9;2;0;We could try and reset\\nthe password!
-9;3;0;A mother's maiden name is\\ntheir last name before marriage.
-9;3;1;To find the answer to the first\\nsecurity question, we should go\\nto ponziscam.com to see Zoran's\\nfamily tree!
-9;3;2;Since Zoran was a veterinarian,\\nI bet there was an animal that was\\ndear to him when he was a child!
-9;3;3;We should find the answers\\nfor the last two security questions\\non petpalsclinic.com.
-9;4;0;Now we just have to figure out\\nwhich animal species is in charge\\nof this secret organization!
-9;4;1;If we can figure out what this\\nanimal species eats and what they do,\\nwe'll be able to figure out who they are!
-9;4;2;The farm being defended by at\\nleast 1000 soldiers within 500m\\ngrows what this animal species eats.
-9;4;3;There might be multiple animal\\nspecies that eats crops grown\\nfrom this farm. We won't be able\\nto find the correct animal species\\njust from this.
-9;4;4;We will also need to figure out\\nwhich consumer products the\\nanimal species wants produced.\\nTake a look at the accounting and\\nmanufacturing job listings!
-9;4;5;Once we find which car parts\\nare being siphoned, we can\\nfigure out which consumer products\\ncan be built from these parts!
-9;4;6;We can figure out which car parts\\nare being siphoned by calculating\\nwhich car parts have a higher expense\\nthan what can be expected from the\\nreported car sales.
+0;1;0;확실하진 않은데, 파란 페인트\\n뒤집어쓴 사람이 <i>아닐까요</i>?
+0;1;1;저는 여전히 파란 페인트\\n뒤집어쓴 사람 같은데요.
+1;1;0;용의자 신분증에 적힌 정보로\\n누군지 알아낼 수 있을 것 같아요.
+1;1;1;용의자 후보를 정리한 테이블도\\n있어요. 여기 있는 정보를\\n쓸 수 있을 것 같은데요!
+1;1;2;용의자에 대해 아는 걸로 쿼리를\\n짜서 이름을 알아내 봐요.
+2;1;0;보안 영상에 쓸 만한 단서가\\n꽤 많아 보여요.
+2;1;1;영상 속 용의자가 장신구를\\n몇 개 하고 있네요!
+2;1;2;보안 영상을 보면 용의자의\\n출입 등급과 지급받은 총기 수를\\n알아낼 수 있을 거예요.
+2;1;3;이 절도가 벌어진 시각도\\n단서가 될 것 같아요!
+2;1;4;절도가 벌어질 때 사무실에\\n남아 있던 경관이 몇 명이었을까요?
+2;1;5;출입 등급, 총기 수, 그리고 절도\\n당시 사무실에 있었는지를 합치면\\n용의자를 한 명으로 좁힐 수\\n있을 거예요.
+3;1;0;용의자가 여기저기 생각을\\n적어 뒀네요. 그걸로 어디를\\n다녀왔는지 알아낼 수 있을\\n것 같아요!
+3;1;1;일기를 보면 용의자가 어느 행사에\\n안 갔는지 나와 있어요. 그걸로\\n후보를 좁혀 봐요.
+3;1;2;정원이 차서 못 들어간 행사가\\n있다고 적혀 있어요. 어느 행사인지\\n알아낼 수 있을 거예요.
+3;1;3;어느 행사에서 뭔가 탈 수도\\n있었다고 적었네요. 어느 행사를\\n말하는 건지 알아낼 수 있어요.
+3;1;4;브로슈어를 보니 특정 물건을\\n가장 많이 가져와야 뭔가를\\n탈 수 있네요.
+3;1;5;아령만 빼고 가져간 물건을 전부\\n사진에 찍어 뒀어요. 사진 속\\n개수를 세서 참가자와 맞춰 봐요.
+3;1;6;사진 뒷면 메모를 보면 아령을\\n몇 개 가져갔는지 알 수 있어요.
+3;1;7;용의자와 물건 개수가 같으면서\\n같은 행사 두 곳에 간 사람은\\n한 명뿐일 거예요.
+4;1;0;저 명함에 쓸 만한 정보가\\n있어 보이는데요.
+4;1;1;명함에 적힌 웹사이트에\\n들어가 봐요!
+4;2;0;목격자가 뭐라고 했죠?\\n용의자가 팁 비율을 제일 적게\\n남겼다고 했던가요?
+4;2;1;팁 비율은 팁 금액을 식사\\n총액으로 나눠서 구해요.
+5;1;0;포스트잇에 적힌 사이트에\\n로그인해 봐요.
+5;2;0;불법 후기를 남긴 사람들,\\n<i>거의</i> 다 잡은 것 같아요!
+5;2;1;조사할 후기가 하나 남았어요.\\n<i>anon78</i>에 대해 좀 더 알면\\n좋을 텐데요!
+5;2;2;Zoran에 대한 좋은 후기를 남겨\\n보신 적 있나요? <i>rateyourdictator.gov</i>에\\n들어가서 페이지 아래쪽에\\n후기를 올리면 돼요!
+5;2;3;용의자가 평점을 남긴 그때\\n<i>rateyourdictator.gov</i>에서\\n평점을 남길 수 있었던 IP가\\n어느 것인지 봐야 해요.
+5;2;4;후기가 올라온 날 <i>rateyourdictator.gov</i>에\\n접속한 IP가 어느 것인지\\n확인해야 해요.
+5;2;5;후기가 올라온 시각 <b>이전에</b>\\n<i>rateyourdictator.gov</i>에 접속한\\nIP도 확인해야 해요.
+5;3;0;용의자가 다녀간 사이트를 더\\n파보죠. 신원에 대해 더 나올\\n수도 있어요.
+5;4;0;용의자가 소개팅 서비스에\\n가입했네요. 프로필에 뭐라고\\n썼을까요!
+5;4;1;<i>selectyourstar.com</i> 프로필을\\n만들려면 자기에 대한 질문 세 개에\\n답해야 하는 모양이에요.
+5;99;0;용의자 검색 기록에 있는\\n사이트를 더 둘러봐요.
+5;100;0;용의자가 Jim의 생일에\\n초대받았네요! 좋아하는 음식이\\n거기 적혀 있을 거예요!
+5;100;1;용의자가 못 먹는 게 있을까요?\\n검색 기록을 훑어보면 더\\n알 수 있을 거예요.
+5;100;2;<i>frogblog.net</i>에 들어가서\\n용의자가 댓글을 남겼는지\\n확인해 보세요!
+5;100;3;<i>molemanfans.net/test</i> 결과를 보면\\n못 먹는 게 뭔지 더 알 수\\n있을 거예요!
+5;999;0;이 도시 사람들은 영화를 많이\\n봐요! 용의자도 검색 기록 어딘가에\\n좋아하는 영화 흔적을 남겼을\\n거예요.
+5;1000;0;용의자가 좋아하는 영화는 Megacorp\\n훈장을 못 받았다고 했어요.\\n<i>mmdb.com</i> 메인 페이지에 그\\n훈장에 대한 설명이 있을 거예요.
+5;9999;0;용의자 검색 기록에 있는\\n사이트를 더 둘러봐요.
+5;10000;0;용의자가 스무디 만들기에 관심이\\n있었나 봐요! 어떤 재료를 주문했는지\\n찾아보면 뭘 만들려던 건지\\n알 수 있을 거예요.
+5;100000;0;용의자가 자기 얘기를 쓴 데가\\n어디 없을까요?
+5;100000;1;사람들은 진지한 얘기를 쓸 때\\n(정치 같은) 개인 정보를\\n흘리곤 하죠.
+5;100000;2;<i>rateyourdictator.gov</i>의 다른\\n후기도 꼭 읽어보세요! 쓸 만한\\n정보가 있을지도 몰라요.
+6;1;0;스크린샷에 나온 위키 페이지에\\n들어가 봐요.
+6;2;0;무슨 일이 있었는지 더 알아봐요.\\n예를 들면 흉기를 찾거나\\n동기를 짚어볼 수 있겠죠!
+6;2;1;피해자가 어떤 무기를 갖고\\n있었죠? 지금은 누가 갖고\\n있을까요!
+6;2;2;피해자는 Rare Burning Sword를\\n갖고 있었어요. 피해 기록 테이블에서\\n이 무기에 무슨 일이 있었는지\\n찾아봐요!
+6;2;3;피해자가 받은 피해량이 범인에\\n대해 아주 중요한 걸 알려줘요!
+6;2;4;피해자가 받은 피해량과 쓰인\\n무기를 합치면 범인이 어떤 직업을\\n골랐는지 알 수 있어요.
+6;2;5;위키에 캐릭터 이름으로 다른\\n플레이어를 찾는 법이 나와\\n있을 거예요.
+6;3;0;goldtooth가 피해자 무기를\\n어디선가 구했을 텐데요!
+6;3;1;goldtooth가 다른 플레이어한테서\\n피해자 무기를 샀네요!
+6;3;2;goldtooth가 Rare Burning Sword를\\n산 상대가 sefrgswrg니까, 그 사람\\n거래 내역을 봐야겠어요.
+6;4;0;sefrgswrg도 피해자 무기를\\n어디선가 구했을 거예요!
+6;4;1;sefrgswrg의 거래 내역에서\\n수상한 결제를 살펴봐요.
+6;4;2;<i>cashboys</i>라는 이름, 어디서\\n들어봤는데요! 길드였던 것 같아요...
+6;4;3;피해자도 길드 몇 군데에\\n들어 있었을 거예요!
+6;4;4;피해자 플레이어 이름으로\\n어느 길드에 들었는지 찾아봐요.
+6;4;5;피해자가 속했던 다른 길드\\n포럼을 훑어봐요. <i>cashboys</i>\\n포럼에 들어가는 방법이 나올지도\\n몰라요!
+6;4;6;<i>Lore Lovin' Merchants</i> 포럼은\\n시험을 통과하면 들어갈 수\\n있는 모양이에요!
+6;5;0;lsat.net 문제를 풀려면\\n위키를 뒤져봐야겠어요!
+6;5;1;Manchester Grasslands랑\\nManford Swamplands, 이름이\\n비슷하네요!
+6;5;2;Manford Swamplands의 적들이\\n계속 되살아나는 게 이상해요!\\n왜 그런 걸까요?
+6;5;3;Cursed 효과가 걸린 사람의\\n피해량, 무기, 직업을 알면 그\\n효과가 얼마나 더해주는지\\n계산할 수 있어요!
+6;5;4;상인이 하는 말 중에 zippity가\\n나오는 건 딱 한 번뿐이에요!
+6;5;5;상인의 말 중에 Dark Forest를\\n언급하는 게 몇 개 있어요.\\n그 말들의 공통점을 찾아봐요!
+6;6;0;Lore Lovin' Merchants 포럼 글\\n중에 다른 길드 가입 얘기가\\n있는지 봐요!
+6;6;1;<i>다른 길드 들어갈 만함?</i>이라는\\n제목의 글, 한번 볼 만해 보여요!
+6;6;2;피해자가 <i>cashboys</i> 포럼\\n비밀번호를 누군가에게 팔았네요!
+6;6;3;피해자의 payup 계정에 이 거래\\n내용이 더 자세히 남아 있을\\n거예요.
+6;7;0;이 길드는 프리미엄 회원에게\\n무기를 주네요! 어떤 무기인지\\n봐요.
+6;7;1;이 길드에서 프리미엄 회원이\\n되는 법을 알아낸 다음, cashboys의\\npayup 계정에서 그게 누군지\\n찾아봐요!
+6;7;2;피해자가 죽기 전에 cashboys\\n길드에서 중요한 선거가\\n있었어요!
+6;7;3;선거가 동기라면, 범인은 피해자와\\n다르게 투표한 사람이겠죠!
+6;7;4;지목할 사람이 사건 당시 피해자와\\n같은 장소에 있었는지 꼭\\n확인해요.
+6;7;5;전투 규칙 6번 덕분에 살해\\n시각에 각 플레이어가 어디\\n있었는지 알아낼 수 있어요.
+6;7;6;피해자가 죽기 직전에 Cursed Sword나\\nCursed Scythe로 마지막 피해를\\n입은 사람이라면, 그때 피해자와\\n같이 Dark Forest에 있었던 거예요.
+6;7;7;피해자가 받은 피해량으로\\n범인의 직업도 좁힐 수 있어요.
+6;7;8;범인은 프리미엄 회원인 음유시인이면서\\n살해 시각에 Dark Forest에\\n있었던 사람이에요.
+6;7;9;범인의 payup 거래 내역을 보면\\n이름을 알아낼 수 있을 거예요.
+7;1;0;증거에 나온 웹사이트에\\n들어가 봐요!
+7;2;0;lzu.edu를 둘러보면서 용의자를\\n찾는 데 도움이 될 단서가\\n있는지 봐요.
+7;2;1;lzu.edu에서 내려받을 수 있는\\n자료가 있는지 봐요. 용의자에게\\n한 발 더 다가갈 수 있을지도요.
+7;3;0;자료에 학생 이름은 없고\\n학번만 있네요.
+7;3;1;LZU 교원들은 학번으로 이름을\\n찾는 방법이 있을 거예요!
+7;3;2;<i>Teacher Login</i> 페이지 비밀번호를\\n정한 사람이 누군지 더 알아봐요.
+7;3;3;<i>Teacher Login</i> 페이지에\\n비밀번호를 정한 사람에 대한\\n단서가 있는 것 같아요!
+7;4;0;각 수업 페이지에 들어가서\\n<i>Teacher Login</i>에 언급된\\n교수에 대해 더 알아봐요.
+7;5;0;수업 페이지의 <i>reading</i>\\n부분에 나온 내용으로 Alan Douglas의\\n비밀번호를 알아내 봐요.
+7;5;1;Alan Douglas가 어디 살았는지는\\n그의 수업 페이지에서 찾을 수\\n있을 거예요.
+7;5;2;Alan Douglas가 LZU에서 언제부터\\n일했는지도 알아야 해요. 다른 수업\\n페이지도 뒤져봐야 할 거예요.
+7;6;0;역사 수업 reading 페이지에 나온\\n건물들, 어디서 본 것 같지 않아요?
+7;6;1;Alan Douglas가 지나가는 아치를\\n보면 LZU에서 언제부터 일했는지\\n알 수 있어요.
+7;6;2;아치가 공사 중인 것 같네요.
+7;6;3;Alan Douglas가 입은 옷을 보면\\nLZU에서 언제부터 일했는지\\n알 수 있을지도 몰라요!
+7;6;4;Douglas 모자에 있는 로고,\\n지금 LZU 로고랑 다른데요!
+7;7;0;이제 교원이 보는 자료를 전부\\n볼 수 있어요! 그래도 이 페이지에\\n뭔가 더 있을 것 같은데요!
+7;7;1;학생들 없을 때 교원들이 무슨\\n얘기를 하는지 궁금하네요!
+7;8;0;요즘 애들이 어떻게 문자하는지\\n알았으니, 이제 증거를 제대로\\n읽을 수 있을 거예요!
+7;8;1;용의자와 문자 상대가 어떤 수업을\\n들었는지 알면 후보를 좁힐 수\\n있어요!
+7;8;2;LZU에서 과제를 내주는 수업이\\n어디죠? 용의자 답안과 맞는 게\\n있을지도 몰라요!
+7;8;3;용의자가 왜 첫 페이지 얘기를\\n했을까요? "WYA"의 뜻과\\n관련이 있을 거예요!
+7;8;4;첫 페이지는 미술과 관련이\\n있을 것 같아요.
+7;8;5;용의자가 문자한 상대가 누군지\\n알아내면, 그 사람 시험 점수로\\n용의자를 찾을 수 있어요!
+8;1;0;증거에 나온 웹사이트들을\\n확인해 보는 게 좋겠어요!
+8;4;0;<i>bigleeks.net</i>에 있는 문서를\\n자세히 봐요! 그날 있었던 금융\\n사기와 관련이 있을지도 몰라요.
+8;4;1;<i>broker.com</i>은 주식 매수\\n거래를 하나도 빠짐없이 기록해\\n두는 것 같아요!
+8;4;2;유출 문서의 계획과 맞는 거래를\\n<i>broker.com</i>에서 찾으면 진범에\\n한 발 더 다가가는 거예요!
+8;4;3;LZPPP가 어느 회사에 투자하겠다고\\n했죠? 그걸 알면 살펴볼 거래\\n내역을 좁힐 수 있어요!
+8;4;4;LZPPP가 파산을 선언하기 전의\\n거래를 봐야 해요!
+8;4;5;LZPPP에서 나간 거래를 보세요.\\n범인들이 그 안에 있을 거예요!
+8;5;0;유출 문서가 말하는 요원들이\\nSuit & Tie의 주인들인 것\\n같아요!
+8;5;1;요원들 이름을 알아내면 수익을\\n어디로 보냈는지 알 수 있어요!
+8;5;2;요원 하나가 비행기 탄 사진을\\n올렸네요. 사진 속 단서로 그\\n요원이 누군지 알아낼 수 있을\\n거예요!
+8;5;3;비행 날짜는 이 세 가지로\\n알아낼 수 있어요:\\n1. 도착지\\n2. 바깥 날씨\\n3. 중계 중인 Big Ball 경기
+8;5;4;요원의 좌석은 이 세 가지로\\n찾을 수 있어요:\\n1. 기내에서의 위치\\n2. 테이블 위 음료\\n3. 앞자리에 사람이 있는지
+8;5;5;다른 요원은 도박을 즐기는 모양이에요.\\n올려둔 투자로 얼마를 벌었는지\\n계산하면 그 요원이 누군지\\n알 수 있어요!
+8;8;0;주소가 어디로 이어지는지\\n알아볼 수 있는 곳이 몇 군데\\n있어요!
+8;8;1;특정 주소의 건물주를 알아볼 수\\n있는 사이트가 두 군데 있어요.
+8;8;2;<i>realnimby.com</i>과 <i>broker.com</i>,\\n이 두 곳에 주소와 소유자가\\n같이 나와 있어요.
+8;8;3;<i>broker.com</i> 안내 페이지를 보면,\\n회사에 적힌 주소는 최대 주주의\\n주소라고 나와 있어요.
+8;8;4;193 Neptune Ave는 broker.com에\\n올라온 어느 회사의 주소예요!
+8;8;5;최대 주주를 찾으려면, 팔지 않고\\n가장 많이 사들인 거래자를\\n찾으면 돼요.
+8;9;0;PonziScam Inc.의 주인이\\n누군지 알아내야 해요!
+8;9;1;조카손자는 형제자매의 손주,\\n그러니까 조카의 자식이에요!
+9;1;0;증거에 나온 웹사이트들에\\n들어가 봐요!
+9;2;0;비밀번호를 재설정해\\n보는 것도 방법이에요!
+9;3;0;어머니의 결혼 전 성은 혼인\\n전에 쓰던 성을 말해요.
+9;3;1;첫 번째 보안 질문의 답은\\nponziscam.com에서 Zoran의\\n가계도를 보면 알 수 있어요!
+9;3;2;Zoran이 수의사였으니, 어릴 때\\n아끼던 동물이 있었을 거예요!
+9;3;3;나머지 보안 질문 두 개의 답은\\npetpalsclinic.com에서 찾아요.
+9;4;0;이제 이 비밀 조직을 이끄는\\n동물이 뭔지만 알아내면 돼요!
+9;4;1;이 동물이 뭘 먹고 무슨 일을\\n하는지 알아내면 정체를 밝힐 수\\n있어요!
+9;4;2;500미터 안에 병사 1000명\\n이상이 지키는 농장에서 그 동물이\\n먹는 걸 기르고 있어요.
+9;4;3;그 농장 작물을 먹는 동물이\\n여럿일 수도 있어요. 이것만으로는\\n정확히 짚어낼 수 없겠네요.
+9;4;4;그 동물이 어떤 소비재를 만들게\\n하려는지도 알아내야 해요.\\n회계와 제조 쪽 구인 공고를\\n살펴보세요!
+9;4;5;어떤 자동차 부품이 빼돌려지는지\\n알아내면, 그 부품으로 만들 수 있는\\n소비재가 뭔지 알 수 있어요!
+9;4;6;보고된 차량 판매량으로 예상되는\\n것보다 비용이 더 많이 든 부품을\\n계산하면, 어떤 부품이 빼돌려지는지\\n알 수 있어요.
