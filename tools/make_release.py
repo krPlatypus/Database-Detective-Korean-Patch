@@ -247,9 +247,9 @@ def publish(version, zips, digests):
     git("push", "origin", "main")
     git("push", "origin", tag)
 
+    # 본문은 매번 다시 쓴다. 다시 묶으면 sha256이 달라지므로 남겨 두면 어긋난다.
     notes = os.path.join(OUT_DIR, f"notes-{tag}.md")
-    if not os.path.exists(notes):
-        write_notes(notes, version, zips, digests)
+    write_notes(notes, version, zips, digests)
 
     # 태그를 밀면 워크플로가 먼저 초안을 만들어 둘 수 있다. 있으면 파일만 얹는다.
     exists = subprocess.run([gh, "release", "view", tag], cwd=ROOT,
@@ -270,6 +270,13 @@ def publish(version, zips, digests):
         print(result.stderr.strip())
         fail("Release에 올리지 못했습니다. 위 메시지를 보십시오.")
     print(f"  {result.stdout.strip()}")
+
+    if exists:
+        # 파일만 얹으면 본문에 적힌 sha256이 옛것으로 남는다. 본문도 새로 쓴다.
+        subprocess.run([gh, "release", "edit", tag, "--notes-file", notes],
+                       cwd=ROOT, capture_output=True, text=True,
+                       encoding="utf-8", errors="replace")
+
     print(f"\n  https://github.com/krPlatypus/Database-Detective-Korean-Patch/releases/tag/{tag}")
 
 
