@@ -266,6 +266,58 @@ def draw_text(image, entry):
     image.alpha_composite(layer, (int(cx - layer.width / 2), int(cy - layer.height / 2)))
 
 
+def draw_block(image, entry):
+    """상자 안에 문단을 흘려 넣는다. 설명서처럼 본문이 여러 줄인 경우에 쓴다.
+
+    단서 그림의 한 줄짜리 글씨와 달리, 정해진 폭 안에서 어절 단위로 줄을 바꾸고
+    줄 간격을 맞춰야 한다. 원본 조판을 그대로 흉내 내기보다 읽기 좋게 다시 짠다.
+    """
+    text = entry.get("text", "").strip()
+    if not text:
+        return
+
+    x1, y1, x2, y2 = entry["box"]
+    font = load_font(entry.get("font"), entry.get("size", 26), entry.get("font_index"))
+    colour = tuple(entry.get("color", [0, 0, 0]))
+    spacing = entry.get("line_spacing", 1.35)
+    indent = entry.get("indent", 0)
+
+    draw = ImageDraw.Draw(image)
+    width = x2 - x1
+
+    lines = []
+    for paragraph in text.split("\n"):
+        words = paragraph.split()
+        if not words:
+            lines.append("")
+            continue
+
+        current = ""
+        first = True
+        for word in words:
+            candidate = word if not current else current + " " + word
+            limit = width - (indent if first else 0)
+            if current and draw.textlength(candidate, font=font) > limit:
+                lines.append(current)
+                current = word
+                first = False
+            else:
+                current = candidate
+        if current:
+            lines.append(current)
+
+    step = int(entry.get("size", 26) * spacing)
+    y = y1
+    for i, line in enumerate(lines):
+        if y + step > y2 + step:   # 상자를 넘어가면 멈춘다
+            break
+        x = x1 + (indent if i == 0 else 0)
+        draw.text((x, y), line, font=font, fill=colour)
+        y += step
+
+    return len(lines), (y - y1)
+
+
 def build(name):
     source = os.path.join(SOURCE_DIR, name + ".png")
     spec_path = os.path.join(SPEC_DIR, name + ".json")
@@ -311,6 +363,10 @@ def build(name):
 
     for entry in spec.get("texts", []):
         draw_text(image, entry)
+
+    # 여러 줄짜리 본문. 정해진 폭 안에서 어절 단위로 줄을 바꿔 흘려 넣는다.
+    for entry in spec.get("blocks", []):
+        draw_block(image, entry)
 
     os.makedirs(OUT_DIR, exist_ok=True)
     image.convert("RGBA").save(os.path.join(OUT_DIR, name + ".png"))
