@@ -23,6 +23,10 @@
   "name": "subtitle",
   "source": "resources.assets:2350"
  },
+ "guilds__2352.txt": {
+  "name": "guilds",
+  "source": "resources.assets:2352"
+ },
  "correct__2354.txt": {
   "name": "correct",
   "source": "resources.assets:2354"

@@ -20,9 +20,14 @@ OUT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 KEEP_ORIGINAL = {
     "female-first-names", "male-first-names", "last-names", "science", "movies",
     "crops", "family-tree", "players", "player_descriptions", "profiles", "payup",
-    "broker-traders", "guilds", "economics", "squadrons", "philosophy", "foods",
+    "broker-traders", "economics", "squadrons", "philosophy", "foods",
     "animals", "car-parts", "hair-colors", "eye-colors", "farms", "movies_favs",
 }
+
+# guilds는 여기 있었으나 뺐다. 네 칸(코드;이름;소개;가입조건) 중 뒤 두 칸은
+# 길드 상세 화면에 찍히기만 하고 테이블에 들어가지 않는다(LoadGuildProfiles가
+# GuildProfile로 들고 있을 뿐이다). 앞 두 칸은 테이블 이름과 식별자가 되므로
+# 번역할 때 원문을 지켜야 한다.
 
 # TMP 내부 설정이거나 게임 텍스트가 아닌 것.
 SKIP = {
