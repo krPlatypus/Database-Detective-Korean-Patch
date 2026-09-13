@@ -3,20 +3,24 @@
 Steam 게임 *Database Detective* (HsuCorp)의 한글패치 및 입력 버그 수정.
 BepInEx 플러그인으로 동작하며 **게임 원본 파일은 수정하지 않는다.**
 
+화면 문구와 대사뿐 아니라 **사진 단서와 사용 설명서 23쪽도 그림째 다시 그려** 넣는다.
+
 ## 구성
 
 | 경로 | 내용 |
 |---|---|
 | `src/DDKoreanPatch/` | BepInEx 플러그인 (C#) |
-| `tools/` | 애셋 분석·텍스트 추출 스크립트 (Python) |
+| `tools/` | 애셋 분석·텍스트 추출·그림 제작 스크립트 (Python) |
 | `translation/` | 번역 작업 파일 (사람이 편집) |
-| `dist/` | 플러그인이 읽는 번역 번들 |
+| `translation/images/` | 그림 편집 사양 (JSON) |
+| `dist/` | 플러그인이 읽는 번들 — `translation.json`, `images/`, `fonts/`, `sounds/` |
 | `extracted/` | 추출 원본 (git 제외) |
 | `decompiled/` | 디컴파일 결과 (git 제외) |
 
 ## 게임 환경
 
 - Unity **6000.5.5f1**, 스크립팅 백엔드 **Mono**
+- BepInEx **5.4.23.5** + HarmonyX
 - 로컬라이제이션 프레임워크 없음 (영어 하드코딩)
 - 내장 폰트 전부 라틴 전용 — 한글 글리프 없음
 
@@ -40,13 +44,38 @@ Ctrl+Enter 제출이 멀쩡했던 것은 그쪽이 Input System의 `"Enter Query
 수정: 여러 줄 필드에서 `OnSubmit`을 건너뛰고, `'\r'`·`'\v'`를 `'\n'`으로 정규화한다.
 한 줄짜리 입력 필드(로그인, 검색창)는 건드리지 않는다.
 
+## 덧붙인 것
+
+번역만으로는 해결되지 않아 플러그인 쪽에서 따로 손본 것들. 전부 설정에서 끌 수 있다.
+
+| 기능 | 하는 일 |
+|---|---|
+| 말풍선 크기 다시 잡기 | 조수 말풍선은 **글자 수 × 15px**로 크기를 잡아 한글에서 잘렸다. TMP로 실제 너비를 재서 다시 잡는다 (`AssistantDialoguePatches`) |
+| 원본/번역 전환 버튼 | 사진 단서 창과 설명서에 붙는다. 원본 그림을 눈으로 대조할 수 있다 (`ClueImagePatches`, `ManualPatches`) |
+| HELP 커서 한글화 | 조수 위의 툴팁은 글자가 아니라 32×32 커서 텍스처다. 한글로 다시 그렸다 (`CursorPatches`) |
+| broker.com 화면 손질 | 웹사이트가 없는 회사는 **`웹사이트` 라벨째** 감추고, 라벨을 값의 첫 줄 베이스라인에 맞춘다 (`BrokerPagePatches`) |
+| 팝업 키로 닫기 | 알림·오류 팝업을 Esc나 Enter로 닫는다. 원래는 X 버튼뿐 (`PopupPatches`) |
+| 타건음 | 글자를 칠 때마다 짧은 소리를 낸다 (`TypingSound`) |
+| 장 미리보기 | 아직 못 간 장을 열어 번역을 확인한다 (`PreviewPatches`). 아래 참고 |
+
+### 장 미리보기
+
+`PreviewAllChapters = true`로 두면 조수에게 **`시간 여행.`**을 고를 때 나오는
+사건 목록에 모든 장이 나온다. 아직 풀지 않은 사건의 화면과 단서를 열어 볼 수 있다.
+
+`Save.GetMaxLevelUnlocked()`를 부풀리는 방식이라 **켜 둔 동안에는 진행이 저장되지 않는다.**
+실수로 세이브를 망치지 않도록 처음 켤 때 `SQLGame.save`를 백업해 둔다.
+번역 확인용이므로 평소에는 꺼 둘 것.
+
 ## 한글 폰트
 
 OS에 설치된 폰트를 `AtlasPopulationMode.DynamicOS`로 참조해 TMP 폴백에 건다.
 라틴 글자는 원래 폰트 모양을 유지하고 한글만 폴백에서 가져온다.
 글리프를 필요할 때 OS에서 가져오므로 **폰트 파일을 동봉하지 않아 재배포 라이선스 문제가 없다.**
 
-기본값은 맑은 고딕. 설정에서 굴림(`Gulim`)으로 바꾸면 게임의 Windows 95풍 UI와 더 잘 어울린다.
+기본값은 동봉한 **Neo둥근모**(`FontFile = neodgm.ttf`)다. `FontFile`이 비어 있으면
+OS에 설치된 `FontFamily` 폰트(기본 맑은 고딕)로 돌아간다. 굴림(`Gulim`)으로 바꾸면
+게임의 Windows 95풍 UI와 잘 어울린다.
 
 ## 동봉 폰트
 
@@ -59,8 +88,6 @@ OS에 설치된 폰트를 `AtlasPopulationMode.DynamicOS`로 참조해 TMP 폴�
 요즘 렌더링은 외곽선을 부드럽게 그려내고 TMP는 SDF로 한 번 더 다듬으므로
 같은 굴림 파일을 써도 그 느낌이 나지 않는다. 외곽선 자체가 계단 모양인
 픽셀 글꼴을 쓰면 SDF를 통과해도 결이 살아남는다.
-
-`FontFile`을 비우면 OS에 설치된 `FontFamily` 글꼴(기본 굴림)을 쓴다.
 
 ### 글꼴 바꾸기
 
@@ -106,31 +133,189 @@ python tools/build_sounds.py     # ffmpeg 필요
 
 ## 번역 작업 흐름
 
+### 글자
+
 ```sh
 python tools/extract_text.py      # 게임에서 텍스트 추출 -> extracted/
 python tools/make_templates.py    # 번역 템플릿 생성 -> translation/
 #   translation/ui.json           : UI 문자열 (원문 -> 번역). 값을 채운다.
+#   translation/dynamic.json      : 코드가 조립해 쓰는 문자열
 #   translation/textassets/*.txt  : 대사·힌트. 구분자를 두고 텍스트만 고친다.
 python tools/build_translation.py # dist/translation.json 으로 묶기
 ```
 
-빌드와 배포:
+화면에 찍히는 문자열이 코드 안에 박혀 있는 것도 많다. 생김새로 짐작하면 테이블 이름까지
+딸려 오므로, **호출 지점을 보고** 고른다 (`SetText`, `CreateQuestionAnswer`,
+`GetHelpWrapper`, `Launch*Popup` 등).
+
+```sh
+python tools/extract_code_strings.py     # Scripts.dll 문자열 후보
+python tools/extract_dialogue_strings.py # 호출 지점으로 거르기
+python tools/filter_code_strings.py      # 실제로 번역할 것만 남기기
+```
+
+### 그림
+
+사진 단서와 설명서는 텍스처라 글자를 바꿔 넣을 수 없다. **원본 그림에서 글자만 걷어내고
+그 자리에 한글을 얹어** 새 PNG를 만든다. 그림을 다시 그리지는 않는다.
+
+```sh
+python tools/extract_images.py                 # 단서 그림 -> extracted/images/
+python tools/extract_manual.py                 # 설명서 23쪽 -> extracted/images/manual/
+python tools/measure_image.py <이름> [--box …]  # 글줄이 놓인 자리·색을 잰다
+python tools/build_clue_images.py [이름 …]      # 사양대로 그려 dist/images/ 로
+python tools/build_cursor.py                   # HELP 커서 그림
+```
+
+`extract_images.py`는 같은 이름의 스프라이트를 여럿 뽑아 놓는다(`brochure_1__2.png` 등).
+그중 쓸 것을 골라 `extracted/images/clues/`에 정리해 두면 빌드가 거기서 읽는다.
+설명서는 이름이 규칙적이라(`8-3`) `extract_manual.py`가 바로 제자리에 뽑는다.
+
+편집 사양은 `translation/images/<이름>.json`에 둔다 (설명서는 `manual/` 아래).
+이름 없이 돌리면 전부 다시 만든다.
+
+| 키 | 하는 일 |
+|---|---|
+| `erase_fill` | 기본으로 덮을 색 |
+| `erase_boxes` | 네모를 통째로 덮는다. `[x1,y1,x2,y2]` 또는 `{"box": […], "fill": [r,g,b]}` |
+| `erase_colour_within` | 상자 안에서 **지정한 색에 가까운 화소만** 지운다. 글자가 기울었거나 그림과 얽혀 네모로 못 잡을 때 |
+| `erase_ink_within` | 상자 안에 **통째로 들어가는 잉크 덩어리만** 지운다. 화살표·동그라미는 상자 밖으로 뻗으므로 살아남는다 |
+| `texts` | 낱줄 글자. `at`, `align`(left/center/right), `valign`(top/middle), `size`, `font`, `weight`, `angle`, `color`, `line_gap` |
+| `blocks` | 상자 안에 어절 단위로 흘려 넣는 문단. `box`, `size`, `font`, `color`, `line_spacing`, `indent` |
+| `overlays` | 문단 **위에** 덧그리는 글자. 한 색으로 그려진 문단에서 키워드만 색을 바꿀 때 |
+
+`font`는 `gulim`, `gulimche`, `dotum`, `dotumche`, `batang`, `neodgm`, `mongtori`,
+`magic`(매직체), `pyunji`(편지체), `gungso`(궁서) 등을 이름으로 고른다.
+없는 이름이면 굴림으로 떨어진다. `weight`는 굵은 서체가 없는 글꼴에 획을 덧그려
+굵기를 흉내 낸다.
+
+빌드는 **문장을 말없이 잃지 않는다.** 상자에 다 못 담으면
+`N줄을 못 그렸다`, 넘치면 `상자를 Npx 넘쳤다`로 알려 준다. 이 두 줄이 뜨면
+글을 줄이거나 상자를 넓혀야 한다.
+
+```sh
+python tools/build_clue_images.py 8-1 | grep -E "못 그렸|넘쳤"
+```
+
+#### 이름이 겹치는 그림
+
+스프라이트 이름만으로는 구분되지 않는 경우가 있다. `victim`이라는 이름의 스프라이트가
+사건마다 다른 그림(512×512 지구본, 650×563 샌드위치)이었다. 파일 이름을
+`<이름>@<가로>x<세로>.png`로 두면 플러그인이 크기까지 맞춰 고른다.
+크기를 붙인 것을 먼저 찾고, 없으면 이름만으로 찾는다.
+
+#### 손대지 않은 그림
+
+글자가 없는 그림(인물 사진, 증언 아이콘)과 `security_footage`는 원본 그대로 둔다.
+`security_footage`의 벽 명패는 기울어진 데다 안쪽에 결이 있어, 네모로 덮으면 스티커를
+붙인 꼴이 되고 잉크만 지우면 자국이 남았다. 그 안의 시각 정보는 원래 번역 대상도 아니다.
+
+### 검사
+
+번역을 넣은 뒤 돌린다.
+
+```sh
+python tools/check_data_collisions.py  # 조회 대상 값과 겹치는 번역 찾기 (아래 참고)
+python tools/check_breaks.py           # 줄바꿈 표기가 온전한지
+python tools/rewrap_hints.py           # 힌트의 줄 수를 원문에 맞추기
+python tools/locate_text.py            # 번역한 문구가 게임 안 어느 쪽에 나오는지
+python tools/mark_skipped.py           # 일부러 안 옮긴 것을 이유와 함께 적어 두기
+```
+
+`locate_text.py`는 TMP 컴포넌트에서 부모를 타고 올라가 주소처럼 생긴 프리팹 이름을
+찾는다. 웹 화면은 프리팹 하나가 한 쪽이라 그 이름이 곧 주소다.
+결과는 `extracted/text_locations.json`에 쪽별로 모인다.
+번역을 눈으로 확인할 때 어디를 열어야 하는지 여기서 본다.
+
+일부러 남긴 것은 `translation/ui_keep_original.json`과
+`translation/code_strings_skipped.json`에 이유와 함께 적혀 있다.
+다음에 볼 때 "빠뜨린 것"과 구별하기 위해서다.
+
+### 빌드와 배포
 
 ```sh
 dotnet build src/DDKoreanPatch/DDKoreanPatch.csproj -c Release
-# DDKoreanPatch.dll 과 translation.json 을
-# <게임폴더>/BepInEx/plugins/DDKoreanPatch/ 에 복사
 ```
 
-### 번역하면 안 되는 것
+`<게임폴더>/BepInEx/plugins/DDKoreanPatch/` 에 아래를 넣는다.
+
+```
+DDKoreanPatch.dll
+translation.json      <- dist/translation.json
+images/               <- dist/images/*.png
+fonts/                <- dist/fonts/ (neodgm.ttf, LICENSE.txt)
+sounds/               <- dist/sounds/ (없으면 게임 내 소리를 쓴다)
+```
+
+그림과 폰트, 음원은 DLL이 읽기만 하므로 **바꿔 넣을 때 재빌드가 필요 없다.**
+
+플러그인은 켜질 때 패치한 메서드 수를 로그에 남긴다.
+`Plugin.cs`에서 `harmony.PatchAll(typeof(…))`을 클래스마다 **직접** 부르는 구조라,
+새 패치 클래스를 만들고 등록을 잊으면 아무 일도 일어나지 않는다.
+고친 게 반영되지 않으면 이 숫자부터 본다.
+
+```
+로드 완료. 메서드 18개 패치. EnterBehavior=Newline
+```
+
+## 번역하면 안 되는 것
 
 이 게임은 플레이어가 **SQL로 데이터를 조회**해 사건을 푼다.
 조회 대상 데이터를 번역하면 쿼리가 통하지 않아 게임이 깨진다.
 
 - `tools/extract_text.py`의 `KEEP_ORIGINAL`에 해당 TextAsset을 분류해 두었다
-  (이름 목록, 영화 제목, 작물, 프로필 등 22개).
+  (이름 목록, 영화 제목, 작물, 프로필 등 20개).
 - **테이블 이름과 컬럼 이름도 원문을 유지해야 한다.** UI 문자열 중에도
-  소문자 `exit`, `settings`처럼 실제 테이블명인 것이 섞여 있으니 주의.
+  소문자 `exit`, `settings`, `search`, `arrest`, `clues`, `manual`, `messages`,
+  `notepad`, `music player`, `web browser`처럼 실제 테이블명인 것이 섞여 있다.
+  설명서 그림에 적힌 것도 화면의 아이콘 이름과 **한 글자도 다르면 안 된다.**
+- 플레이어가 쿼리에 적어 넣는 값도 마찬가지다. 위키의 `Slimehead`, `Rare`,
+  `Burning`, `Sword`는 설명글처럼 보이지만 `damage_log.character_damaged`,
+  `inventory.weapon_name`의 값이다. `lsat.cs`는 입력을 `"Corrupted"`와 그대로 비교한다.
+
+### 파일 단위로 가르면 놓친다
+
+`guilds`, `broker-traders`, `profiles`는 한동안 통째로 `KEEP_ORIGINAL`에 있었다.
+그런데 이 셋은 **칸마다 쓰임이 다르다.** 사람이 읽는 소개글 칸은 화면에 찍히기만 하고
+테이블에 들어가지 않는다. 지금은 화면용 칸만 옮기고 나머지는 그대로 둔다.
+자세한 내용은 `extract_text.py`의 주석에 적어 두었다.
+
+### 자동 검사
+
+같은 사고를 되풀이하지 않으려고 만들었다.
+
+```sh
+python tools/check_data_collisions.py
+```
+
+C# 문자열 리터럴을 전부 훑어, 번역한 `ui.json` 키가 그 안에 들어 있으면 알린다.
+`$"Slimehead #{id}"` 같은 조립 문자열까지 잡는다. 사람이 확인한 안전한 낱말은
+스크립트 안의 `REVIEWED`에 적어 둔다. 지금은 0건.
+
+## 번역 어투
+
+| 대상 | 어투 |
+|---|---|
+| 형사(플레이어)·독백 | 반말 위주의 하드보일드 |
+| 조수 | 해요체 |
+| 사용 설명서 | 합쇼체. 짧은 평서문, 현재형, `아십니까?` 같은 설의법 |
+
+고유명사는 영문 그대로 둔다 (`Zoran`, `Los Zorangeles`, `CopOS`).
+SQL 키워드와 테이블·컬럼 이름도 옮기지 않는다.
+
+설명서는 특히 **명사형 종결(`~하는 것.`)로 끝내지 않고**, 쉼표로 길게 이은 문장을
+쓰지 않는다. 옛날 번역체로 기울기 쉬운 자리다.
+
+## 번역 현황
+
+| 갈래 | 상태 |
+|---|---|
+| UI 문자열 (`ui.json`) | 886개 중 752개. 남긴 134개는 테이블명 등 일부러 둔 것 |
+| 코드 조립 문자열 (`dynamic.json`) | 215개 |
+| TextAsset (대사·힌트·웹페이지) | 41개 |
+| 사진 단서 그림 | 21장 (+ 글자 없는 그림은 원본 유지) |
+| 사용 설명서 | **23쪽 전부** |
+| 커서 | HELP 커서 1개 |
 
 ## 설정
 
@@ -138,10 +323,32 @@ dotnet build src/DDKoreanPatch/DDKoreanPatch.csproj -c Release
 
 | 항목 | 기본값 | 설명 |
 |---|---|---|
+| **Input** | | |
 | `EnterBehavior` | `Newline` | `Newline`=Enter·Shift+Enter 줄바꿈, 제출은 Ctrl+Enter / `Submit`=Enter 제출, Shift+Enter 줄바꿈 |
+| `ClosePopupWithKey` | `true` | 팝업을 Esc·Enter로 닫기 |
+| **Font** | | |
 | `EnableKoreanFont` | `true` | 한글 폰트 폴백 주입 |
+| `FontFile` | `neodgm.ttf` | 플러그인 `fonts/` 안의 폰트 파일. 있으면 `FontFamily`보다 먼저 쓴다 |
 | `FontFamily` | `Malgun Gothic` | 한글 글리프를 가져올 OS 폰트 |
+| `FontStyle` | `Regular` | 폰트 스타일 |
+| `FontPointSize` | `64` | 폰트 샘플링 크기 |
+| `FontAtlasPadding` | `4` | 글자 외곽 여백. 픽셀 글꼴은 작을수록 또렷하다 (보통 글꼴은 9) |
+| `FontScale` | `0.95` | 폴백 글리프 크기 보정 |
+| `FontBaselineOffset` | `0.09` | 폴백 글리프 세로 위치 보정 |
+| `ModernHangulLineBreaking` | `true` | 한글을 어절 단위로 끊는다 |
+| **Translation** | | |
 | `EnableTranslation` | `true` | 번역 적용 |
+| `ShrinkTextToFit` | `true` | 번역문이 넘칠 때만 글자를 조금 줄인다 |
+| `ShrinkFloor` | `0.72` | 줄일 수 있는 하한 |
+| `FitAssistantBubble` | `true` | 조수 말풍선 크기를 번역문 너비에 맞춰 다시 잡는다 |
+| `EnableClueImageToggle` | `true` | 단서 창·설명서에 원본/번역 전환 버튼 |
+| **Sound** | | |
+| `EnableTypingSound` | `true` | 타건음 |
+| `TypingVolume` | `0.22` | 타건음 크기 |
+| `TypingClip` | `click down` | 쓸 소리 이름 (`sounds/` 폴더가 비었을 때) |
+| **Preview** | | |
+| `PreviewAllChapters` | `false` | 모든 장을 열어 번역 확인. **켜면 진행이 저장되지 않는다** |
+| **Debug** | | |
 | `VerboseInputLog` | `false` | 입력 진단 로그 |
 
 ## 제거
@@ -152,8 +359,13 @@ dotnet build src/DDKoreanPatch/DDKoreanPatch.csproj -c Release
 winhttp.dll  doorstop_config.ini  .doorstop_version  changelog.txt  BepInEx/
 ```
 
+`PreviewAllChapters`를 켜 본 적이 있다면 백업해 둔 `SQLGame.save`도 확인할 것.
+
 ## 배포 시 유의
 
 `translation/`과 `extracted/`에는 게임의 원문 텍스트가 그대로 들어 있다.
 이 저장소를 공개하거나 패치를 배포할 때는 원문 대사를 그대로 싣지 않도록 주의할 것.
 게임 본편 애셋은 어떤 형태로도 포함하지 않는다.
+
+`dist/images/`의 PNG는 **원본 그림 위에 글자만 바꾼 것**이라 게임 애셋의 2차 저작물이다.
+공개 저장소에 올리지 말고, 패치 배포물에만 넣는다.
