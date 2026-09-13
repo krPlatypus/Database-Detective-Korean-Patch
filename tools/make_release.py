@@ -203,6 +203,21 @@ def pack(root, zip_path):
     return digest
 
 
+def find_gh():
+    """gh를 찾는다. 갓 깐 직후에는 PATH에 아직 안 잡혀 있을 수 있다."""
+    found = shutil.which("gh")
+    if found:
+        return found
+    for candidate in (
+        r"C:\Program Files\GitHub CLI\gh.exe",
+        r"C:\Program Files (x86)\GitHub CLI\gh.exe",
+        os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\WinGet\Links\gh.exe"),
+    ):
+        if os.path.exists(candidate):
+            return candidate
+    return None
+
+
 def git(*args, check=True):
     result = subprocess.run(["git"] + list(args), cwd=ROOT, capture_output=True, text=True,
                             encoding="utf-8", errors="replace")
@@ -217,7 +232,8 @@ def publish(version, zips, digests):
     if git("status", "--porcelain"):
         fail("고치다 만 것이 남아 있습니다. 커밋하고 다시 하십시오.")
 
-    if shutil.which("gh") is None:
+    gh = find_gh()
+    if gh is None:
         print("\n  gh(GitHub CLI)가 없어 Release는 만들지 못했습니다.")
         print("  설치: winget install --id GitHub.cli")
         print(f"  또는 아래에서 {tag} 태그로 직접 올리십시오.")
@@ -236,16 +252,16 @@ def publish(version, zips, digests):
         write_notes(notes, version, zips, digests)
 
     # 태그를 밀면 워크플로가 먼저 초안을 만들어 둘 수 있다. 있으면 파일만 얹는다.
-    exists = subprocess.run(["gh", "release", "view", tag], cwd=ROOT,
+    exists = subprocess.run([gh, "release", "view", tag], cwd=ROOT,
                             capture_output=True, text=True,
                             encoding="utf-8", errors="replace").returncode == 0
 
     if exists:
         print(f"  Release {tag}가 이미 있어 파일만 올립니다")
-        command = ["gh", "release", "upload", tag] + zips + ["--clobber"]
+        command = [gh, "release", "upload", tag] + zips + ["--clobber"]
     else:
         print(f"  Release {tag} 만드는 중")
-        command = (["gh", "release", "create", tag] + zips
+        command = ([gh, "release", "create", tag] + zips
                    + ["--title", f"한글패치 {tag}", "--notes-file", notes])
 
     result = subprocess.run(command, cwd=ROOT, capture_output=True, text=True,
