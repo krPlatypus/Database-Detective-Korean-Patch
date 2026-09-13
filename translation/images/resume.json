@@ -1,0 +1,578 @@
+{
+ "_comment": "9장 Zoran PonziScam의 이력서. 가로줄과 이름, 주소, 전화번호는 그대로 두고 직함과 본문만 옮긴다.",
+ "_keep_note": "이름, 주소, 전화번호, 회사 이름(PonziScam, Pet Pals Clinic), 주소(ponziscam.com, petpalsclinic.com), 학교 이름, 연도는 사람을 가려내는 값이라 손대지 않는다. 오른쪽 칸을 통째로 지우고 다시 찍으므로 회사 이름과 주소도 원문 그대로 다시 적는다.",
+ "_font_note": "원본이 세리프라 바탕체로 얹는다. 라틴 글자도 같은 글꼴로 나가 결이 이어진다.",
+ "erase_fill": [
+  255,
+  255,
+  255
+ ],
+ "erase_boxes": [
+  {
+   "_note": "전화번호 앞 라벨. 번호는 다시 찍는다.",
+   "box": [
+    565,
+    50,
+    790,
+    103
+   ]
+  },
+  {
+   "_note": "CAREER SUMMARY 제목. 위아래 가로줄은 남긴다.",
+   "box": [
+    260,
+    115,
+    535,
+    146
+   ]
+  },
+  {
+   "_note": "요약 두 줄",
+   "box": [
+    40,
+    160,
+    795,
+    222
+   ]
+  },
+  {
+   "_note": "PROFESSIONAL EXPERIENCE 제목",
+   "box": [
+    200,
+    235,
+    600,
+    265
+   ]
+  },
+  {
+   "_note": "경력 오른쪽 칸 전체. 왼쪽의 연도와 지명은 남긴다.",
+   "box": [
+    218,
+    283,
+    795,
+    806
+   ]
+  },
+  {
+   "_note": "1940 - present의 present만",
+   "box": [
+    100,
+    288,
+    200,
+    315
+   ]
+  },
+  {
+   "_note": "EDUCATION 제목",
+   "box": [
+    300,
+    823,
+    478,
+    853
+   ]
+  },
+  {
+   "_note": "학력 세 줄",
+   "box": [
+    40,
+    868,
+    795,
+    956
+   ]
+  }
+ ],
+ "texts": [
+  {
+   "text": "집:",
+   "at": [
+    570,
+    64
+   ],
+   "align": "left",
+   "size": 23,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "(917)-636-1742",
+   "at": [
+    782,
+    64
+   ],
+   "align": "right",
+   "size": 23,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "사무실:",
+   "at": [
+    570,
+    88
+   ],
+   "align": "left",
+   "size": 23,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "(917)-982-7473",
+   "at": [
+    782,
+    88
+   ],
+   "align": "right",
+   "size": 23,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "경력 요약",
+   "at": [
+    395,
+    129
+   ],
+   "size": 31,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "경영진으로 오랜 경험을 쌓은 검증된 리더. 여러 종(種)이 일상에서",
+   "at": [
+    47,
+    177
+   ],
+   "align": "left",
+   "size": 23,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "무엇을 필요로 하는지 깊이 이해하고 있음.",
+   "at": [
+    47,
+    202
+   ],
+   "align": "left",
+   "size": 23,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "경력 사항",
+   "at": [
+    399,
+    249
+   ],
+   "size": 31,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "현재",
+   "at": [
+    104,
+    301
+   ],
+   "align": "left",
+   "size": 23,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "PonziScam — ",
+   "at": [
+    226,
+    301
+   ],
+   "align": "left",
+   "size": 28,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "ponziscam.com",
+   "at": [
+    422,
+    301
+   ],
+   "align": "left",
+   "size": 24,
+   "font": "batang",
+   "color": [
+    217,
+    47,
+    99
+   ]
+  },
+  {
+   "text": "최고경영자 (1985 – 현재)",
+   "at": [
+    226,
+    331
+   ],
+   "align": "left",
+   "size": 28,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "• 세계 최대 투자 회사 중 하나를 이끌며 운영 규모를",
+   "at": [
+    249,
+    360
+   ],
+   "align": "left",
+   "size": 23,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "12% 넓힘",
+   "at": [
+    262,
+    385
+   ],
+   "align": "left",
+   "size": 23,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "최고경영자의 아들 (1940 – 1985)",
+   "at": [
+    226,
+    416
+   ],
+   "align": "left",
+   "size": 28,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "• 다른 신생아들보다 30% 더 효율적으로 산도를",
+   "at": [
+    249,
+    447
+   ],
+   "align": "left",
+   "size": 23,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "빠져나옴",
+   "at": [
+    262,
+    471
+   ],
+   "align": "left",
+   "size": 23,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "• 또래의 99.9%보다 복잡한 첫 낱말을 말함",
+   "at": [
+    249,
+    496
+   ],
+   "align": "left",
+   "size": 23,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "(“현상학”)",
+   "at": [
+    262,
+    520
+   ],
+   "align": "left",
+   "size": 23,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "• 가족 내 승계 불안을 300% 줄임",
+   "at": [
+    249,
+    545
+   ],
+   "align": "left",
+   "size": 23,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "Pet Pals Clinic — ",
+   "at": [
+    226,
+    604
+   ],
+   "align": "left",
+   "size": 28,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "petpalsclinic.com",
+   "at": [
+    471,
+    604
+   ],
+   "align": "left",
+   "size": 24,
+   "font": "batang",
+   "color": [
+    217,
+    47,
+    99
+   ]
+  },
+  {
+   "text": "수의사 (1979 –1985)",
+   "at": [
+    226,
+    634
+   ],
+   "align": "left",
+   "size": 28,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "• 수많은 동물의 죽음을 막아 기대 수명을 최소",
+   "at": [
+    249,
+    663
+   ],
+   "align": "left",
+   "size": 23,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "10,000% 늘림 (아마 훨씬 더)",
+   "at": [
+    262,
+    687
+   ],
+   "align": "left",
+   "size": 23,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "• 병원 웹사이트에 안내문을 올려 동물 건강에 대한",
+   "at": [
+    249,
+    712
+   ],
+   "align": "left",
+   "size": 23,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "대중의 이해를 높임. 당신의 종을 위한 것도 있음.",
+   "at": [
+    262,
+    736
+   ],
+   "align": "left",
+   "size": 23,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "• 일을 너무 잘해서 사람을 치료하게 해준 적도 있음!",
+   "at": [
+    249,
+    785
+   ],
+   "align": "left",
+   "size": 23,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "학력",
+   "at": [
+    388,
+    837
+   ],
+   "size": 31,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "SSS Academy for Gifted Humans",
+   "at": [
+    45,
+    886
+   ],
+   "align": "left",
+   "size": 28,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "생물학 학사",
+   "at": [
+    45,
+    912
+   ],
+   "align": "left",
+   "size": 25,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "– 1975년 6월",
+   "at": [
+    280,
+    912
+   ],
+   "align": "left",
+   "size": 25,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  },
+  {
+   "text": "우수 학업 똑똑한 인간상 (1975)",
+   "at": [
+    45,
+    938
+   ],
+   "align": "left",
+   "size": 21,
+   "font": "batang",
+   "color": [
+    9,
+    9,
+    9
+   ]
+  }
+ ]
+}
