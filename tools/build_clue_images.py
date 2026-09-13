@@ -27,7 +27,10 @@ from collections import deque
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SOURCE_DIR = os.path.join(ROOT, "extracted", "images", "clues")
+SOURCE_DIRS = [
+    os.path.join(ROOT, "extracted", "images", "clues"),
+    os.path.join(ROOT, "extracted", "images", "manual"),
+]
 SPEC_DIR = os.path.join(ROOT, "translation", "images")
 OUT_DIR = os.path.join(ROOT, "dist", "images")
 
@@ -319,11 +322,17 @@ def draw_block(image, entry):
 
 
 def build(name):
-    source = os.path.join(SOURCE_DIR, name + ".png")
-    spec_path = os.path.join(SPEC_DIR, name + ".json")
+    source = next((os.path.join(d, name + ".png")
+                   for d in SOURCE_DIRS
+                   if os.path.exists(os.path.join(d, name + ".png"))), None)
+    spec_path = next((p for p in (
+        os.path.join(SPEC_DIR, name + ".json"),
+        os.path.join(SPEC_DIR, "manual", name + ".json"),
+    ) if os.path.exists(p)), os.path.join(SPEC_DIR, name + ".json"))
 
-    if not os.path.exists(source):
-        return f"원본 없음: {source}"
+    if source is None:
+        return f"원본 없음: {name}.png"
+
     if not os.path.exists(spec_path):
         return f"사양 없음: {spec_path}"
 
@@ -336,12 +345,20 @@ def build(name):
 
     holes = []
 
-    # 네모 통째로 지우기
-    for box in spec.get("erase_boxes", []):
-        x1, y1, x2, y2 = box
-        for y in range(max(0, y1), min(image.height, y2)):
-            for x in range(max(0, x1), min(image.width, x2)):
-                holes.append((x, y))
+    # 배경이 단색인 문서 페이지는 그 색으로 덮는 편이 낫다.
+    # 주변 색으로 메우는 방식은 상자 경계에 원본 글자가 걸쳐 있을 때
+    # 그 검은색을 안쪽으로 번지게 해 세로줄 자국을 남긴다.
+    flat = spec.get("erase_fill")
+    if flat is not None:
+        painter = ImageDraw.Draw(image)
+        for box in spec.get("erase_boxes", []):
+            painter.rectangle(box, fill=tuple(flat))
+    else:
+        for box in spec.get("erase_boxes", []):
+            x1, y1, x2, y2 = box
+            for y in range(max(0, y1), min(image.height, y2)):
+                for x in range(max(0, x1), min(image.width, x2)):
+                    holes.append((x, y))
 
     # 영역 안에 완전히 들어가는 잉크 덩어리만 지우기
     regions = spec.get("erase_ink_within", [])
@@ -378,7 +395,11 @@ def main():
         print(f"사양 폴더가 없습니다: {SPEC_DIR}")
         return
 
-    names = sorted(os.path.splitext(f)[0] for f in os.listdir(SPEC_DIR) if f.endswith(".json"))
+    names = []
+    for folder in (SPEC_DIR, os.path.join(SPEC_DIR, "manual")):
+        if os.path.isdir(folder):
+            names += [os.path.splitext(f)[0] for f in os.listdir(folder) if f.endswith(".json")]
+    names = sorted(set(names))
     if len(sys.argv) > 1:
         names = [n for n in names if n in sys.argv[1:]]
 
