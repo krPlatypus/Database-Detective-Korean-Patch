@@ -299,10 +299,7 @@ def write_notes(path, version, zips, digests):
         lines.append(f"- **{kind}** — `{name}`")
         lines.append(f"  - sha256 `{digest}`")
     lines += ["", "압축을 풀어 게임 폴더(copOS.exe가 있는 곳)에 덮어쓰면 됩니다.",
-              "자세한 것은 압축 파일 안의 `읽어주세요.txt`를 보십시오.", "",
-              "`translation-sheet.csv`에는 원문과 지금 번역이 나란히 들어 있습니다.",
-              "어색한 곳을 보시면 [이슈](https://github.com/krPlatypus/"
-              "Database-Detective-Korean-Patch/issues)로 알려 주십시오."]
+              "자세한 것은 압축 파일 안의 `읽어주세요.txt`를 보십시오."]
 
     with io.open(path, "w", encoding="utf-8") as f:
         f.write("\n".join(lines) + "\n")
@@ -341,19 +338,6 @@ def main():
         zips.append(path)
 
     shutil.rmtree(os.path.join(OUT_DIR, "_staging"), ignore_errors=True)
-
-    # 번역 대조표도 함께 올린다. 제안을 받으려면 사람이 읽을 수 있어야 한다.
-    sheet = os.path.join(OUT_DIR, "translation-sheet.csv")
-    result = subprocess.run([sys.executable, os.path.join(ROOT, "tools", "export_sheet.py"),
-                             "--out", sheet],
-                            cwd=ROOT, capture_output=True, text=True,
-                            encoding="utf-8", errors="replace")
-    if result.returncode == 0 and os.path.exists(sheet):
-        print(f"  translation-sheet.csv  ({os.path.getsize(sheet) / 1024:.0f} KB)")
-        zips.append(sheet)
-    else:
-        print("  (!) 번역 대조표를 만들지 못해 빼고 갑니다.")
-        print(f"      {result.stderr.strip()[:200]}")
 
     if args.publish:
         publish(args.version, zips, digests)

@@ -8,9 +8,6 @@ body:
       value: |
         고맙습니다. 어디가 어색한지만 알려 주셔도 됩니다. 아래를 다 채우지 않으셔도 괜찮습니다.
 
-        번역 전체를 표로 보시려면 Release에 붙어 있는 `translation-sheet.csv`를 받으십시오.
-        원문과 지금 번역이 나란히 들어 있습니다.
-
   - type: textarea
     id: where
     attributes:
