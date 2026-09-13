@@ -1,0 +1,19 @@
+{
+ "_comment": "6장 용의자가 남긴 게임 화면 사진. 게임 안의 게임이라 이 화면에 뜨는 말도 우리가 이미 옮긴 것과 같은 말로 맞춘다.",
+
+ "_keep_note": "바탕화면 아이콘 이름(exit, clues, web browser)은 실제 테이블 이름이고, xCalibur32는 플레이어 이름, newhampshire.wiki/dying은 주소, The Legends of New Hampshire는 게임 제목이라 모두 그대로 둔다.",
+
+ "erase_boxes": [
+  { "_note": "YOU DIED", "box": [295, 288, 792, 374], "fill": [0, 0, 0] },
+  { "_note": "브라우저 제목 표시줄", "box": [508, 414, 622, 436], "fill": [0, 0, 128] },
+  { "_note": "Guides: Dying 제목. 아래 가로줄은 남긴다.", "box": [525, 490, 792, 532], "fill": [212, 243, 217] },
+  { "_note": "본문 첫 줄. 사진이 여기서 잘려 있어 원본도 글자가 반쯤 잘린다.", "box": [528, 540, 795, 558], "fill": [212, 243, 217] }
+ ],
+
+ "texts": [
+  { "text": "당신은 죽었습니다", "at": [541, 330], "size": 62, "font": "batang", "color": [136, 0, 0] },
+  { "text": "웹 브라우저", "at": [512, 425], "align": "left", "size": 18, "font": "gulim", "color": [255, 255, 255] },
+  { "text": "공략: 죽음", "at": [529, 511], "align": "left", "size": 34, "font": "batang", "color": [0, 0, 0] },
+  { "text": "죽는 게 좋은 일은 아니다", "at": [531, 551], "align": "left", "size": 25, "font": "gulim", "color": [28, 33, 29] }
+ ]
+}
