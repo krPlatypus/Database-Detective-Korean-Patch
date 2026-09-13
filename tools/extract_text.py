@@ -19,15 +19,25 @@ OUT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 # SQL 쿼리 대상 데이터. 번역하면 게임이 깨진다.
 KEEP_ORIGINAL = {
     "female-first-names", "male-first-names", "last-names", "science", "movies",
-    "crops", "family-tree", "players", "player_descriptions", "profiles", "payup",
-    "broker-traders", "economics", "squadrons", "philosophy", "foods",
+    "crops", "family-tree", "players", "player_descriptions", "payup",
+    "economics", "squadrons", "philosophy", "foods",
     "animals", "car-parts", "hair-colors", "eye-colors", "farms", "movies_favs",
 }
 
-# guilds는 여기 있었으나 뺐다. 네 칸(코드;이름;소개;가입조건) 중 뒤 두 칸은
-# 길드 상세 화면에 찍히기만 하고 테이블에 들어가지 않는다(LoadGuildProfiles가
-# GuildProfile로 들고 있을 뿐이다). 앞 두 칸은 테이블 이름과 식별자가 되므로
-# 번역할 때 원문을 지켜야 한다.
+# 아래 셋은 여기 있었으나 뺐다. 칸 전체가 조회 대상인 줄 알았는데, 사람이 읽는
+# 소개글 칸은 화면에 찍히기만 하고 테이블에 들어가지 않았다. 칸마다 쓰임이
+# 달라 파일 단위로 가르면 놓친다.
+#
+#   guilds          코드;이름;소개;가입조건
+#                   뒤 두 칸만 화면용. LoadGuildProfiles가 GuildProfile로 들고 있다.
+#   broker-traders  회사명;주소;소개
+#                   소개만 화면용. broker_search가 bio.text에 그대로 넣는다.
+#   profiles        아이디;소개;사진;영화;평점;후기
+#                   소개와 후기만 화면용. LoadProfileDownloads가 이 둘을 버리고
+#                   (title, rating)만 reviews 테이블에 넣는다.
+#
+# 나머지 칸(코드, 회사명, 아이디, 영화 제목, 평점)은 플레이어가 쿼리에 적는
+# 값이므로 번역할 때 원문을 지켜야 한다.
 
 # TMP 내부 설정이거나 게임 텍스트가 아닌 것.
 SKIP = {
