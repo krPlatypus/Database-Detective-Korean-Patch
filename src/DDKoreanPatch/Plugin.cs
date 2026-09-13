@@ -36,6 +36,8 @@ namespace DDKoreanPatch
         internal static ConfigEntry<float> ShrinkFloor;
         internal static ConfigEntry<bool> FitAssistantBubble;
 
+        internal static ConfigEntry<bool> PreviewAllChapters;
+
         internal static ConfigEntry<bool> ClosePopupWithKey;
         internal static ConfigEntry<bool> EnableTypingSound;
         internal static ConfigEntry<float> TypingVolume;
@@ -168,6 +170,17 @@ namespace DDKoreanPatch
                 + "게임은 말풍선을 글자 수로 재는데, 한글은 라틴 글자보다 넓어 "
                 + "상자가 좁게 잡히고 글자가 잘리거나 질문 버튼과 겹칩니다.");
 
+            PreviewAllChapters = Config.Bind(
+                "Preview",
+                "PreviewAllChapters",
+                false,
+                "번역 확인용입니다. 조수에게 '시간 여행.'을 고르면 나오는 사건 목록에 "
+                + "모든 사건이 뜨게 해, 아직 못 간 장의 화면을 미리 볼 수 있습니다. "
+                + "켜 두는 동안에는 사건을 풀어도 진행도가 오르지 않습니다. "
+                + "미리 본 것이 진짜 진행으로 남지 않게 하려는 것이니, "
+                + "확인이 끝나면 다시 꺼 주세요. 켤 때 저장 파일 사본을 "
+                + "SQLGame.save.backup으로 떠 둡니다.");
+
             ClosePopupWithKey = Config.Bind(
                 "Input",
                 "ClosePopupWithKey",
@@ -210,6 +223,12 @@ namespace DDKoreanPatch
             Harmony harmony = new Harmony(PluginGuid);
             harmony.PatchAll(typeof(InputFieldPatches));
             harmony.PatchAll(typeof(PopupPatches));
+
+            if (PreviewAllChapters.Value)
+            {
+                PreviewPatches.BackUpSave();
+                harmony.PatchAll(typeof(PreviewPatches));
+            }
 
             if (EnableTypingSound.Value)
             {
