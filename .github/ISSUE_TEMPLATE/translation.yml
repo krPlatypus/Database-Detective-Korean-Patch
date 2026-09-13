@@ -1,0 +1,52 @@
+name: 번역이 어색해요
+description: 말투나 낱말이 어색한 곳, 뜻이 틀린 곳을 알려 주십시오.
+title: "[번역] "
+labels: ["번역"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        고맙습니다. 어디가 어색한지만 알려 주셔도 됩니다. 아래를 다 채우지 않으셔도 괜찮습니다.
+
+        번역 전체를 표로 보시려면 Release에 붙어 있는 `translation-sheet.csv`를 받으십시오.
+        원문과 지금 번역이 나란히 들어 있습니다.
+
+  - type: textarea
+    id: where
+    attributes:
+      label: 어디에서 보셨습니까
+      description: 화면 이름이나 상황을 적어 주십시오. 스크린샷을 붙여 주시면 가장 빠릅니다.
+      placeholder: |
+        예) 3장에서 조수한테 힌트 물어봤을 때
+        예) newhampshire.wiki/enemies 페이지
+        예) 사용 설명서 5장 2쪽
+    validations:
+      required: true
+
+  - type: textarea
+    id: current
+    attributes:
+      label: 지금 나오는 번역
+      description: 보이는 그대로 옮겨 적어 주십시오.
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: 이렇게 하면 어떨까요
+      description: 떠오르는 게 없으시면 비워 두셔도 됩니다. 어색하다는 것만으로 충분합니다.
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        **먼저 봐 주십시오.** 아래는 일부러 원문으로 둔 것이라 번역하지 않습니다.
+
+        - 테이블 이름, 컬럼 이름 (`people`, `first_name` 같은 것)
+        - SQL 키워드 (`SELECT`, `JOIN` ...)
+        - 인물·회사·지명 등 고유명사
+        - 쿼리에 그대로 적어 넣는 값 (`Slimehead`, `Corrupted` 같은 것)
+
+        옮기면 쿼리가 통하지 않아 게임이 깨집니다.
+        말투 기준은 [translation/STYLE.md](../blob/main/translation/STYLE.md)에 적어 두었습니다.

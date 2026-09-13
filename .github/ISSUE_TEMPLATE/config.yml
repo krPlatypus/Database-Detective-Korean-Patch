@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 번역 전체를 표로 보기
+    url: https://github.com/krPlatypus/Database-Detective-Korean-Patch/releases/latest
+    about: Release에 붙은 translation-sheet.csv에 원문과 지금 번역이 나란히 들어 있습니다.
+  - name: 번역 방침
+    url: https://github.com/krPlatypus/Database-Detective-Korean-Patch/blob/main/translation/STYLE.md
+    about: 어떤 말투로 옮기고 무엇을 원문으로 두는지 적어 두었습니다.

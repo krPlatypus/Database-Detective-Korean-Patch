@@ -1,0 +1,43 @@
+name: 패치가 안 돌아요
+description: 깔리지 않거나, 글자가 깨지거나, 게임이 멈추는 경우
+title: "[오류] "
+labels: ["오류"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: 무슨 일이 있었습니까
+      placeholder: |
+        예) 압축을 풀어 넣었는데 그대로 영어로 나옵니다
+        예) 설명서를 열면 글자가 네모(□)로 보입니다
+        예) 5장 단서 창을 열면 게임이 멈춥니다
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: 패치 버전
+      description: 받으신 압축 파일 이름에 적혀 있습니다.
+      placeholder: v1.0.0
+    validations:
+      required: true
+
+  - type: textarea
+    id: log
+    attributes:
+      label: 로그
+      description: |
+        게임을 한 번 켠 뒤 게임 폴더의 `BepInEx\LogOutput.log`를 통째로 붙여 주십시오.
+        파일을 그대로 끌어다 놓으셔도 됩니다. 이것만 있으면 대개 원인이 보입니다.
+      render: text
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        먼저 이것부터 봐 주십시오.
+
+        - 압축을 `copOS.exe`가 있는 폴더에 푸셨습니까?
+        - 스팀에서 파일 무결성 검사를 돌리면 패치 파일이 지워집니다. 다시 풀어 넣으면 됩니다.
+        - 로그에 `로드 완료. 메서드 N개 패치.`가 있으면 패치는 들어가 있는 것입니다.
