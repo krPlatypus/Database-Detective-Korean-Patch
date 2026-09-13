@@ -430,8 +430,17 @@ def build(name):
         draw_text(image, entry)
 
     # 여러 줄짜리 본문. 정해진 폭 안에서 어절 단위로 줄을 바꿔 흘려 넣는다.
+    # 한글은 원문보다 길어지기 쉬워 상자를 넘치기 쉬운데, 넘쳐도 그림은 그려지므로
+    # 눈으로만 보면 놓친다. 얼마나 넘쳤는지 알려 준다.
+    overflow = []
     for entry in spec.get("blocks", []):
-        draw_block(image, entry)
+        _, used = draw_block(image, entry)
+        room = entry["box"][3] - entry["box"][1]
+        if used > room:
+            overflow.append((entry["text"][:24], int(used - room)))
+
+    for snippet, over in overflow:
+        print(f"    상자를 {over}px 넘쳤다: {snippet}...")
 
     os.makedirs(OUT_DIR, exist_ok=True)
     image.convert("RGBA").save(os.path.join(OUT_DIR, name + ".png"))
