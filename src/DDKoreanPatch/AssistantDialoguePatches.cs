@@ -35,6 +35,10 @@ namespace DDKoreanPatch
         /// </summary>
         private const float Unbounded = 32767f;
 
+        // 처음 한 번만 잰 값을 기록으로 남긴다. 원본 계산과 얼마나 달랐는지 보면
+        // 패치가 실제로 일하고 있는지 알 수 있다.
+        private static bool reported;
+
         // AssistantDialogue의 private static 상수들. 원본 계산을 그대로 잇기 위해 읽어 둔다.
         private static bool constantsRead;
         private static float minWidth = 300f;
@@ -123,6 +127,15 @@ namespace DDKoreanPatch
             RectTransform promptBox = prompts.GetComponent<RectTransform>();
             promptBox.anchoredPosition =
                 new Vector2(promptBox.anchoredPosition.x, questionsY - height);
+
+            if (!reported)
+            {
+                reported = true;
+                int guessed = text.Split('\n').Length;
+                Plugin.Log.LogInfo(
+                    $"말풍선을 다시 쟀다. 글자폭 {natural:F0}px, 여백 {pad:F0}px, "
+                    + $"높이 {height:F0}px (원본 계산 {guessed * lineHeight:F0}px)");
+            }
         }
 
         /// <summary>

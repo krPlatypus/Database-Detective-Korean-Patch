@@ -1,3 +1,4 @@
+using System.Linq;
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
@@ -226,9 +227,14 @@ namespace DDKoreanPatch
             {
                 Translator.Load(PluginDirectory);
                 harmony.PatchAll(typeof(TranslationPatches));
+                harmony.PatchAll(typeof(AssistantDialoguePatches));
             }
 
-            Logger.LogInfo($"로드 완료. EnterBehavior={EnterMode.Value}");
+            // 패치 클래스는 위에서 하나씩 등록한다. 새 클래스를 만들고 등록을
+            // 빠뜨리면 아무 일도 일어나지 않고 오류도 남지 않으므로, 실제로
+            // 몇 개를 갈아 끼웠는지 남겨 둔다.
+            int patched = harmony.GetPatchedMethods().Count();
+            Logger.LogInfo($"로드 완료. 메서드 {patched}개 패치. EnterBehavior={EnterMode.Value}");
         }
 
         /// <summary>
