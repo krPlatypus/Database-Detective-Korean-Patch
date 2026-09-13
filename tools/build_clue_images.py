@@ -388,6 +388,21 @@ def build(name):
             for x in range(max(0, x1), min(image.width, x2)):
                 holes.append((x, y))
 
+    # 영역 안에서 지정한 색에 가까운 화소만 지우기.
+    # 글자가 기울어 있거나 그림과 얽혀 네모로는 잡을 수 없을 때 쓴다.
+    # 글자 색과 바탕색이 뚜렷이 다르면 이 편이 깔끔하다.
+    for rule in spec.get("erase_colour_within", []):
+        x1, y1, x2, y2 = rule["box"]
+        target = tuple(rule["colour"])
+        allowed = rule.get("tolerance", 120)
+        rgb = image.convert("RGB")
+        px = rgb.load()
+        for y in range(max(0, y1), min(image.height, y2)):
+            for x in range(max(0, x1), min(image.width, x2)):
+                pixel = px[x, y]
+                if sum(abs(a - b) for a, b in zip(pixel, target)) <= allowed:
+                    holes.append((x, y))
+
     # 영역 안에 완전히 들어가는 잉크 덩어리만 지우기
     regions = spec.get("erase_ink_within", [])
     if regions:

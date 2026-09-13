@@ -1,0 +1,281 @@
+{
+ "_comment": "3장 DUMBCON 전단. 글자가 모두 기울어 있고 서로 겹쳐 네모로는 잡을 수 없다. 노란 글자만 골라 한꺼번에 지우고, 남겨야 할 행사 이름과 날짜는 같은 자리에 원문 그대로 다시 찍는다. 아령은 회색이라 노랑만 골라도 무사하다.",
+ "_keep_note": "DUMBCON은 dumbcon 테이블의 이름이고 HSUCENTER 114 / JUNE 29 3-6 PM은 용의자가 어느 행사에 갔는지 가리는 값이라 원문 그대로 다시 찍는다. '덤벨을 가장 많이 들고 오면'이 dumbs_brought를 묻는 단서이고 7,340단계는 숫자라 그대로 둔다. Pat은 이름이다.",
+ "erase_colour_within": [
+  {
+   "_note": "GET",
+   "box": [
+    8,
+    60,
+    212,
+    145
+   ],
+   "colour": [
+    234,
+    232,
+    84
+   ],
+   "tolerance": 150
+  },
+  {
+   "_note": "DUMB",
+   "box": [
+    206,
+    143,
+    440,
+    244
+   ],
+   "colour": [
+    234,
+    232,
+    84
+   ],
+   "tolerance": 150
+  },
+  {
+   "_note": "DUMBCON, HSUCENTER 114, JUNE 29 3-6 PM, CARRY THE MOST... 이 넷이 서로 겹쳐 한꺼번에 지운다.",
+   "box": [
+    6,
+    330,
+    444,
+    645
+   ],
+   "colour": [
+    234,
+    232,
+    84
+   ],
+   "tolerance": 150
+  },
+  {
+   "_note": "learn about Pat's TRANSFORMATION",
+   "box": [
+    6,
+    584,
+    218,
+    766
+   ],
+   "colour": [
+    20,
+    20,
+    20
+   ],
+   "tolerance": 140
+  },
+  {
+   "_note": "It only took him ... 7,340 step plan!",
+   "box": [
+    276,
+    626,
+    448,
+    754
+   ],
+   "colour": [
+    20,
+    20,
+    20
+   ],
+   "tolerance": 140
+  },
+  {
+   "_note": "free water included!",
+   "box": [
+    324,
+    832,
+    450,
+    896
+   ],
+   "colour": [
+    20,
+    20,
+    20
+   ],
+   "tolerance": 140
+  }
+ ],
+ "ink_dilate": 2,
+ "texts": [
+  {
+   "text": "덤벨로",
+   "at": [
+    108,
+    100
+   ],
+   "angle": -14,
+   "size": 58,
+   "font": "mongtori",
+   "color": [
+    234,
+    232,
+    84
+   ]
+  },
+  {
+   "text": "덤벼라",
+   "at": [
+    322,
+    192
+   ],
+   "angle": -14,
+   "size": 58,
+   "font": "mongtori",
+   "color": [
+    234,
+    232,
+    84
+   ]
+  },
+  {
+   "_note": "지운 자리에 원문 그대로 다시 찍는다.",
+   "text": "DUMBCON",
+   "at": [
+    152,
+    418
+   ],
+   "angle": -22,
+   "size": 58,
+   "font": "mongtori",
+   "color": [
+    234,
+    232,
+    84
+   ]
+  },
+  {
+   "text": "HSUCENTER 114",
+   "at": [
+    130,
+    466
+   ],
+   "angle": -22,
+   "size": 27,
+   "font": "mongtori",
+   "color": [
+    234,
+    232,
+    84
+   ]
+  },
+  {
+   "text": "JUNE 29 3-6 PM",
+   "at": [
+    133,
+    518
+   ],
+   "angle": -22,
+   "size": 27,
+   "font": "mongtori",
+   "color": [
+    234,
+    232,
+    84
+   ]
+  },
+  {
+   "text": "덤벨을 가장",
+   "at": [
+    336,
+    512
+   ],
+   "angle": -58,
+   "size": 19,
+   "font": "mongtori",
+   "color": [
+    234,
+    232,
+    84
+   ]
+  },
+  {
+   "text": "많이 들고 오면",
+   "at": [
+    378,
+    520
+   ],
+   "angle": -58,
+   "size": 19,
+   "font": "mongtori",
+   "color": [
+    234,
+    232,
+    84
+   ]
+  },
+  {
+   "text": "상품 드립니다",
+   "at": [
+    416,
+    527
+   ],
+   "angle": -58,
+   "size": 19,
+   "font": "mongtori",
+   "color": [
+    234,
+    232,
+    84
+   ]
+  },
+  {
+   "text": "Pat의 변신을",
+   "at": [
+    95,
+    640
+   ],
+   "angle": -26,
+   "size": 26,
+   "font": "mongtori",
+   "color": [
+    20,
+    20,
+    20
+   ]
+  },
+  {
+   "text": "확인하세요",
+   "at": [
+    78,
+    700
+   ],
+   "angle": -26,
+   "size": 26,
+   "font": "mongtori",
+   "color": [
+    20,
+    20,
+    20
+   ]
+  },
+  {
+   "text": "쉽게 따라 하는\n7,340단계 계획으로\n12년밖에 안\n걸렸습니다!",
+   "at": [
+    358,
+    697
+   ],
+   "angle": -6,
+   "size": 20,
+   "font": "mongtori",
+   "color": [
+    20,
+    20,
+    20
+   ],
+   "line_gap": 4
+  },
+  {
+   "text": "생수 무료 제공!",
+   "at": [
+    382,
+    864
+   ],
+   "angle": -4,
+   "size": 24,
+   "font": "mongtori",
+   "color": [
+    20,
+    20,
+    20
+   ]
+  }
+ ]
+}
