@@ -110,13 +110,33 @@ namespace DDKoreanPatch
         [HarmonyPatch(typeof(TMP_Text), "text", MethodType.Setter)]
         private static void TextSetterPrefix(TMP_Text __instance, ref string value)
         {
-            string translated = Translator.TranslateUi(value);
-            if (!ReferenceEquals(translated, value) && translated != value)
+            value = Translator.TranslateUi(value);
+
+            // 번역문은 UI 사전만이 아니라 TextAsset을 거쳐서도 들어온다.
+            // 그때는 이미 한글인 채로 도착하므로 "이번에 바꿨는지"로 판단하면 놓친다.
+            // 게임 원문에는 한글이 없으니 한글이 보이면 우리 번역이다.
+            if (ContainsHangul(value))
             {
                 AllowShrinkToFit(__instance);
             }
+        }
 
-            value = translated;
+        private static bool ContainsHangul(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return false;
+            }
+
+            foreach (char c in text)
+            {
+                if (c >= '가' && c <= '힣')
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
