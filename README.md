@@ -1,9 +1,28 @@
-# Database Detective 한글패치
+# 데이터베이스 디텍티브 한글패치
 
-Steam 게임 *Database Detective* (HsuCorp)의 한글패치 및 입력 버그 수정.
-BepInEx 플러그인으로 동작하며 **게임 원본 파일은 수정하지 않는다.**
+Steam 게임 **Database Detective: Minor Crimes Division** (Thomas Hsu)의 비공식 한글패치.
+화면 문구와 대사뿐 아니라 **사진 단서와 사용 설명서 23쪽까지 그림째 다시 그려** 넣는다.
+덤으로 원래 게임에 있던 **쿼리창 Enter 줄바꿈 버그**도 고친다.
 
-화면 문구와 대사뿐 아니라 **사진 단서와 사용 설명서 23쪽도 그림째 다시 그려** 넣는다.
+BepInEx 플러그인으로 동작하며 **게임 원본 파일은 하나도 수정하지 않는다.**
+
+## 받기
+
+**[최신판 내려받기](https://github.com/krPlatypus/Database-Detective-Korean-Patch/releases/latest)**
+
+1. `DDKoreanPatch-v1.0.0.zip`을 받는다
+2. 스팀 라이브러리에서 게임 오른쪽 클릭 → 관리 → **로컬 파일 보기**
+3. 압축을 그 폴더(`copOS.exe`가 있는 곳)에 **전부 풀어 넣는다**
+
+지우려면 `winhttp.dll`, `doorstop_config.ini`, `.doorstop_version`, `changelog.txt`,
+`BepInEx` 폴더만 지우면 된다. 자세한 설명은 압축 파일 안의 `읽어주세요.txt`에 있다.
+
+번역이 어색한 곳을 보시면 [이슈](https://github.com/krPlatypus/Database-Detective-Korean-Patch/issues)로
+알려 주십시오.
+
+---
+
+아래는 이 패치를 어떻게 만들었는지에 대한 기록이다.
 
 ## 구성
 
