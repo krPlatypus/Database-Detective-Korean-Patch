@@ -248,6 +248,7 @@ namespace DDKoreanPatch
                 Translator.Load(PluginDirectory);
                 harmony.PatchAll(typeof(TranslationPatches));
                 harmony.PatchAll(typeof(AssistantDialoguePatches));
+                harmony.PatchAll(typeof(BrokerPagePatches));
             }
 
             // 패치 클래스는 위에서 하나씩 등록한다. 새 클래스를 만들고 등록을
