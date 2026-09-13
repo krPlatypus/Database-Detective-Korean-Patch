@@ -221,6 +221,7 @@ namespace DDKoreanPatch
                 TranslatedImages.Initialize(PluginDirectory);
                 harmony.PatchAll(typeof(ClueImagePatches));
                 harmony.PatchAll(typeof(ManualPatches));
+                harmony.PatchAll(typeof(CursorPatches));
             }
 
             if (EnableTranslation.Value)

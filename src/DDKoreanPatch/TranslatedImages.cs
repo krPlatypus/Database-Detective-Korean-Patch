@@ -87,5 +87,14 @@ namespace DDKoreanPatch
             cache[spriteName] = sprite;
             return sprite;
         }
+
+        /// <summary>
+        /// 같은 PNG를 스프라이트가 아니라 텍스처로 받는다.
+        /// 마우스 커서처럼 스프라이트를 받지 않는 자리에 쓴다.
+        /// </summary>
+        internal static Texture2D GetTexture(string name)
+        {
+            return Get(name)?.texture;
+        }
     }
 }
