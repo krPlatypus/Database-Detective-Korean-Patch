@@ -1,0 +1,63 @@
+{
+ "_comment": "4장 피자집 명함. 양쪽 귀퉁이의 홍보 문구만 옮긴다. 가게 이름과 그림, 주소는 그대로 둔다.",
+ "_keep_note": "PIZZA N' SLICES는 가게 이름이고 pizzaslices.net은 주소, 1712 Mittens Rd는 번지다. 앞치마에 적힌 이름도 그림의 일부라 건드리지 않는다.",
+ "erase_fill": [
+  73,
+  217,
+  87
+ ],
+ "erase_boxes": [
+  {
+   "_note": "FRUIT AND PIZZA IN ONE PLACE. 다섯 줄",
+   "box": [
+    22,
+    24,
+    124,
+    182
+   ]
+  },
+  {
+   "_note": "FREE NAPKINS AND STRAWS 세 줄. 왼쪽 N'의 삐침(x523~549)과 오른쪽 테두리(x673)를 피한다.",
+   "box": [
+    556,
+    16,
+    670,
+    128
+   ]
+  }
+ ],
+ "texts": [
+  {
+   "text": "과일도\n피자도\n한자리에.",
+   "at": [
+    26,
+    70
+   ],
+   "align": "left",
+   "size": 30,
+   "font": "mongtori",
+   "color": [
+    20,
+    20,
+    20
+   ],
+   "line_gap": 8
+  },
+  {
+   "text": "냅킨과\n빨대\n무료",
+   "at": [
+    666,
+    62
+   ],
+   "align": "right",
+   "size": 30,
+   "font": "mongtori",
+   "color": [
+    20,
+    20,
+    20
+   ],
+   "line_gap": 8
+  }
+ ]
+}
