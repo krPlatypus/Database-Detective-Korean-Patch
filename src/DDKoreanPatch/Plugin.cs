@@ -23,7 +23,7 @@ namespace DDKoreanPatch
     {
         public const string PluginGuid = "kr.spade.databasedetective.koreanpatch";
         public const string PluginName = "Database Detective Korean Patch";
-        public const string PluginVersion = "0.2.0";
+        public const string PluginVersion = "1.0.0";
 
         internal static ManualLogSource Log;
         internal static string PluginDirectory;

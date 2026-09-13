@@ -258,6 +258,32 @@ sounds/               <- dist/sounds/ (없으면 게임 내 소리를 쓴다)
 로드 완료. 메서드 18개 패치. EnterBehavior=Newline
 ```
 
+### 배포판 만들기
+
+```sh
+python tools/make_release.py 1.0.1 --bump      # release/ 에 zip 두 개
+python tools/make_release.py 1.0.1 --publish   # 태그를 밀고 Release까지
+```
+
+두 가지가 나온다.
+
+| 파일 | 내용 | 누구에게 |
+|---|---|---|
+| `DDKoreanPatch-v<버전>.zip` | BepInEx + 패치 전부 | 처음 까는 사람. 게임 폴더에 풀면 끝 |
+| `DDKoreanPatch-v<버전>-plugin-only.zip` | 패치만 | 이미 깐 사람. 번역만 새로 받을 때 |
+
+BepInEx는 게임 폴더에 깔린 것을 그대로 담는다. 고치지 않은 공식 배포본이므로
+LGPL-2.1에 따라 출처와 라이선스를 `packaging/NOTICE.txt`에 적어 함께 넣는다.
+
+`--publish`는 `gh`(GitHub CLI)가 있어야 한다. 없으면 zip은 그대로 두고
+직접 올리는 방법을 알려 준다. Release 본문은 `CHANGELOG.md`에서 그 버전 대목을
+떼어 쓰므로, 버전을 올리기 전에 CHANGELOG부터 적는다.
+
+**빌드를 CI에서 돌릴 수는 없다.** 컴파일에 게임의 `copOS_Data/Managed`
+(UnityEngine.dll, Scripts.dll ...)가 필요한데 그것은 게임 원저작물이라 저장소에
+올려 둘 수 없다. `.github/workflows/ci.yml`은 게임 없이 할 수 있는 것
+(`tools/ci_check.py` — JSON과 그림 사양 검사)만 본다.
+
 ## 번역하면 안 되는 것
 
 이 게임은 플레이어가 **SQL로 데이터를 조회**해 사건을 푼다.
@@ -311,7 +337,7 @@ SQL 키워드와 테이블·컬럼 이름도 옮기지 않는다.
 | 갈래 | 상태 |
 |---|---|
 | UI 문자열 (`ui.json`) | 886개 중 752개. 남긴 134개는 테이블명 등 일부러 둔 것 |
-| 코드 조립 문자열 (`dynamic.json`) | 215개 |
+| 코드 조립 문자열 (`dynamic.json`) | 214개 |
 | TextAsset (대사·힌트·웹페이지) | 41개 |
 | 사진 단서 그림 | 21장 (+ 글자 없는 그림은 원본 유지) |
 | 사용 설명서 | **23쪽 전부** |

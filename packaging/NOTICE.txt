@@ -1,0 +1,89 @@
+====================================================================
+ Database Detective 한글패치 - 저작권 안내
+====================================================================
+
+ 이 패치는 팬이 만든 비공식 번역이며, 게임을 만든 HsuCorp와는
+ 아무런 관계가 없습니다. 게임을 대신 배포하지 않으며, 게임을
+ 가지고 있어야만 쓸 수 있습니다.
+
+ 패치는 게임 원본 파일을 하나도 고치지 않습니다.
+
+
+--------------------------------------------------------------------
+ 1. 게임 원저작물
+--------------------------------------------------------------------
+
+ Database Detective (c) HsuCorp.
+
+ 이 패치 안의 다음 것들은 게임 원저작물에서 나온 2차 저작물입니다.
+
+   images\*.png
+     게임의 사진 단서와 사용 설명서 그림에서, 그림은 그대로 두고
+     글자만 한글로 바꿔 그린 것입니다.
+
+   translation.json
+     게임 원문과 그 번역이 짝으로 들어 있습니다.
+
+ 권리자가 원치 않으신다면 알려 주시는 대로 즉시 내리겠습니다.
+ https://github.com/krPlatypus/Database-Detective-Korean-Patch/issues
+
+
+--------------------------------------------------------------------
+ 2. BepInEx
+--------------------------------------------------------------------
+
+ winhttp.dll, doorstop_config.ini, .doorstop_version, changelog.txt,
+ BepInEx\core\ 아래의 파일들은 BepInEx 5.4.23.5를 그대로 담은
+ 것입니다. 고치지 않았습니다.
+
+   BepInEx  -  LGPL-2.1 license
+   https://github.com/BepInEx/BepInEx
+   https://github.com/BepInEx/BepInEx/blob/master/LICENSE
+
+ BepInEx에는 다음이 함께 들어 있습니다.
+
+   HarmonyX      MIT license   https://github.com/BepInEx/HarmonyX
+   MonoMod       MIT license   https://github.com/MonoMod/MonoMod
+   Mono.Cecil    MIT license   https://github.com/jbevain/cecil
+   UnityDoorstop                https://github.com/NeighTools/UnityDoorstop
+
+ BepInEx만 따로 받고 싶으시면 위 주소에서 받으실 수 있습니다.
+
+
+--------------------------------------------------------------------
+ 3. Neo둥근모 (글꼴)
+--------------------------------------------------------------------
+
+ fonts\neodgm.ttf
+
+   Neo둥근모  (c) 2017-2021 Eunbin Jeong (Dalgona.)
+   SIL Open Font License 1.1
+   원문은 같은 폴더의 LICENSE.txt 에 들어 있습니다.
+   https://neodgm.dalgona.dev/
+
+ 예약 글꼴 이름(Reserved Font Name)이 걸려 있는 글꼴입니다.
+ 파일을 고쳐 쓰실 경우 글꼴 이름을 바꾸셔야 합니다.
+
+
+--------------------------------------------------------------------
+ 4. 타건음
+--------------------------------------------------------------------
+
+ sounds\keyboard\key-1.wav, key-2.wav
+
+ 개인이 직접 녹음해 블로그에 올린 음원을 가져다 손질한 것입니다.
+ (앞의 무음을 떼고 길이를 줄여 WAV로 바꿨습니다.)
+
+ 출처 표기를 원하시거나 사용을 원치 않으시면 알려 주십시오.
+ 바로 반영하겠습니다. 이 폴더를 통째로 지우시면 게임에 원래
+ 들어 있는 클릭 소리로 돌아가며, 그 밖의 동작은 같습니다.
+
+
+--------------------------------------------------------------------
+ 5. 이 패치의 코드
+--------------------------------------------------------------------
+
+ BepInEx\plugins\DDKoreanPatch\DDKoreanPatch.dll 과
+ 그 소스는 아래에 있습니다.
+
+   https://github.com/krPlatypus/Database-Detective-Korean-Patch
