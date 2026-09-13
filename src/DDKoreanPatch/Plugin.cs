@@ -33,6 +33,8 @@ namespace DDKoreanPatch
         internal static ConfigEntry<bool> EnableTranslation;
         internal static ConfigEntry<bool> ShrinkTextToFit;
         internal static ConfigEntry<float> ShrinkFloor;
+        internal static ConfigEntry<bool> FitAssistantBubble;
+
         internal static ConfigEntry<bool> ClosePopupWithKey;
         internal static ConfigEntry<bool> EnableTypingSound;
         internal static ConfigEntry<float> TypingVolume;
@@ -156,6 +158,14 @@ namespace DDKoreanPatch
                     "글자를 줄일 수 있는 최소 비율. 0.72면 원래 크기의 72%까지만 줄입니다. "
                     + "너무 낮게 두면 읽기 어려워집니다.",
                     new AcceptableValueRange<float>(0.4f, 1f)));
+
+            FitAssistantBubble = Config.Bind(
+                "Translation",
+                "FitAssistantBubble",
+                true,
+                "조수 말풍선의 크기를 번역문의 실제 너비에 맞춰 다시 잡습니다. "
+                + "게임은 말풍선을 글자 수로 재는데, 한글은 라틴 글자보다 넓어 "
+                + "상자가 좁게 잡히고 글자가 잘리거나 질문 버튼과 겹칩니다.");
 
             ClosePopupWithKey = Config.Bind(
                 "Input",

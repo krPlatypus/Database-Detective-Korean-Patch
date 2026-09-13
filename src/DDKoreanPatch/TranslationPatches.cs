@@ -121,7 +121,7 @@ namespace DDKoreanPatch
             }
         }
 
-        private static bool ContainsHangul(string text)
+        internal static bool ContainsHangul(string text)
         {
             if (string.IsNullOrEmpty(text))
             {
