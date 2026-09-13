@@ -336,16 +336,20 @@ def draw_block(image, entry):
         if current:
             lines.append(current)
 
+    # 상자를 넘어가는 줄은 그리지 않는다. 아래 구역을 침범하는 것보다 낫다.
+    # 다만 말없이 문장을 잃으면 안 되므로 몇 줄을 못 그렸는지 돌려준다.
     step = int(entry.get("size", 26) * spacing)
     y = y1
+    drawn = 0
     for i, line in enumerate(lines):
-        if y + step > y2 + step:   # 상자를 넘어가면 멈춘다
+        if y > y2:
             break
         x = x1 + (indent if i == 0 else 0)
         draw.text((x, y), line, font=font, fill=colour)
         y += step
+        drawn += 1
 
-    return len(lines), (y - y1)
+    return len(lines) - drawn, (y - y1)
 
 
 def build(name):
@@ -434,18 +438,20 @@ def build(name):
     # 눈으로만 보면 놓친다. 얼마나 넘쳤는지 알려 준다.
     overflow = []
     for entry in spec.get("blocks", []):
-        _, used = draw_block(image, entry)
+        lost, used = draw_block(image, entry)
         room = entry["box"][3] - entry["box"][1]
-        if used > room:
-            overflow.append((entry["text"][:24], int(used - room)))
+        if lost:
+            overflow.append((entry["text"][:24], f"{lost}줄을 못 그렸다"))
+        elif used > room:
+            overflow.append((entry["text"][:24], f"상자를 {int(used - room)}px 넘쳤다"))
 
     # 문단 위에 덧그리는 글자. 문단은 한 색으로만 그릴 수 있어, 키워드처럼
     # 색이 달라야 하는 낱말은 같은 자리에 다시 찍어 색만 바꾼다.
     for entry in spec.get("overlays", []):
         draw_text(image, entry)
 
-    for snippet, over in overflow:
-        print(f"    상자를 {over}px 넘쳤다: {snippet}...")
+    for snippet, trouble in overflow:
+        print(f"    {trouble}: {snippet}...")
 
     os.makedirs(OUT_DIR, exist_ok=True)
     image.convert("RGBA").save(os.path.join(OUT_DIR, name + ".png"))
