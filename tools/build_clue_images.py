@@ -56,6 +56,7 @@ TTC_FACES = {"gulim": 0, "gulimche": 1, "dotum": 2, "dotumche": 3}
 #   gungso 궁서    - 붓글씨
 NAMED_FONTS = {
     "mongtori": ("Griun_Mongtori-Rg.ttf", 0),
+    "neodgm": ("neodgm.ttf", 0),
     "magic": ("HMKMMAG.TTF", 0),
     "pyunji": ("HMFMPYUN.TTF", 0),
     "ami": ("HMKMAMI.TTF", 0),
@@ -243,7 +244,13 @@ def fit_size(text, font_name, max_w, max_h, font_index=None):
 
 
 def draw_text(image, entry):
-    """중심점에 각도를 줘서 글자를 얹는다."""
+    """글자를 얹는다.
+
+    'at'이 어디를 가리키는지는 align/valign으로 정한다. 기본은 가운데인데,
+    손으로 갈겨 쓴 주석처럼 가운데를 잡는 편이 쉬운 그림이 있어서다.
+    문자 메시지 화면처럼 왼쪽이나 오른쪽 끝이 맞아야 하는 그림에서는
+    그 끝을 직접 가리키는 편이 낫다. 여러 줄이면 줄끼리도 같은 쪽으로 맞춘다.
+    """
     text = entry.get("text", "").strip()
     if not text:
         return
@@ -254,19 +261,34 @@ def draw_text(image, entry):
         text, font_name, entry.get("max_width", 400), entry.get("max_height", 80), font_index)
     font = load_font(font_name, size, font_index)
 
+    align = entry.get("align", "center")
+    spacing = entry.get("line_gap", 4)
+
     probe = ImageDraw.Draw(Image.new("RGB", (8, 8)))
-    left, top, right, bottom = probe.textbbox((0, 0), text, font=font)
+    left, top, right, bottom = probe.multiline_textbbox(
+        (0, 0), text, font=font, spacing=spacing, align=align)
     pad = size // 2
-    layer = Image.new("RGBA", (right - left + pad * 2, bottom - top + pad * 2), (0, 0, 0, 0))
-    ImageDraw.Draw(layer).text((pad - left, pad - top), text,
-                               font=font, fill=tuple(entry.get("color", [0, 0, 0])))
+    layer = Image.new("RGBA",
+                      (int(right - left) + pad * 2, int(bottom - top) + pad * 2),
+                      (0, 0, 0, 0))
+    ImageDraw.Draw(layer).multiline_text(
+        (pad - left, pad - top), text, font=font, spacing=spacing, align=align,
+        fill=tuple(entry.get("color", [0, 0, 0])))
 
     angle = entry.get("angle", 0)
     if angle:
         layer = layer.rotate(angle, resample=Image.BICUBIC, expand=True)
 
     cx, cy = entry["at"]
-    image.alpha_composite(layer, (int(cx - layer.width / 2), int(cy - layer.height / 2)))
+    if align == "left":
+        x = cx - pad
+    elif align == "right":
+        x = cx - layer.width + pad
+    else:
+        x = cx - layer.width / 2
+
+    y = cy - pad if entry.get("valign") == "top" else cy - layer.height / 2
+    image.alpha_composite(layer, (int(x), int(y)))
 
 
 def draw_block(image, entry):
@@ -348,17 +370,23 @@ def build(name):
     # 배경이 단색인 문서 페이지는 그 색으로 덮는 편이 낫다.
     # 주변 색으로 메우는 방식은 상자 경계에 원본 글자가 걸쳐 있을 때
     # 그 검은색을 안쪽으로 번지게 해 세로줄 자국을 남긴다.
+    # 한 그림 안에 바탕색이 여럿인 경우가 있다(문자 메시지 화면은 본문이 흰색,
+    # 위아래 띠가 검정). 상자마다 색을 따로 줄 수 있게 두 가지 적는 법을 받는다.
+    #   [x1, y1, x2, y2]                      erase_fill 색으로 덮는다
+    #   {"box": [...], "fill": [r, g, b]}     이 상자만 다른 색으로 덮는다
     flat = spec.get("erase_fill")
-    if flat is not None:
-        painter = ImageDraw.Draw(image)
-        for box in spec.get("erase_boxes", []):
+    painter = ImageDraw.Draw(image)
+    for box in spec.get("erase_boxes", []):
+        if isinstance(box, dict):
+            painter.rectangle(box["box"], fill=tuple(box.get("fill", flat or (255, 255, 255))))
+            continue
+        if flat is not None:
             painter.rectangle(box, fill=tuple(flat))
-    else:
-        for box in spec.get("erase_boxes", []):
-            x1, y1, x2, y2 = box
-            for y in range(max(0, y1), min(image.height, y2)):
-                for x in range(max(0, x1), min(image.width, x2)):
-                    holes.append((x, y))
+            continue
+        x1, y1, x2, y2 = box
+        for y in range(max(0, y1), min(image.height, y2)):
+            for x in range(max(0, x1), min(image.width, x2)):
+                holes.append((x, y))
 
     # 영역 안에 완전히 들어가는 잉크 덩어리만 지우기
     regions = spec.get("erase_ink_within", [])
