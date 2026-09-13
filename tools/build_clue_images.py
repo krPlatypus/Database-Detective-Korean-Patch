@@ -264,16 +264,21 @@ def draw_text(image, entry):
     align = entry.get("align", "center")
     spacing = entry.get("line_gap", 4)
 
+    # 굵은 서체가 없는 글꼴에 굵기를 주려면 획을 한 겹 덧그린다.
+    # 설명서 제목처럼 원본이 굵은 세리프인 자리에 쓴다.
+    weight = entry.get("weight", 0)
+    colour = tuple(entry.get("color", [0, 0, 0]))
+
     probe = ImageDraw.Draw(Image.new("RGB", (8, 8)))
     left, top, right, bottom = probe.multiline_textbbox(
-        (0, 0), text, font=font, spacing=spacing, align=align)
+        (0, 0), text, font=font, spacing=spacing, align=align, stroke_width=weight)
     pad = size // 2
     layer = Image.new("RGBA",
                       (int(right - left) + pad * 2, int(bottom - top) + pad * 2),
                       (0, 0, 0, 0))
     ImageDraw.Draw(layer).multiline_text(
         (pad - left, pad - top), text, font=font, spacing=spacing, align=align,
-        fill=tuple(entry.get("color", [0, 0, 0])))
+        fill=colour, stroke_width=weight, stroke_fill=colour)
 
     angle = entry.get("angle", 0)
     if angle:
