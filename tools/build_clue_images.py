@@ -439,6 +439,11 @@ def build(name):
         if used > room:
             overflow.append((entry["text"][:24], int(used - room)))
 
+    # 문단 위에 덧그리는 글자. 문단은 한 색으로만 그릴 수 있어, 키워드처럼
+    # 색이 달라야 하는 낱말은 같은 자리에 다시 찍어 색만 바꾼다.
+    for entry in spec.get("overlays", []):
+        draw_text(image, entry)
+
     for snippet, over in overflow:
         print(f"    상자를 {over}px 넘쳤다: {snippet}...")
 
