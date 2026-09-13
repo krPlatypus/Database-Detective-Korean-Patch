@@ -31,6 +31,8 @@ namespace DDKoreanPatch
         internal static ConfigEntry<bool> Diagnostics;
 
         internal static ConfigEntry<bool> EnableTranslation;
+        internal static ConfigEntry<bool> ShrinkTextToFit;
+        internal static ConfigEntry<float> ShrinkFloor;
         internal static ConfigEntry<bool> ClosePopupWithKey;
         internal static ConfigEntry<bool> EnableTypingSound;
         internal static ConfigEntry<float> TypingVolume;
@@ -136,6 +138,24 @@ namespace DDKoreanPatch
                 "EnableTranslation",
                 true,
                 "translation.json의 한글 번역을 화면에 적용합니다.");
+
+            ShrinkTextToFit = Config.Bind(
+                "Translation",
+                "ShrinkTextToFit",
+                true,
+                "번역문이 자리에 넘칠 때만 글자를 조금 줄여 담습니다. "
+                + "한글은 같은 크기에서 라틴 글자보다 세 배 가까이 넓어, "
+                + "영문 기준으로 잡힌 상자에서는 줄이 늘어나 옆 요소를 덮습니다. "
+                + "끄면 원래 크기를 유지하되 넘칠 수 있습니다.");
+
+            ShrinkFloor = Config.Bind(
+                "Translation",
+                "ShrinkFloor",
+                0.72f,
+                new ConfigDescription(
+                    "글자를 줄일 수 있는 최소 비율. 0.72면 원래 크기의 72%까지만 줄입니다. "
+                    + "너무 낮게 두면 읽기 어려워집니다.",
+                    new AcceptableValueRange<float>(0.4f, 1f)));
 
             ClosePopupWithKey = Config.Bind(
                 "Input",

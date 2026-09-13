@@ -88,6 +88,7 @@ namespace DDKoreanPatch
             string translated = Translator.TranslateUi(original);
             if (translated != original)
             {
+                AllowShrinkToFit(__instance);
                 __instance.text = translated;
                 Report();
             }
@@ -107,9 +108,43 @@ namespace DDKoreanPatch
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(TMP_Text), "text", MethodType.Setter)]
-        private static void TextSetterPrefix(ref string value)
+        private static void TextSetterPrefix(TMP_Text __instance, ref string value)
         {
-            value = Translator.TranslateUi(value);
+            string translated = Translator.TranslateUi(value);
+            if (!ReferenceEquals(translated, value) && translated != value)
+            {
+                AllowShrinkToFit(__instance);
+            }
+
+            value = translated;
+        }
+
+        /// <summary>
+        /// 자리에 넘칠 때만 글자가 조금 작아지도록 한다.
+        ///
+        /// 한글은 같은 글꼴 크기에서 라틴 글자보다 세 배 가까이 넓다.
+        /// 영문 기준으로 잡힌 상자에 번역문을 넣으면 줄이 늘어나고,
+        /// 말풍선처럼 옆에 다른 요소가 붙어 있는 자리에서는 그것을 덮는다.
+        ///
+        /// 문장을 억지로 줄이면 말이 부자연스러워지므로, 넘치는 경우에 한해
+        /// 글자를 줄여 담는다. TMP는 필요할 때만 줄이고 들어가면 원래 크기를 쓴다.
+        /// </summary>
+        private static void AllowShrinkToFit(TMP_Text label)
+        {
+            if (label == null || !Plugin.ShrinkTextToFit.Value || label.enableAutoSizing)
+            {
+                return;
+            }
+
+            float size = label.fontSize;
+            if (size <= 0f)
+            {
+                return;
+            }
+
+            label.enableAutoSizing = true;
+            label.fontSizeMax = size;
+            label.fontSizeMin = size * Plugin.ShrinkFloor.Value;
         }
 
         [HarmonyPostfix]
