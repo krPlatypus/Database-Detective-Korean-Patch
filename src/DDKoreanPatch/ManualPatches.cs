@@ -47,7 +47,7 @@ namespace DDKoreanPatch
                     continue;
                 }
 
-                Sprite translated = TranslatedImages.Get(current.name);
+                Sprite translated = TranslatedImages.Get(current);
                 if (translated != null && translated != current)
                 {
                     image.sprite = translated;

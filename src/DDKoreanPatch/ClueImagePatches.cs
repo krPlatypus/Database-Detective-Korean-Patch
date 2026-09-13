@@ -27,7 +27,7 @@ namespace DDKoreanPatch
                 return;
             }
 
-            Sprite translated = TranslatedImages.Get(image.name);
+            Sprite translated = TranslatedImages.Get(image);
             if (translated == null)
             {
                 return;   // 번역본이 없는 단서는 버튼도 만들지 않는다
