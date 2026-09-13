@@ -1,33 +1,33 @@
-Hey there, recruit. Welcome to the Minor Crimes Division of the
-Los Zorangeles Police Department. This is your first day as a
-Database Detective, correct?
+안녕하세요, 신입. Los Zorangeles 경찰청 경범죄
+수사과에 오신 걸 환영합니다. 데이터베이스 형사로
+일하는 첫날 맞으시죠?
 
-You know, not many people signed up for this job, and between you
-and me, we need all the help we can get. These days, people seem
-to think they can commit all the minor crimes they want - littering,
-shoplifting, jaywalking... just... disregarding the delicate balance
-of law and order, tearing down the social contract that ties us all
-together - but that’s where we come in.
+아시겠지만 이 일에 지원한 사람이 많지 않아요. 우리끼리
+얘긴데, 손이 하나라도 더 필요한 형편입니다. 요즘 사람들은
+경범죄쯤은 마음대로 저질러도 된다고 여기나 봐요. 무단투기,
+좀도둑질, 무단횡단... 그냥... 법과 질서의 아슬아슬한 균형을
+무시하고, 우리를 묶어주는 사회계약을 찢어버리는 거죠.
+그런데 바로 그때 저희가 나섭니다.
 
-We're here to stop those who think they can get away with the little
-things - things that people might not think are a big deal. But the
-road to hell is paved one brick at a time! Think about it - one day,
-someone "accidentally" leaves some paint on private property. No big
-deal, they might think, until they realize - if I can get away with
-that, what else can I get away with? And then they’ll start thinking
-they can get away with killing our innocent women and children,
-abducting them from the cover of night and ripping their flesh from
-limb to limb all because we let them get away with something they
-shouldn’t have. 
+사소한 건 그냥 넘어갈 수 있다고 여기는 자들을 막는 게
+저희 일입니다. 남들은 별일 아니라고 볼 것들이죠. 하지만
+지옥으로 가는 길은 벽돌 한 장씩 깔립니다! 생각해 보세요.
+어느 날 누군가 남의 땅에 페인트를 "실수로" 흘립니다.
+별일 아니라고 여기겠죠. 그러다 깨닫습니다 - 이게 넘어갔으니
+다른 것도 되지 않을까? 그러면 이제 죄 없는 여자와
+아이들을 죽여도 괜찮다고 여기기 시작합니다.
+밤을 틈타 끌고 가서 살점을 갈기갈기
+찢어놓는 거죠. 넘어가면 안 될 것을 우리가
+넘어가 줬다는 이유 하나로요.
 
-And that’s what we have here. We caught a group of suspects around
-the sidewalk in Bleecker Street that was vandalized with paint. I've
-downloaded the suspect data into your desktop. This should be a good
-first case for you detective, we’ll need you to figure out who was
-the one responsible. If we don’t catch the right person, I don't even
-want to know what they’ll get away with in the future.
+지금이 바로 그런 경우입니다. Bleecker Street 인도가
+페인트로 훼손됐는데, 그 주변에서 용의자 몇 명을 잡았어요.
+용의자 자료는 형사님 바탕화면에 내려받아 뒀습니다.
+첫 사건으로는 괜찮을 거예요, 형사님. 누가 저지른 건지
+밝혀주셔야 합니다. 맞는 사람을 못 잡으면 그자가 앞으로
+뭘 저지를지 생각하고 싶지도 않네요.
 
-If you’re not sure where to start, why don’t you read the little
-instruction manual thingy that’s on your computer somewhere, and uh, 
-that's it for me - I got some work to do - but I’ll be sure to call
-you back when you make that first arrest. Best of luck, detective.
+어디서 시작할지 모르겠으면 컴퓨터 어딘가에 있는
+사용 설명서 같은 걸 읽어보세요. 어, 그리고
+저는 이만 - 할 일이 좀 있어서요 - 첫 체포를 하시면
+꼭 다시 연락드리겠습니다. 행운을 빕니다, 형사님.

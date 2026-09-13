@@ -1,69 +1,69 @@
-main_credits;Thomas Hsu;Programming/Writing/Art/Design
-main_credits;SQLite;SQL Library
-main_credits;Unity;Game Engine
-voice_credits;Thomas Hsu;Police Chief
-voice_credits;Yerim Heo;Assistant Moleman
-voice_credits;Yerim Heo;Scarred Waitress
-font_credits;FontsArena;System Font;W95FA
-font_credits;Sebastian Kosch;Arrest Warrant Font;Crimson
-font_credits;datagoblin;Search Tables Query Font;monogram
-font_credits;Georg Duffner, Octavio Pardo;Book Font;EB Garamond
-font_credits;Claus Eggers Sorensen;Website Font;Playfair Display
-font_credits;athy!!;Website Font;Handwriting
-font_credits;mazaya niar;Website Font;Helium
-font_credits;Caca;Website Font;Shaabyla
-font_credits;Morris Fuller Benton;Website Font;Franklin Gothic
-font_credits;fsuarez913;Website Font;Super Dream
-font_credits;Sven Pels;Website Font;The Bold Font
-font_credits;Debut Studio;Website Font;Abbasy Calligraphy Typeface
-font_credits;Mooniak;Website Font;Abhaya Libre
-font_credits;GUST e-foundry;Website Font;TeX Gyre Termes
-font_credits;Vincent Connare;Website Font;Comic Sans
-font_credits;Sandylukee;Website Font;Tango Sans
-font_credits;Lauren Thompson;Website Font;Caviar Dreams
-font_credits;Steve Matteson;Website/Evidence Font;Liberation Serif
-font_credits;Dieter Steffmann;Website Font;Canterbury
-font_credits;Christoph Mueller;Website Font;Moms Typewriter
-font_credits;Manfred Klein;Website Font;Old Newspaper Types
-font_credits;Tart Workshop;Website Font;Mountains of Christmas
-font_credits;Tup Wanders;Website Font;Evil Empire
-font_credits;Hanken Design Co.;Website Font;Glacial Indifference
-font_credits;Adrian Jordanov;Website Font;Theater
-font_credits;Vernon Adams;Website Font;Carter One
-font_credits;Robin Nicholas, Patricia Saunders;Website Font;Arial
-font_credits;Manfred Klein;Website Font;Optimus Princeps
-font_credits;Apostrophic Labs;Website Font;Day Roman
-font_credits;Fajarisha Phonna;Website Font;Belgiano Serif
-font_credits;ingoFonts;Level 7 Evidence;DePixel (OT1)
-font_credits;Zeh Fernando;Level 7 Evidence;Nokia Cellphone FC
-music_credits;MusicByPedro;Music Player;Noire #1
-music_credits;Aaron Kenny;Music Player;The Black Cat
-music_credits;Mackey;Music Player;Coffee Shop In the Afternoon
-music_credits;Mackey;Music Player;Like Black Coffee
-music_credits;Mackey;Music Player;At the Lounge
-music_credits;Quincas Moreira;Music Player;Miles Beyond
-music_credits;Kevin MacLeod;Music Player;Night in Venice (incompetech.com)
-music_credits;plasterbrain;Arrest Music;(Bossa Nova Loop) Thank You for Shopping!
+main_credits;Thomas Hsu;프로그래밍/각본/아트/디자인
+main_credits;SQLite;SQL 라이브러리
+main_credits;Unity;게임 엔진
+voice_credits;Thomas Hsu;경찰서장
+voice_credits;Yerim Heo;조수 두더지인간
+voice_credits;Yerim Heo;충격받은 종업원
+font_credits;FontsArena;시스템 글꼴;W95FA
+font_credits;Sebastian Kosch;체포영장 글꼴;Crimson
+font_credits;datagoblin;테이블 검색 쿼리 글꼴;monogram
+font_credits;Georg Duffner, Octavio Pardo;책 글꼴;EB Garamond
+font_credits;Claus Eggers Sorensen;웹사이트 글꼴;Playfair Display
+font_credits;athy!!;웹사이트 글꼴;Handwriting
+font_credits;mazaya niar;웹사이트 글꼴;Helium
+font_credits;Caca;웹사이트 글꼴;Shaabyla
+font_credits;Morris Fuller Benton;웹사이트 글꼴;Franklin Gothic
+font_credits;fsuarez913;웹사이트 글꼴;Super Dream
+font_credits;Sven Pels;웹사이트 글꼴;The Bold Font
+font_credits;Debut Studio;웹사이트 글꼴;Abbasy Calligraphy Typeface
+font_credits;Mooniak;웹사이트 글꼴;Abhaya Libre
+font_credits;GUST e-foundry;웹사이트 글꼴;TeX Gyre Termes
+font_credits;Vincent Connare;웹사이트 글꼴;Comic Sans
+font_credits;Sandylukee;웹사이트 글꼴;Tango Sans
+font_credits;Lauren Thompson;웹사이트 글꼴;Caviar Dreams
+font_credits;Steve Matteson;웹사이트/증거 글꼴;Liberation Serif
+font_credits;Dieter Steffmann;웹사이트 글꼴;Canterbury
+font_credits;Christoph Mueller;웹사이트 글꼴;Moms Typewriter
+font_credits;Manfred Klein;웹사이트 글꼴;Old Newspaper Types
+font_credits;Tart Workshop;웹사이트 글꼴;Mountains of Christmas
+font_credits;Tup Wanders;웹사이트 글꼴;Evil Empire
+font_credits;Hanken Design Co.;웹사이트 글꼴;Glacial Indifference
+font_credits;Adrian Jordanov;웹사이트 글꼴;Theater
+font_credits;Vernon Adams;웹사이트 글꼴;Carter One
+font_credits;Robin Nicholas, Patricia Saunders;웹사이트 글꼴;Arial
+font_credits;Manfred Klein;웹사이트 글꼴;Optimus Princeps
+font_credits;Apostrophic Labs;웹사이트 글꼴;Day Roman
+font_credits;Fajarisha Phonna;웹사이트 글꼴;Belgiano Serif
+font_credits;ingoFonts;7장 증거;DePixel (OT1)
+font_credits;Zeh Fernando;7장 증거;Nokia Cellphone FC
+music_credits;MusicByPedro;음악 플레이어;Noire #1
+music_credits;Aaron Kenny;음악 플레이어;The Black Cat
+music_credits;Mackey;음악 플레이어;Coffee Shop In the Afternoon
+music_credits;Mackey;음악 플레이어;Like Black Coffee
+music_credits;Mackey;음악 플레이어;At the Lounge
+music_credits;Quincas Moreira;음악 플레이어;Miles Beyond
+music_credits;Kevin MacLeod;음악 플레이어;Night in Venice (incompetech.com)
+music_credits;plasterbrain;체포 음악;(Bossa Nova Loop) Thank You for Shopping!
 music_credits;plasterbrain;calmail.com/help2;(Cute Loop) Pink Bunny Death Metal
-music_credits;YellowTree;Temporary Leave Music;Elevator Music
-music_credits;Dylan Owen;Ending Cutscene;Black Fingerprint
-music_credits;Nikita Kondrashev;Final Message;Motivational
-sfx_credits;Liecio;Ringing Phone;Classic 90s Ring Telefone
-sfx_credits;jack_urbanski;Startup Sound;Vibraphone Chord
-sfx_credits;Artninja;Explosion Sounds;heavy_explosive_crunchy_impact_sound
-sfx_credits;mrfriends;Delete Table Sound;pistol shot
-sfx_credits;gattoangus;Delete Table Sound;9mm pistol shoot short reverb
-sfx_credits;qubodup;Confetti Sound Effect;Puff of Smoke
-sfx_credits;FenrirFangs;Background Change;guitar strum
-sfx_credits;Leszek_Szary;Notepad Color Sound Effect;scale x6
-sfx_credits;yuliana-yurukova;Shutdown Sound;Lighter
-sfx_credits;SoundReality;Assistant Button Click;Pop Clean
-sfx_credits;floraphonic;Panel Popup Sound;UI Pop Up 1
-sfx_credits;TanwerAman;Jail Door Sound;Jail Door Closing (Heavy Door)
-sfx_credits;pfranzen;Arrest Air Horn;DJ airhorn sound
-sfx_credits;nomiqbomi;Error/Warning Popup;Vibraphone Sting
-sfx_credits;marlonnnnnn;Login Chime;Computer Chimes - Program Start.aif
-sfx_credits;SoundMaker25;Clear Internet History;Flashback
+music_credits;YellowTree;임시 휴가 음악;Elevator Music
+music_credits;Dylan Owen;엔딩 컷신;Black Fingerprint
+music_credits;Nikita Kondrashev;마지막 메시지;Motivational
+sfx_credits;Liecio;전화벨;Classic 90s Ring Telefone
+sfx_credits;jack_urbanski;시동음;Vibraphone Chord
+sfx_credits;Artninja;폭발음;heavy_explosive_crunchy_impact_sound
+sfx_credits;mrfriends;테이블 삭제음;pistol shot
+sfx_credits;gattoangus;테이블 삭제음;9mm pistol shoot short reverb
+sfx_credits;qubodup;색종이 효과음;Puff of Smoke
+sfx_credits;FenrirFangs;배경 변경;guitar strum
+sfx_credits;Leszek_Szary;메모장 색 변경 효과음;scale x6
+sfx_credits;yuliana-yurukova;종료음;Lighter
+sfx_credits;SoundReality;조수 버튼 클릭음;Pop Clean
+sfx_credits;floraphonic;창 열림음;UI Pop Up 1
+sfx_credits;TanwerAman;감옥문 소리;Jail Door Closing (Heavy Door)
+sfx_credits;pfranzen;체포 경적;DJ airhorn sound
+sfx_credits;nomiqbomi;오류/경고 알림음;Vibraphone Sting
+sfx_credits;marlonnnnnn;로그인 알림음;Computer Chimes - Program Start.aif
+sfx_credits;SoundMaker25;인터넷 기록 삭제음;Flashback
 playtesters;Graeme Ferguson
 playtesters;Chayne Rimkus
 playtesters;yattytheman
@@ -80,12 +80,12 @@ playtesters;Peter Hwang
 playtesters;Michelle Hwang
 playtesters;Francesco "Sapo" Saporito
 playtesters;Telzwin
-misc_credits;Windows 98;Web Browser Icon;Regional Settings Icon
-misc_credits;Windows 95;Music Player Icon;shell32.dll Icon
-misc_credits;Sam Boyer;Audio Message Spectrum;SimpleSpectrum
-misc_credits;Ciela Spike;Multi Threading Library;Thread Ninja
-special_thanks;Graeme Ferguson;Manual Proofreader
-special_thanks;Luna Song;Community Manager
-special_thanks;Logan Wohlers;Mac Lender
-special_thanks;Christie Zhao;Trailer Cinematographer
-special_thanks;YOU!!!;Playing my game :)
+misc_credits;Windows 98;웹 브라우저 아이콘;Regional Settings Icon
+misc_credits;Windows 95;음악 플레이어 아이콘;shell32.dll Icon
+misc_credits;Sam Boyer;음성 메시지 스펙트럼;SimpleSpectrum
+misc_credits;Ciela Spike;멀티스레딩 라이브러리;Thread Ninja
+special_thanks;Graeme Ferguson;설명서 교정
+special_thanks;Luna Song;커뮤니티 매니저
+special_thanks;Logan Wohlers;맥 대여
+special_thanks;Christie Zhao;트레일러 촬영
+special_thanks;YOU!!!;제 게임을 즐겨 주셔서 :)
