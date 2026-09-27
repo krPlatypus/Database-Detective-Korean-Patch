@@ -19,7 +19,7 @@ body:
     attributes:
       label: 패치 버전
       description: 받으신 압축 파일 이름에 적혀 있습니다.
-      placeholder: v1.0.0
+      placeholder: v1.0.1
     validations:
       required: true
 

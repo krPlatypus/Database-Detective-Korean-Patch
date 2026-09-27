@@ -10,7 +10,7 @@ BepInEx 플러그인으로 동작하며 **게임 원본 파일은 하나도 수�
 
 **[최신판 내려받기](https://github.com/krPlatypus/Database-Detective-Korean-Patch/releases/latest)**
 
-1. `DDKoreanPatch-v1.0.0.zip`을 받는다
+1. `DDKoreanPatch-v1.0.1.zip`을 받는다
 2. 스팀 라이브러리에서 게임 오른쪽 클릭 → 관리 → **로컬 파일 보기**
 3. 압축을 그 폴더(`copOS.exe`가 있는 곳)에 **전부 풀어 넣는다**
 
