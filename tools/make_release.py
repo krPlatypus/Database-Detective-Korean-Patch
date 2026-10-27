@@ -68,7 +68,8 @@ MACOS_DOORSTOP = (
     "8282e8ec37abc81bbf736d12c315fdb78b0418654fb57be9e40858649953ccb7")
 
 # 맥 전체판의 로더 파일. 어디서 가져오는지는 stage_macos()를 보라.
-MACOS_LOADER_FILES = ["run_bepinex.sh", "libdoorstop.dylib", ".doorstop_version", "changelog.txt"]
+MACOS_LOADER_FILES = ["run_bepinex.sh", "install_macos.command", "libdoorstop.dylib",
+                      ".doorstop_version", "changelog.txt"]
 
 # 게임 폴더에서 그대로 가져올 BepInEx 파일. core는 .dll만 담는다.
 # .xml은 개발용 문서 주석이라 있어도 동작이 달라지지 않고 용량만 는다.
@@ -274,6 +275,8 @@ def stage_macos(version, dll):
     sources = {
         # 공식 run_bepinex.sh에서 실행 파일 이름과 Rosetta 실행만 고친 것.
         "run_bepinex.sh": lambda: open(os.path.join(MACOS_PACKAGING, "run_bepinex.sh"), "rb").read(),
+        # 격리 표시 제거와 스팀 실행 옵션 설정을 대신 해 주는 설치 스크립트.
+        "install_macos.command": lambda: open(os.path.join(MACOS_PACKAGING, "install_macos.command"), "rb").read(),
         "libdoorstop.dylib": lambda: unzip_member(doorstop, "universal/libdoorstop.dylib"),
         ".doorstop_version": lambda: unzip_member(doorstop, "universal/.doorstop_version"),
         "changelog.txt": lambda: unzip_member(bepinex, "changelog.txt"),
@@ -290,7 +293,7 @@ def stage_macos(version, dll):
 
 
 # zip 안에서 실행 권한을 줄 파일. 윈도우에서 묶으면 권한 비트가 없으므로 직접 적는다.
-EXECUTABLES = {"run_bepinex.sh"}
+EXECUTABLES = {"run_bepinex.sh", "install_macos.command"}
 
 
 def pack(root, zip_path):

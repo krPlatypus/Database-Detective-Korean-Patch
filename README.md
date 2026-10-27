@@ -21,15 +21,11 @@ BepInEx 플러그인으로 동작하며 **게임 원본 파일은 하나도 수�
 
 1. `DDKoreanPatch-v<버전>-macos.zip`을 받는다
 2. 게임 폴더(`copOS.app`이 있는 곳)에 **전부 넣는다**
-3. 터미널에서 격리 표시를 떼고 실행 권한을 준다
-   ```sh
-   cd ~/Library/Application\ Support/Steam/steamapps/common/Database\ Detective
-   xattr -dr com.apple.quarantine . ; chmod +x run_bepinex.sh
-   ```
-4. 스팀 게임 속성 → 일반 → **실행 옵션**에 아래를 적는다
-   ```
-   "$HOME/Library/Application Support/Steam/steamapps/common/Database Detective/run_bepinex.sh" %command%
-   ```
+3. 게임 폴더의 **`install_macos.command`를 실행한다** (경고가 뜨면 오른쪽 클릭 → 열기)
+   - 격리 표시를 떼고, 스팀 **실행 옵션**에 `run_bepinex.sh`를 적어 준다.
+   - 실행 옵션이 없으면 스팀이 게임을 바로 켜서 **영어로 나온다.** 윈도우와 달리
+     맥에는 폴더에 두기만 하면 자동으로 읽히는 `winhttp.dll` 같은 길이 없기 때문이다.
+   - 스팀은 꺼질 때 설정을 덮어쓰므로, 켜져 있으면 잠시 껐다가 다시 켠다.
 
 Apple Silicon 맥에서는 게임이 **Rosetta(x86_64)로** 실행된다.
 BepInEx 5의 MonoMod가 arm64 네이티브에서 후킹을 못 하기 때문이다(게임은 유니버설 바이너리).

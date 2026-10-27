@@ -7,6 +7,7 @@
 - **macOS 지원.** 맥 전체판(`-macos.zip`)을 함께 만듭니다.
   맥용 BepInEx와 Doorstop 4.6.0, 실행 스크립트가 들어 있습니다.
   Apple Silicon에서는 Rosetta로 실행됩니다.
+  `install_macos.command`를 한 번 실행하면 스팀 실행 옵션까지 알아서 설정합니다.
 
 ### 고친 버그
 
