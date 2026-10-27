@@ -1,11 +1,16 @@
 """배포용 zip을 만들고, 원하면 GitHub Release까지 올린다.
 
-두 가지를 만든다.
+세 가지를 만든다.
 
   DDKoreanPatch-v<버전>.zip              전체판. BepInEx까지 들어 있어
                                         게임 폴더에 풀어 넣으면 끝난다.
   DDKoreanPatch-v<버전>-plugin-only.zip  갱신판. 이미 깐 사람이 번역만
-                                        새로 받을 때 쓴다.
+                                        새로 받을 때 쓴다. 맥에서도 같다.
+  DDKoreanPatch-v<버전>-macos.zip        맥 전체판. 맥용 BepInEx와 실행
+                                        스크립트가 들어 있다.
+
+맥용 BepInEx는 게임 폴더가 아니라 공식 배포본을 받아 담는다(sha256 확인).
+윈도우에서도 그대로 만들 수 있다. 받은 파일은 release/_cache에 남겨 둔다.
 
 BepInEx는 게임 폴더에 깔린 것을 그대로 담는다. 우리가 고친 것이 아니라
 공식 배포본 그대로이므로, LGPL-2.1에 따라 출처와 라이선스를 NOTICE.txt에
@@ -16,6 +21,7 @@ BepInEx는 게임 폴더에 깔린 것을 그대로 담는다. 우리가 고친 
   python tools/make_release.py 1.0.0            zip만 만든다
   python tools/make_release.py 1.0.0 --bump     Plugin.cs 버전도 맞춘다
   python tools/make_release.py 1.0.0 --publish  태그를 밀고 Release까지
+  python tools/make_release.py 1.0.0 --no-macos 맥 전체판은 건너뛴다
 
 --publish는 gh(GitHub CLI)가 있어야 한다. 없으면 zip은 그대로 두고
 직접 올리는 방법을 알려 준다.
@@ -29,6 +35,7 @@ import re
 import shutil
 import subprocess
 import sys
+import urllib.request
 import zipfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -39,6 +46,29 @@ CSPROJ = os.path.join(ROOT, "src", "DDKoreanPatch", "DDKoreanPatch.csproj")
 PLUGIN_CS = os.path.join(ROOT, "src", "DDKoreanPatch", "Plugin.cs")
 
 PLUGIN_SUBDIR = "BepInEx/plugins/DDKoreanPatch"
+MACOS_PACKAGING = os.path.join(PACKAGING, "macos")
+CACHE_DIR = os.path.join(OUT_DIR, "_cache")
+
+# 맥 전체판에 담을 공식 배포본. 바꿀 때는 sha256도 같이 고친다.
+#
+# BepInEx는 윈도우판과 같은 5.4.23.5의 맥 빌드다. core의 dll은 플랫폼마다
+# 빌드가 달라 윈도우판 것을 그대로 쓰면 안 된다.
+#
+# libdoorstop.dylib만은 UnityDoorstop 4.6.0으로 바꿔 담는다. BepInEx에 든
+# 4.5.0은 Unity 6.3 이상의 chained fixups를 읽지 못해
+# "Failed to open current process PLT! ... unknown imports format 0"으로
+# 아무것도 하지 않는다. 4.6.0에서 고쳐졌다 (UnityDoorstop#117).
+MACOS_BEPINEX = (
+    "https://github.com/BepInEx/BepInEx/releases/download/v5.4.23.5/"
+    "BepInEx_macos_universal_5.4.23.5.zip",
+    "01c2ae782eb016dfd6c345a18dbd2dcafffb3d9d318449d6486689f426b4a323")
+MACOS_DOORSTOP = (
+    "https://github.com/NeighTools/UnityDoorstop/releases/download/v4.6.0/"
+    "doorstop_macos_release_4.6.0.zip",
+    "8282e8ec37abc81bbf736d12c315fdb78b0418654fb57be9e40858649953ccb7")
+
+# 맥 전체판의 로더 파일. 어디서 가져오는지는 stage_macos()를 보라.
+MACOS_LOADER_FILES = ["run_bepinex.sh", "libdoorstop.dylib", ".doorstop_version", "changelog.txt"]
 
 # 게임 폴더에서 그대로 가져올 BepInEx 파일. core는 .dll만 담는다.
 # .xml은 개발용 문서 주석이라 있어도 동작이 달라지지 않고 용량만 는다.
@@ -119,22 +149,23 @@ def check_bundle():
     print(f"  번역 그림 {count}장")
 
 
-def render(name, out_path, **fields):
-    with io.open(os.path.join(PACKAGING, name), encoding="utf-8") as f:
+def render(name, out_path, folder=PACKAGING, mac=False, **fields):
+    with io.open(os.path.join(folder, name), encoding="utf-8") as f:
         text = f.read()
     for key, value in fields.items():
         text = text.replace("{" + key + "}", value)
+    if mac:
+        # 맥의 텍스트 편집기는 BOM 없는 LF가 자연스럽다.
+        with io.open(out_path, "w", encoding="utf-8", newline="\n") as f:
+            f.write(text)
+        return
     # 메모장에서 열어 보는 사람이 많아 CRLF로 내보낸다.
     with io.open(out_path, "w", encoding="utf-8-sig", newline="\r\n") as f:
         f.write(text)
 
 
-def stage(version, dll, full):
-    """zip에 넣을 것을 임시 폴더에 그대로 늘어놓는다."""
-    root = os.path.join(OUT_DIR, "_staging", "full" if full else "plugin")
-    if os.path.exists(root):
-        shutil.rmtree(root)
-
+def stage_plugin(root, dll):
+    """플러그인 폴더(BepInEx/plugins/DDKoreanPatch)를 늘어놓는다. 윈도우·맥 공통."""
     plugin = os.path.join(root, *PLUGIN_SUBDIR.split("/"))
     os.makedirs(plugin)
 
@@ -152,6 +183,15 @@ def stage(version, dll, full):
     sounds = os.path.join(DIST, "sounds")
     if os.path.isdir(sounds) and any(os.scandir(sounds)):
         shutil.copytree(sounds, os.path.join(plugin, "sounds"))
+
+
+def stage(version, dll, full):
+    """zip에 넣을 것을 임시 폴더에 그대로 늘어놓는다."""
+    root = os.path.join(OUT_DIR, "_staging", "full" if full else "plugin")
+    if os.path.exists(root):
+        shutil.rmtree(root)
+
+    stage_plugin(root, dll)
 
     if full:
         game = game_dir()
@@ -186,6 +226,73 @@ def stage(version, dll, full):
     return root
 
 
+def fetch(url, sha256):
+    """공식 배포본을 받아 release/_cache에 둔다. 해시가 다르면 멈춘다."""
+    os.makedirs(CACHE_DIR, exist_ok=True)
+    path = os.path.join(CACHE_DIR, url.rsplit("/", 1)[1])
+    if not os.path.exists(path):
+        print(f"  받는 중 {os.path.basename(path)}")
+        with urllib.request.urlopen(url) as response, open(path + ".part", "wb") as f:
+            shutil.copyfileobj(response, f)
+        os.replace(path + ".part", path)
+    with open(path, "rb") as f:
+        digest = hashlib.sha256(f.read()).hexdigest()
+    if digest != sha256:
+        os.remove(path)
+        fail(f"{os.path.basename(path)}의 sha256이 다릅니다.\n     기대 {sha256}\n     실제 {digest}")
+    return path
+
+
+def unzip_member(zip_path, suffix):
+    """zip 안에서 경로가 suffix로 끝나는 파일 하나를 꺼낸다."""
+    with zipfile.ZipFile(zip_path) as zf:
+        names = [n for n in zf.namelist() if n == suffix or n.endswith("/" + suffix)]
+        if len(names) != 1:
+            fail(f"{os.path.basename(zip_path)}에서 {suffix}를 찾지 못했습니다.")
+        return zf.read(names[0])
+
+
+def stage_macos(version, dll):
+    """맥 전체판. 공식 BepInEx 맥 빌드 + Doorstop 4.6.0 + 고친 실행 스크립트."""
+    root = os.path.join(OUT_DIR, "_staging", "macos")
+    if os.path.exists(root):
+        shutil.rmtree(root)
+
+    stage_plugin(root, dll)
+
+    bepinex = fetch(*MACOS_BEPINEX)
+    doorstop = fetch(*MACOS_DOORSTOP)
+
+    core_out = os.path.join(root, "BepInEx", "core")
+    os.makedirs(core_out)
+    with zipfile.ZipFile(bepinex) as zf:
+        for name in zf.namelist():
+            if name.startswith("BepInEx/core/") and name.endswith(".dll"):
+                with open(os.path.join(core_out, name.rsplit("/", 1)[1]), "wb") as f:
+                    f.write(zf.read(name))
+
+    sources = {
+        # 공식 run_bepinex.sh에서 실행 파일 이름과 Rosetta 실행만 고친 것.
+        "run_bepinex.sh": lambda: open(os.path.join(MACOS_PACKAGING, "run_bepinex.sh"), "rb").read(),
+        "libdoorstop.dylib": lambda: unzip_member(doorstop, "universal/libdoorstop.dylib"),
+        ".doorstop_version": lambda: unzip_member(doorstop, "universal/.doorstop_version"),
+        "changelog.txt": lambda: unzip_member(bepinex, "changelog.txt"),
+    }
+    for name in MACOS_LOADER_FILES:
+        with open(os.path.join(root, name), "wb") as f:
+            f.write(sources[name]())
+
+    today = datetime.date.today().strftime("%Y-%m-%d")
+    render("읽어주세요.txt", os.path.join(root, "읽어주세요.txt"), folder=MACOS_PACKAGING,
+           mac=True, version=f"v{version}", date=today, update_note="")
+    render("NOTICE.txt", os.path.join(root, "NOTICE.txt"), mac=True)
+    return root
+
+
+# zip 안에서 실행 권한을 줄 파일. 윈도우에서 묶으면 권한 비트가 없으므로 직접 적는다.
+EXECUTABLES = {"run_bepinex.sh"}
+
+
 def pack(root, zip_path):
     if os.path.exists(zip_path):
         os.remove(zip_path)
@@ -193,7 +300,13 @@ def pack(root, zip_path):
         for base, _, files in os.walk(root):
             for name in sorted(files):
                 path = os.path.join(base, name)
-                zf.write(path, os.path.relpath(path, root).replace("\\", "/"))
+                info = zipfile.ZipInfo.from_file(path, os.path.relpath(path, root).replace("\\", "/"))
+                info.compress_type = zipfile.ZIP_DEFLATED
+                mode = 0o755 if name in EXECUTABLES else 0o644
+                info.external_attr = (0o100000 | mode) << 16
+                info.create_system = 3  # unix. 그래야 맥의 압축 풀기가 권한을 읽는다.
+                with open(path, "rb") as f:
+                    zf.writestr(info, f.read(), compresslevel=9)
 
     size = os.path.getsize(zip_path) / (1024 * 1024)
     with open(zip_path, "rb") as f:
@@ -295,10 +408,16 @@ def write_notes(path, version, zips, digests):
     lines = [body, "", "## 받는 곳", ""]
     for zip_path, digest in zip(zips, digests):
         name = os.path.basename(zip_path)
-        kind = "갱신판 (이미 까신 분)" if "plugin-only" in name else "전체판 (처음 까시는 분)"
+        if "plugin-only" in name:
+            kind = "갱신판 (이미 까신 분, 윈도우·맥 공통)"
+        elif "macos" in name:
+            kind = "맥 전체판 (macOS에서 처음 까시는 분)"
+        else:
+            kind = "전체판 (처음 까시는 분)"
         lines.append(f"- **{kind}** — `{name}`")
         lines.append(f"  - sha256 `{digest}`")
     lines += ["", "압축을 풀어 게임 폴더(copOS.exe가 있는 곳)에 덮어쓰면 됩니다.",
+              "맥은 copOS.app이 있는 곳에 넣고 스팀 실행 옵션을 하나 적어야 합니다.",
               "자세한 것은 압축 파일 안의 `읽어주세요.txt`를 보십시오."]
 
     with io.open(path, "w", encoding="utf-8") as f:
@@ -312,6 +431,8 @@ def main():
                         help="Plugin.cs의 PluginVersion을 이 버전으로 고친다")
     parser.add_argument("--publish", action="store_true",
                         help="태그를 밀고 GitHub Release까지 만든다")
+    parser.add_argument("--no-macos", action="store_true",
+                        help="맥 전체판을 만들지 않는다")
     args = parser.parse_args()
 
     if not re.fullmatch(r"\d+\.\d+\.\d+", args.version):
@@ -334,6 +455,12 @@ def main():
         suffix = "" if full else "-plugin-only"
         root = stage(args.version, dll, full)
         path = os.path.join(OUT_DIR, f"DDKoreanPatch-v{args.version}{suffix}.zip")
+        digests.append(pack(root, path))
+        zips.append(path)
+
+    if not args.no_macos:
+        root = stage_macos(args.version, dll)
+        path = os.path.join(OUT_DIR, f"DDKoreanPatch-v{args.version}-macos.zip")
         digests.append(pack(root, path))
         zips.append(path)
 

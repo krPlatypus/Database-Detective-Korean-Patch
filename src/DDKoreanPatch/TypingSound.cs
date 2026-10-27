@@ -140,6 +140,18 @@ namespace DDKoreanPatch
         }
 
         /// <summary>
+        /// 로컬 경로를 file URL로 바꾼다.
+        /// 윈도우 경로(C:\...)는 앞에 /를 하나 더 붙여야 하고, 맥·리눅스 경로는
+        /// 이미 /로 시작하므로 그대로 붙인다. "file:///" + "/Users/..."처럼
+        /// 슬래시가 넷이 되면 UnityWebRequest가 Malformed URL로 거절한다.
+        /// </summary>
+        private static string FileUrl(string path)
+        {
+            string normalized = path.Replace('\\', '/');
+            return normalized.StartsWith("/") ? "file://" + normalized : "file:///" + normalized;
+        }
+
+        /// <summary>
         /// 플러그인 폴더의 sounds/ 아래에 있는 음원을 읽어 들인다.
         ///
         /// 게임 자산에는 진짜 키보드 소리가 없고 마우스·펜 계열만 있다.
@@ -163,7 +175,7 @@ namespace DDKoreanPatch
                 }
 
                 using (UnityWebRequest request =
-                       UnityWebRequestMultimedia.GetAudioClip("file:///" + path.Replace('\\', '/'), type))
+                       UnityWebRequestMultimedia.GetAudioClip(FileUrl(path), type))
                 {
                     yield return request.SendWebRequest();
 

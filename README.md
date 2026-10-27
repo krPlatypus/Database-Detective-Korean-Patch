@@ -17,6 +17,23 @@ BepInEx 플러그인으로 동작하며 **게임 원본 파일은 하나도 수�
 지우려면 `winhttp.dll`, `doorstop_config.ini`, `.doorstop_version`, `changelog.txt`,
 `BepInEx` 폴더만 지우면 된다. 자세한 설명은 압축 파일 안의 `읽어주세요.txt`에 있다.
 
+### macOS
+
+1. `DDKoreanPatch-v<버전>-macos.zip`을 받는다
+2. 게임 폴더(`copOS.app`이 있는 곳)에 **전부 넣는다**
+3. 터미널에서 격리 표시를 떼고 실행 권한을 준다
+   ```sh
+   cd ~/Library/Application\ Support/Steam/steamapps/common/Database\ Detective
+   xattr -dr com.apple.quarantine . ; chmod +x run_bepinex.sh
+   ```
+4. 스팀 게임 속성 → 일반 → **실행 옵션**에 아래를 적는다
+   ```
+   "$HOME/Library/Application Support/Steam/steamapps/common/Database Detective/run_bepinex.sh" %command%
+   ```
+
+Apple Silicon 맥에서는 게임이 **Rosetta(x86_64)로** 실행된다.
+BepInEx 5의 MonoMod가 arm64 네이티브에서 후킹을 못 하기 때문이다(게임은 유니버설 바이너리).
+
 번역이 어색한 곳을 보시면 [이슈](https://github.com/krPlatypus/Database-Detective-Korean-Patch/issues)로
 알려 주십시오.
 
@@ -40,6 +57,9 @@ BepInEx 플러그인으로 동작하며 **게임 원본 파일은 하나도 수�
 
 - Unity **6000.5.5f1**, 스크립팅 백엔드 **Mono**
 - BepInEx **5.4.23.5** + HarmonyX
+- macOS: BepInEx 5.4.23.5 맥 빌드 + **UnityDoorstop 4.6.0**. BepInEx에 든 Doorstop 4.5.0은
+  Unity 6.3 이상의 chained fixups를 읽지 못해 아무것도 하지 않는다
+  (`Failed to open current process PLT! ... unknown imports format 0`, UnityDoorstop#117)
 - 로컬라이제이션 프레임워크 없음 (영어 하드코딩)
 - 내장 폰트 전부 라틴 전용 — 한글 글리프 없음
 

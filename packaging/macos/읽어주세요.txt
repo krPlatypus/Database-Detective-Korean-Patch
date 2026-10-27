@@ -1,0 +1,113 @@
+====================================================================
+ Database Detective 한글패치  {version}  (macOS)
+ {date}
+ https://github.com/krPlatypus/Database-Detective-Korean-Patch
+====================================================================
+
+ 스팀 게임 Database Detective(HsuCorp)의 비공식 한글패치 맥용입니다.
+ 번역 내용은 윈도우판과 같습니다.
+
+ 게임 원본 파일은 하나도 고치지 않습니다.
+ 파일을 더 넣어 게임이 켜질 때 한글을 얹는 방식입니다.
+
+ Apple Silicon(M1 이후) 맥에서는 게임이 Rosetta로 실행됩니다.
+ 패치가 쓰는 BepInEx 5가 arm64 네이티브를 지원하지 않기 때문입니다.
+ Rosetta가 없다면 처음 한 번 설치하겠냐고 물어봅니다.
+
+
+--------------------------------------------------------------------
+ 설치
+--------------------------------------------------------------------
+
+ 1. 스팀 라이브러리에서 Database Detective를 오른쪽 클릭하고
+    [관리] - [로컬 파일 보기]를 고릅니다.
+    보통 아래 폴더가 열립니다.
+
+    ~/Library/Application Support/Steam/steamapps/common/Database Detective
+
+ 2. 이 압축 파일 안의 것을 그 폴더에 **전부 넣습니다.**
+    copOS.app 이 있는 폴더가 맞습니다.
+
+ 3. 터미널을 열고 아래 두 줄을 그대로 붙여 넣습니다.
+    인터넷에서 받은 파일에 붙는 격리 표시를 떼고, 실행 권한을 줍니다.
+
+    cd ~/Library/Application\ Support/Steam/steamapps/common/Database\ Detective
+    xattr -dr com.apple.quarantine . ; chmod +x run_bepinex.sh
+
+ 4. 스팀에서 게임을 오른쪽 클릭 - [속성] - [일반] - [실행 옵션]에
+    아래 한 줄을 넣습니다. (경로가 다르면 맞게 고칩니다)
+
+    "$HOME/Library/Application Support/Steam/steamapps/common/Database Detective/run_bepinex.sh" %command%
+
+ 5. 게임을 켭니다.
+
+ 제대로 들어갔다면 게임 폴더가 이렇게 됩니다.
+
+    Database Detective/
+      copOS.app
+      run_bepinex.sh         <- 새로 들어간 것
+      libdoorstop.dylib      <- 새로 들어간 것
+      .doorstop_version      <- 새로 들어간 것  (Finder에서는 안 보임)
+      changelog.txt          <- 새로 들어간 것
+      BepInEx/               <- 새로 들어간 것
+      ...
+
+{update_note}
+--------------------------------------------------------------------
+ 지우기
+--------------------------------------------------------------------
+
+ 스팀 실행 옵션을 비우고, 게임 폴더에서 아래만 지우면 원래대로
+ 돌아갑니다.
+
+    run_bepinex.sh
+    libdoorstop.dylib
+    .doorstop_version
+    changelog.txt
+    BepInEx  폴더
+
+
+--------------------------------------------------------------------
+ 설정 바꾸기
+--------------------------------------------------------------------
+
+ 게임을 한 번 켜면 아래에 설정 파일이 생깁니다.
+
+    BepInEx/config/kr.spade.databasedetective.koreanpatch.cfg
+
+ 항목은 윈도우판과 같습니다. FontFile 을 비우면 윈도우 글꼴을
+ 찾으므로 맥에서는 동봉한 neodgm.ttf 를 그대로 두십시오.
+
+
+--------------------------------------------------------------------
+ 잘 안 될 때
+--------------------------------------------------------------------
+
+ ● 게임은 켜지는데 그대로 영어입니다
+
+    BepInEx/LogOutput.log 가 생겼는지 보십시오.
+
+    - 파일이 없다면 BepInEx가 뜨지 않은 것입니다.
+      스팀 실행 옵션이 들어갔는지, 3번을 했는지 확인하십시오.
+    - copOS.app/Contents/MacOS/ 안에 preloader_*.log 가 있다면
+      BepInEx가 뜨다가 실패한 것입니다. 그 파일을 올려 주십시오.
+
+ ● "libdoorstop.dylib을(를) 열 수 없습니다" 같은 경고가 뜹니다
+
+    설치 3번의 xattr 줄을 다시 실행하십시오.
+
+ ● 스팀에서 파일 무결성 검사를 돌렸더니 패치가 풀렸습니다
+
+    이 압축 파일을 다시 넣고 3번을 다시 하면 됩니다.
+
+ ● 그 밖의 문제
+
+    BepInEx/LogOutput.log 를 아래 주소에 올려 주시면 보겠습니다.
+    https://github.com/krPlatypus/Database-Detective-Korean-Patch/issues
+
+
+--------------------------------------------------------------------
+ 저작권
+--------------------------------------------------------------------
+
+ 같이 들어 있는 NOTICE.txt 를 보십시오.
