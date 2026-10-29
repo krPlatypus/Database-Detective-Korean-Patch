@@ -163,7 +163,7 @@ namespace DDKoreanPatch
                 }
 
                 using (UnityWebRequest request =
-                       UnityWebRequestMultimedia.GetAudioClip("file:///" + path.Replace('\\', '/'), type))
+                       UnityWebRequestMultimedia.GetAudioClip(new System.Uri(Path.GetFullPath(path)).AbsoluteUri, type))
                 {
                     yield return request.SendWebRequest();
 

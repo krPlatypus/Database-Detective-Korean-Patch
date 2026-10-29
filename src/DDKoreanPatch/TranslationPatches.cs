@@ -173,5 +173,28 @@ namespace DDKoreanPatch
         {
             __result = Translator.TranslateAsset(__result);
         }
+
+        // 지명/파일명은 원문을 유지하고 화면 전용 연결어와 제목 접미사만 바꾼다.
+        // 전역 "A to B" 규칙은 데이터 값까지 바꿀 수 있어 해당 화면에만 적용한다.
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(lzairlines_checkin), nameof(lzairlines_checkin.LoadPage))]
+        private static void FlightRoutePostfix(bool __result, TextMeshProUGUI ___destination)
+        {
+            if (__result && ___destination != null)
+            {
+                ___destination.text = ___destination.text.Replace(" to ", " → ");
+            }
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(AudioClueManager), nameof(AudioClueManager.GetTranscriptTitleName))]
+        private static void ClueTranscriptTitlePostfix(ref string __result)
+        {
+            const string suffix = " Transcript";
+            if (__result != null && __result.EndsWith(suffix, System.StringComparison.Ordinal))
+            {
+                __result = __result.Substring(0, __result.Length - suffix.Length) + " 녹취록";
+            }
+        }
     }
 }

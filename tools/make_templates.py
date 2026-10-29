@@ -8,6 +8,7 @@ import json
 import os
 import re
 import sys
+from build_translation import source_hash
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -75,12 +76,22 @@ def build_textasset_templates():
     out_dir = os.path.join(TRANSLATION, "textassets")
     os.makedirs(out_dir, exist_ok=True)
 
+    manifest_path = os.path.join(out_dir, "_manifest.json")
+    existing = {}
+    if os.path.exists(manifest_path):
+        with open(manifest_path, encoding="utf-8") as f:
+            existing = json.load(f)
+    by_content = {(info["name"], info.get("sha256")): name for name, info in existing.items()
+                  if info.get("sha256")}
     manifest = {}
     created = 0
     for record in records:
         path_id = record["source"].split(":")[1]
-        file_name = safe_name(record["name"], path_id)
-        manifest[file_name] = {"name": record["name"], "source": record["source"]}
+        digest = source_hash(record["text"])
+        file_name = by_content.get((record["name"], digest), safe_name(record["name"], path_id))
+        if file_name in existing and existing[file_name].get("sha256") not in (None, digest):
+            raise ValueError(f"원문이 변경되었습니다: {file_name}. 기존 번역과 대조한 뒤 갱신하세요.")
+        manifest[file_name] = {"name": record["name"], "source": record["source"], "sha256": digest}
 
         target = os.path.join(out_dir, file_name)
         if not os.path.exists(target):

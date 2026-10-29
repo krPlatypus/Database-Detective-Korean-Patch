@@ -1,12 +1,20 @@
 """게임 애셋 접근 공통 헬퍼."""
 import json
 import os
+import sys
+from pathlib import Path
 
 import UnityPy
 from UnityPy.helpers.TypeTreeGenerator import TypeTreeGenerator
 
-GAME_DIR = r"D:\Program Files (x86)\Steam\steamapps\common\Database Detective"
-DATA_DIR = os.path.join(GAME_DIR, "copOS_Data")
+DEFAULT_GAME_DIR = (
+    Path.home() / "Library/Application Support/Steam/steamapps/common/Database Detective"
+    if sys.platform == "darwin"
+    else Path(r"D:\Program Files (x86)\Steam\steamapps\common\Database Detective")
+)
+GAME_DIR = os.environ.get("DDKOREAN_GAME_DIR", str(DEFAULT_GAME_DIR))
+DATA_DIR = os.path.join(GAME_DIR, "copOS.app/Contents/Resources/Data"
+                        if sys.platform == "darwin" else "copOS_Data")
 MANAGED_DIR = os.path.join(DATA_DIR, "Managed")
 UNITY_VERSION = "6000.5.5f1"
 

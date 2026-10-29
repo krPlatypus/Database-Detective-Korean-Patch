@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <Game Condition="'$(Game)' == ''">$(HOME)/Library/Application Support/Steam/steamapps/common/Database Detective</Game>
+    <Managed Condition="'$(Managed)' == ''">$(Game)/copOS.app/Contents/Resources/Data/Managed</Managed>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../src/DDKoreanPatch/Translator.cs" />
+    <Compile Include="../../src/DDKoreanPatch/MessageTitlePatches.cs" />
+    <Compile Include="Program.cs" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(Managed)/Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Scripts">
+      <HintPath>$(Managed)/Scripts.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(Managed)/UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>$(Managed)/UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>$(Managed)/UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>$(Managed)/Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="$(Game)/BepInEx/core/0Harmony.dll" />
+    <Reference Include="$(Game)/BepInEx/core/MonoMod.Utils.dll" />
+    <Reference Include="$(Game)/BepInEx/core/MonoMod.RuntimeDetour.dll" />
+    <Reference Include="$(Game)/BepInEx/core/Mono.Cecil.dll" />
+  </ItemGroup>
+</Project>

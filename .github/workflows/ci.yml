@@ -27,3 +27,6 @@ jobs:
 
       - name: 번역 JSON이 깨지지 않았는지
         run: python tools/ci_check.py
+
+      - name: macOS 설치 백업과 실행 경로
+        run: python -m unittest discover -s tools -p 'test_*.py'

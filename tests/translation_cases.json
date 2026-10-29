@@ -1,0 +1,146 @@
+[
+ {
+  "source": "Question 2",
+  "expected": "2번 문제"
+ },
+ {
+  "source": "Case #7 (Virtual Murder)",
+  "expected": "사건 #7 (가상 살인)"
+ },
+ {
+  "source": "TOP SECRET MESSAGE",
+  "expected": "일급 기밀 메시지"
+ },
+ {
+  "source": "Thanks",
+  "expected": "고마워요"
+ },
+ {
+  "source": "  Error  ",
+  "expected": "  오류  "
+ },
+ {
+  "source": "Signed exponents must be followed by an integer. ",
+  "expected": "부호가 있는 지수 뒤에는 정수가 와야 합니다. "
+ },
+ {
+  "source": "Finding handcuffs...",
+  "expected": "수갑을 찾는 중..."
+ },
+ {
+  "source": "Reloading current case..",
+  "expected": "현재 사건을 다시 불러오는 중.."
+ },
+ {
+  "source": "12 seconds...",
+  "expected": "12초..."
+ },
+ {
+  "source": "Less than 1 second.",
+  "expected": "1초 미만."
+ },
+ {
+  "source": "5 days..",
+  "expected": "5일.."
+ },
+ {
+  "source": "Less than 1 day",
+  "expected": "1일 미만"
+ },
+ {
+  "source": "Finished downloading <i>movies</i>.",
+  "expected": "<i>movies</i> 다운로드를 마쳤습니다."
+ },
+ {
+  "source": "Finished downloading <i>prices</i>.\nCurrency values converted to Calizoranian dollars.",
+  "expected": "<i>prices</i> 다운로드를 마쳤습니다.\n금액을 Calizorania 달러로 환산했습니다."
+ },
+ {
+  "source": "<i>seats_123</i> has already been downloaded.",
+  "expected": "<i>seats_123</i>은(는) 이미 받았습니다."
+ },
+ {
+  "source": "Guild members for THE CA$H BOY$\nhas already been downloaded.",
+  "expected": "THE CA$H BOY$의 길드원 목록은\n이미 받았습니다."
+ },
+ {
+  "source": "Transaction history for goldtooth\nhas already been downloaded.",
+  "expected": "goldtooth의 거래 내역은\n이미 받았습니다."
+ },
+ {
+  "source": "No packages found for Akira Watanabe",
+  "expected": "Akira Watanabe의 배송 물품을 찾을 수 없습니다."
+ },
+ {
+  "source": "There are too many tables. Please delete 1 icon.",
+  "expected": "테이블이 너무 많습니다. 아이콘 1개를 삭제해 주세요."
+ },
+ {
+  "source": "There are too many tables. Please delete 4 icons.",
+  "expected": "테이블이 너무 많습니다. 아이콘 4개를 삭제해 주세요."
+ },
+ {
+  "source": "Illegal word detected! The word DELETE cannot be used in your query.",
+  "expected": "금지된 단어가 있습니다! 쿼리에 DELETE을(를) 쓸 수 없습니다."
+ },
+ {
+  "source": "Cannot find table named: movies. Are you sure this is the right table name?",
+  "expected": "'movies' 테이블을 찾을 수 없습니다. 테이블 이름이 맞는지 확인하세요."
+ },
+ {
+  "source": "The keyword: SELECT cannot be placed directly after a comma",
+  "expected": "SELECT 키워드는 쉼표 바로 뒤에 올 수 없습니다"
+ },
+ {
+  "source": "The comma after the SELECT statement is in an unexpected place.",
+  "expected": "SELECT 문 뒤의 쉼표가 올 자리가 아닙니다."
+ },
+ {
+  "source": "An unexpected value of \"x\" was found inside the USING statement.",
+  "expected": "USING 문 안에서 예상하지 못한 값 \"x\"을(를) 찾았습니다."
+ },
+ {
+  "source": "Cannot use the binary operator: <b>+</b> on <b>FROM</b>",
+  "expected": "<b>FROM</b>에는 이항 연산자 <b>+</b>을(를) 쓸 수 없습니다"
+ },
+ {
+  "source": "<b>name</b> cannot be placed right next to the special character '*'. If you would like to add <b>name</b> as a seperate column, add a comma after '*'.",
+  "expected": "특수 문자 '*' 바로 옆에는 <b>name</b>을(를) 쓸 수 없습니다. <b>name</b>을(를) 별도 컬럼으로 추가하려면 '*' 뒤에 쉼표를 넣으세요."
+ },
+ {
+  "source": "The '$' character is not supported. Do you mean to use the 'AND' operator?",
+  "expected": "'$' 문자는 쓸 수 없습니다. 'AND' 연산자를 쓰려던 건가요?"
+ },
+ {
+  "source": "SELECT * FROM movies",
+  "expected": "SELECT * FROM movies"
+ },
+ {
+  "source": "Corrupted",
+  "expected": "Corrupted"
+ },
+ {
+  "source": "diddly dee",
+  "expected": "diddly dee"
+ },
+ {
+  "source": "Akira Watanabe",
+  "expected": "Akira Watanabe"
+ },
+ {
+  "source": "xCalibur32",
+  "expected": "xCalibur32"
+ },
+ {
+  "source": "THE CA$H BOY$",
+  "expected": "THE CA$H BOY$"
+ },
+ {
+  "source": "Class",
+  "expected": "Class"
+ },
+ {
+  "source": "Flight #12345",
+  "expected": "Flight #12345"
+ }
+]

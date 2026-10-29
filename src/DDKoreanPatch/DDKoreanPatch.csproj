@@ -9,10 +9,17 @@
     <EnableDefaultCompileItems>true</EnableDefaultCompileItems>
     <DebugType>portable</DebugType>
     <NoWarn>$(NoWarn);CS0436;CS1701</NoWarn>
-    <GameDir>D:\Program Files (x86)\Steam\steamapps\common\Database Detective</GameDir>
-    <ManagedDir>$(GameDir)\copOS_Data\Managed</ManagedDir>
-    <BepInExCore>$(GameDir)\BepInEx\core</BepInExCore>
+    <GameDir Condition="'$(GameDir)' == '' and $([MSBuild]::IsOSPlatform('OSX'))">$(HOME)/Library/Application Support/Steam/steamapps/common/Database Detective</GameDir>
+    <GameDir Condition="'$(GameDir)' == ''">D:\Program Files (x86)\Steam\steamapps\common\Database Detective</GameDir>
+    <ManagedDir Condition="'$(ManagedDir)' == '' and $([MSBuild]::IsOSPlatform('OSX'))">$(GameDir)/copOS.app/Contents/Resources/Data/Managed</ManagedDir>
+    <ManagedDir Condition="'$(ManagedDir)' == ''">$(GameDir)/copOS_Data/Managed</ManagedDir>
+    <BepInExCore Condition="'$(BepInExCore)' == ''">$(GameDir)/BepInEx/core</BepInExCore>
   </PropertyGroup>
+
+  <Target Name="CheckGameReferences" BeforeTargets="ResolveReferences">
+    <Error Condition="!Exists('$(ManagedDir)/Scripts.dll')" Text="게임의 Managed 폴더를 찾지 못했습니다. -p:GameDir=게임폴더 또는 -p:ManagedDir=Managed폴더를 지정하세요." />
+    <Error Condition="!Exists('$(BepInExCore)/BepInEx.dll')" Text="BepInEx/core를 찾지 못했습니다. -p:BepInExCore=로더의core폴더를 지정하세요." />
+  </Target>
 
   <ItemGroup>
     <Reference Include="BepInEx">

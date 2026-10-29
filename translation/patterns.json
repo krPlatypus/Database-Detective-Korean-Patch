@@ -3,6 +3,24 @@
   "_comment": "값이 끼워 넣어진 채 만들어지는 문장. 파서 오류는 문자열을 이어 붙여 만들기 때문에 정확 일치 사전으로 잡히지 않는다. match는 .NET 정규식, replace의 $1 $2는 잡아낸 값이다. 구체적인 규칙을 위에 둔다."
  },
 
+ { "match": "^The period after the (.+?) statement is in an unexpected place\\.$",
+   "replace": "$1 문 뒤의 마침표가 올 자리가 아닙니다." },
+
+ { "match": "^The keyword: (.+?) cannot be placed directly after a period$",
+   "replace": "$1 키워드는 마침표 바로 뒤에 올 수 없습니다" },
+
+ { "match": "^Unexpected keyword '(.+?)' spotted right after 'a period' - is this keyword in the right place\\?$",
+   "replace": "마침표 바로 뒤에 예상하지 못한 키워드 '$1'이(가) 있습니다. 키워드 위치를 확인하세요." },
+
+ { "match": "^The comma after the (.+?) statement is in an unexpected place\\.$",
+   "replace": "$1 문 뒤의 쉼표가 올 자리가 아닙니다." },
+
+ { "match": "^The keyword: (.+?) cannot be placed directly after a comma$",
+   "replace": "$1 키워드는 쉼표 바로 뒤에 올 수 없습니다" },
+
+ { "match": "^Unexpected keyword '(.+?)' spotted right after 'a comma' - is this keyword in the right place\\?$",
+   "replace": "쉼표 바로 뒤에 예상하지 못한 키워드 '$1'이(가) 있습니다. 키워드 위치를 확인하세요." },
+
  { "match": "^Cannot find table named: (.+?)\\.? Are you sure this is the right table name\\?$",
    "replace": "'$1' 테이블을 찾을 수 없습니다. 테이블 이름이 맞는지 확인하세요." },
 
@@ -82,5 +100,223 @@
    "replace": "$2 문 뒤의 $1이(가) 올 자리가 아닙니다." },
 
  { "match": "^The keyword: (.+?) cannot be placed directly after (.+)$",
-   "replace": "$1 키워드는 $2 바로 뒤에 올 수 없습니다" }
+   "replace": "$1 키워드는 $2 바로 뒤에 올 수 없습니다" },
+
+ { "_comment": "추가 화면 문구: 진행 표시, 다운로드·체포 알림, SQL 파서 오류. 식별자와 조회 값은 캡처한 원문 그대로 유지한다." },
+
+ { "match": "^Enjoying\\ time\\ off(\\.{1,3})?$",
+   "replace": "휴가를 즐기는 중$1" },
+
+ { "match": "^Relaxing\\ in\\ the\\ pool(\\.{1,3})?$",
+   "replace": "수영장에서 쉬는 중$1" },
+
+ { "match": "^Thinking\\ about\\ nothing(\\.{1,3})?$",
+   "replace": "아무 생각 없이 쉬는 중$1" },
+
+ { "match": "^Coming\\ up\\ with\\ a\\ plan(\\.{1,3})?$",
+   "replace": "계획을 세우는 중$1" },
+
+ { "match": "^Remembering\\ where\\ we\\ put\\ the\\ suspect(\\.{1,3})?$",
+   "replace": "용의자를 둔 곳을 떠올리는 중$1" },
+
+ { "match": "^Walking\\ toward\\ suspect(\\.{1,3})?$",
+   "replace": "용의자에게 걸어가는 중$1" },
+
+ { "match": "^Apprehending\\ suspect(\\.{1,3})?$",
+   "replace": "용의자를 체포하는 중$1" },
+
+ { "match": "^Finding\\ handcuffs(\\.{1,3})?$",
+   "replace": "수갑을 찾는 중$1" },
+
+ { "match": "^Speeding\\ toward\\ suspect\\ location(\\.{1,3})?$",
+   "replace": "용의자가 있는 곳으로 질주하는 중$1" },
+
+ { "match": "^Violently\\ tackling\\ suspect(\\.{1,3})?$",
+   "replace": "용의자를 거칠게 덮치는 중$1" },
+
+ { "match": "^Finishing\\ our\\ coffee(\\.{1,3})?$",
+   "replace": "커피를 마저 마시는 중$1" },
+
+ { "match": "^Scoping\\ out\\ the\\ office\\ kitchen(\\.{1,3})?$",
+   "replace": "사무실 주방을 살피는 중$1" },
+
+ { "match": "^Running\\ toward\\ traitor(\\.{1,3})?$",
+   "replace": "배신자에게 달려가는 중$1" },
+
+ { "match": "^Locating\\ suspect's\\ phone\\ number(\\.{1,3})?$",
+   "replace": "용의자의 전화번호를 찾는 중$1" },
+
+ { "match": "^Dialing\\ suspect(\\.{1,3})?$",
+   "replace": "용의자에게 전화를 거는 중$1" },
+
+ { "match": "^Approaching\\ tracked\\ location(\\.{1,3})?$",
+   "replace": "추적한 위치로 접근하는 중$1" },
+
+ { "match": "^Grabbing\\ weapons\\ and\\ armor(\\.{1,3})?$",
+   "replace": "무기와 방어구를 챙기는 중$1" },
+
+ { "match": "^Preparing\\ armed\\ vehicles(\\.{1,3})?$",
+   "replace": "무장 차량을 준비하는 중$1" },
+
+ { "match": "^Breaching\\ suspect\\ domicile(\\.{1,3})?$",
+   "replace": "용의자의 집에 진입하는 중$1" },
+
+ { "match": "^Tracking\\ suspect's\\ IP\\ address(\\.{1,3})?$",
+   "replace": "용의자의 IP 주소를 추적하는 중$1" },
+
+ { "match": "^Racing\\ toward\\ suspect(\\.{1,3})?$",
+   "replace": "용의자에게 급히 달려가는 중$1" },
+
+ { "match": "^Intercepting\\ suspect(\\.{1,3})?$",
+   "replace": "용의자의 길목을 막는 중$1" },
+
+ { "match": "^Suspect\\ located(\\.{1,3})?$",
+   "replace": "용의자 위치 확인$1" },
+
+ { "match": "^Fighter\\ jets\\ flying\\ overhead(\\.{1,3})?$",
+   "replace": "전투기가 상공을 비행하는 중$1" },
+
+ { "match": "^Officers\\ parachuting\\ towards\\ suspect(\\.{1,3})?$",
+   "replace": "경찰이 용의자 쪽으로 낙하하는 중$1" },
+
+ { "match": "^Entering\\ LZU\\ campus(\\.{1,3})?$",
+   "replace": "LZU 교정에 진입하는 중$1" },
+
+ { "match": "^Finding\\ correct\\ classroom(\\.{1,3})?$",
+   "replace": "해당 강의실을 찾는 중$1" },
+
+ { "match": "^Sprinting\\ towards\\ suspect(\\.{1,3})?$",
+   "replace": "용의자에게 전력 질주하는 중$1" },
+
+ { "match": "^Getting\\ out\\ of\\ bed(\\.{1,3})?$",
+   "replace": "침대에서 일어나는 중$1" },
+
+ { "match": "^Looking\\ at\\ arrest\\ warrant(\\.{1,3})?$",
+   "replace": "체포영장을 보는 중$1" },
+
+ { "match": "^Mentally\\ processing\\ arrest\\ warrant(\\.{1,3})?$",
+   "replace": "체포영장을 이해하는 중$1" },
+
+ { "match": "^Looking\\ up\\ the\\ suspect(\\.{1,3})?$",
+   "replace": "용의자를 조회하는 중$1" },
+
+ { "match": "^Downloading\\ their\\ game(\\.{1,3})?$",
+   "replace": "용의자의 게임을 내려받는 중$1" },
+
+ { "match": "^Looking\\ at\\ the\\ reviews(\\.{1,3})?$",
+   "replace": "후기를 읽는 중$1" },
+
+ { "match": "^Reloading\\ current\\ case(\\.{1,3})?$",
+   "replace": "현재 사건을 다시 불러오는 중$1" },
+
+ { "match": "^Destroying\\ everything(\\.{1,3})?$",
+   "replace": "모든 진행 기록을 지우는 중$1" },
+
+ { "match": "^(\\d+) seconds(\\.{0,3})$",
+   "replace": "$1초$2" },
+
+ { "match": "^Less than 1 second(\\.{0,3})$",
+   "replace": "1초 미만$1" },
+
+ { "match": "^(\\d+) days(\\.{0,3})$",
+   "replace": "$1일$2" },
+
+ { "match": "^Less than 1 day(\\.{0,3})$",
+   "replace": "1일 미만$1" },
+
+ { "match": "^There are too many tables\\. Please delete (\\d+) icons?\\.$",
+   "replace": "테이블이 너무 많습니다. 아이콘 $1개를 삭제해 주세요." },
+
+ { "match": "^Finished downloading <i>(.+?)</i>\\.\\nCurrency values converted to Calizoranian dollars\\.$",
+   "replace": "<i>$1</i> 다운로드를 마쳤습니다.\n금액을 Calizorania 달러로 환산했습니다." },
+
+ { "match": "^Finished downloading <i>(.+?)</i>\\.$",
+   "replace": "<i>$1</i> 다운로드를 마쳤습니다." },
+
+ { "match": "^<i>(.+?)</i> has already been downloaded\\.$",
+   "replace": "<i>$1</i>은(는) 이미 받았습니다." },
+
+ { "match": "^Guild members for (.+?)\\nhas already been downloaded\\.$",
+   "replace": "$1의 길드원 목록은\n이미 받았습니다." },
+
+ { "match": "^Transaction history for (.+?)\\nhas already been downloaded\\.$",
+   "replace": "$1의 거래 내역은\n이미 받았습니다." },
+
+ { "match": "^No packages found for (.+)$",
+   "replace": "$1의 배송 물품을 찾을 수 없습니다." },
+
+ { "match": "^(.+?) is not in our list of suspects being considered for the current case\\. Are you sure you wrote down the right person\\?$",
+   "replace": "$1은(는) 이번 사건의 용의자 명단에 없습니다. 이름을 정확히 입력했는지 확인하세요." },
+
+ { "match": "^(.+?) has already been arrested!$",
+   "replace": "$1은(는) 이미 체포되었습니다!" },
+
+ { "match": "^<b>(.+?)</b> cannot be used as a table name\\. Please choose another\\.$",
+   "replace": "<b>$1</b>은(는) 테이블 이름으로 쓸 수 없습니다. 다른 이름을 고르세요." },
+
+ { "match": "^Illegal word detected! The word (.+?) cannot be used in your query\\.$",
+   "replace": "금지된 단어가 있습니다! 쿼리에 $1을(를) 쓸 수 없습니다." },
+
+ { "match": "^Invalid table name: (.+)$",
+   "replace": "올바르지 않은 테이블 이름: $1" },
+
+ { "match": "^There must be a SELECT statement after the (.+?) keyword\\.$",
+   "replace": "$1 키워드 뒤에는 SELECT 문이 와야 합니다." },
+
+ { "match": "^The list of tables in the (.+?) statement cannot end with a comma\\.$",
+   "replace": "$1 문의 테이블 목록은 쉼표로 끝날 수 없습니다." },
+
+ { "match": "^Join conditions cannot end with (.+?)\\.$",
+   "replace": "조인 조건은 $1(으)로 끝날 수 없습니다." },
+
+ { "match": "^(.+?) cannot be selected\\. Table names cannot start with numbers or special characters\\.$",
+   "replace": "$1을(를) 선택할 수 없습니다. 테이블 이름은 숫자나 특수문자로 시작할 수 없습니다." },
+
+ { "match": "^The (.+?) condition must be followed by a SELECT subquery\\.$",
+   "replace": "$1 조건 뒤에는 SELECT 서브쿼리가 와야 합니다." },
+
+ { "match": "^The (.+?) condition must be followed by a SELECT subquery or a list of expressions\\.$",
+   "replace": "$1 조건 뒤에는 SELECT 서브쿼리나 식 목록이 와야 합니다." },
+
+ { "match": "^You must provide a column name or value for the aggregate function: (.+?)\\.$",
+   "replace": "집계 함수 $1에 컬럼 이름이나 값을 지정해야 합니다." },
+
+ { "match": "^You must provide a column name or value for the function: (.+?)\\.$",
+   "replace": "$1 함수에 컬럼 이름이나 값을 지정해야 합니다." },
+
+ { "match": "^The aggregate function: (.+?) does not have a closing parenthesis\\.$",
+   "replace": "집계 함수 $1에 닫는 괄호가 없습니다." },
+
+ { "match": "^The function: (.+?) does  not have a closing parenthesis\\.$",
+   "replace": "$1 함수에 닫는 괄호가 없습니다." },
+
+ { "match": "^The special character: \\* cannot be given to the function: (.+?)\\.$",
+   "replace": "특수 문자 *는 $1 함수에 쓸 수 없습니다." },
+
+ { "match": "^The table: (.+?) is not joined with another table in your query\\. You can join tables by adding an equals expression in the ON statement of your JOIN\\. For example, add the expression: <i>table1\\.column = table2\\.column</i> to join table1 with table2\\.$",
+   "replace": "$1 테이블이 쿼리의 다른 테이블과 조인되지 않았습니다. JOIN의 ON 문에 등식 조건을 추가하세요. 예를 들어 <i>table1.column = table2.column</i>을 추가하면 table1과 table2를 조인할 수 있습니다." },
+
+ { "match": "^The table named (.+?) has not been specified in the FROM statement or declared as an alias of a valid table\\.$",
+   "replace": "$1 테이블이 FROM 문에 없고, 유효한 테이블의 별칭으로도 선언되지 않았습니다." },
+
+ { "match": "^The selected column: <i>(.+?)</i> is not in a GROUP BY or in an aggregate function\\. Results with this column might be unexpected and random\\. You might want to add <i>\\1</i> to your GROUP BY or put it inside an aggregate function\\.$",
+   "replace": "선택한 <i>$1</i> 컬럼이 GROUP BY나 집계 함수에 없습니다. 이 컬럼은 예상과 다른 임의의 값을 반환할 수 있습니다. <i>$1</i>을(를) GROUP BY에 추가하거나 집계 함수 안에 넣으세요." },
+
+ { "match": "^The selected column: <i>(.+?)</i> is not in an aggregate function\\. Column results that are unaggregated will be unexpected and random\\. To resolve this, you can put <i>\\1</i> inside an aggregate function\\.$",
+   "replace": "선택한 <i>$1</i> 컬럼이 집계 함수에 없습니다. 집계하지 않은 컬럼은 예상과 다른 임의의 값을 반환합니다. <i>$1</i>을(를) 집계 함수 안에 넣으세요." },
+
+ { "match": "^There is an extra parenthesis after '(.+?)'$",
+   "replace": "'$1' 뒤에 괄호가 하나 더 있습니다" },
+
+ { "match": "^Unexpected keyword '(.+?)' spotted right after '(.+?)' - is this keyword in the right place\\?$",
+   "replace": "'$2' 바로 뒤에 예상하지 못한 키워드 '$1'이(가) 있습니다. 키워드 위치를 확인하세요." },
+
+ { "match": "^There must be a value specified before the comma in the beginning of the (.+?) statement\\.$",
+   "replace": "$1 문 앞머리의 쉼표 앞에는 값을 지정해야 합니다." },
+
+ { "match": "^The (.+?) statement cannot contain the special select all \\(\\*\\) character\\.$",
+   "replace": "$1 문에는 전체 선택을 나타내는 특수 문자 *를 쓸 수 없습니다." },
+
+ { "match": "^Invalid character not supported: (.+)$",
+   "replace": "지원하지 않는 문자입니다: $1" }
 ]

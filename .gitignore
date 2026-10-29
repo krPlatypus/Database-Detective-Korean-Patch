@@ -9,3 +9,6 @@ obj/
 *.user
 # 배포용 압축 파일
 release/
+# Python 로컬 실행 캐시
+__pycache__/
+*.pyc

@@ -36,6 +36,13 @@
  BepInEx\core\ 아래의 파일들은 BepInEx 5.4.23.5를 그대로 담은
  것입니다. 고치지 않았습니다.
 
+ macOS 배포판은 대신 BepInEx 5.4.23.6 공식 macOS universal 배포본의
+ libdoorstop.dylib, run_bepinex.sh, .doorstop_version, changelog.txt,
+ BepInEx/core/ 파일을 그대로 담습니다. 별도의 run_korean_patch.command와
+ install_macos.command는 이 패치에서 추가한 실행·설치 스크립트입니다.
+ DDKoreanPatch.app은 이 저장소의 tools/macos_launcher.c로 빌드한 앱 실행기입니다.
+ https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.6
+
    BepInEx  -  LGPL-2.1 license
    https://github.com/BepInEx/BepInEx
    https://github.com/BepInEx/BepInEx/blob/master/LICENSE

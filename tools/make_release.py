@@ -71,10 +71,13 @@ def write_version(version):
 def game_dir():
     """csproj에 적힌 게임 폴더. 여기저기 적지 않으려고 한곳에서 읽는다."""
     with io.open(CSPROJ, encoding="utf-8") as f:
-        found = re.search(r"<GameDir>(.*?)</GameDir>", f.read())
+        candidates = re.findall(r"<GameDir(?:\s[^>]*)?>(.*?)</GameDir>", f.read())
+    # macOS용 조건부 기본값에는 MSBuild 변수($(HOME))가 들어 있다.
+    # 이 도구는 Windows 전체판을 만들므로 변수 없는 Windows 기본값을 쓴다.
+    found = next((path for path in candidates if "$(" not in path), None)
     if not found:
         fail("csproj에서 GameDir을 찾지 못했습니다.")
-    return found.group(1)
+    return found
 
 
 def build():

@@ -6,7 +6,7 @@ Steam 게임 **Database Detective: Minor Crimes Division** (Thomas Hsu)의 비�
 
 BepInEx 플러그인으로 동작하며 **게임 원본 파일은 하나도 수정하지 않는다.**
 
-## 받기
+## 받기 (Windows)
 
 **[최신판 내려받기](https://github.com/krPlatypus/Database-Detective-Korean-Patch/releases/latest)**
 
@@ -19,6 +19,68 @@ BepInEx 플러그인으로 동작하며 **게임 원본 파일은 하나도 수�
 
 번역이 어색한 곳을 보시면 [이슈](https://github.com/krPlatypus/Database-Detective-Korean-Patch/issues)로
 알려 주십시오.
+
+## macOS에서 설치·실행
+
+macOS판(`copOS.app`)도 지원한다. **Windows용 `winhttp.dll`은 맥에서 로드되지 않으며,
+GitHub의 `Source code (zip)`은 실행용 패치가 아니다.** `README.md`, `src/`, `tools/`만
+게임 폴더에 복사한 상태라면 로더와 번역 번들을 별도로 설치해야 한다.
+
+macOS 호환 배포 파일은 `DDKoreanPatch-v1.0.1-macos.zip`이다.
+이 저장소에서 아래 빌드 명령으로 `release/`에 만들 수 있다. 기존 공개 v1.0.1의
+Windows 배포 파일과는 별개이며, macOS 빌드 파일이 GitHub에 게시되어 있다는 뜻은 아니다.
+
+1. 게임을 종료하고 macOS 배포 압축을 **게임 폴더 밖**에 푼다.
+2. 터미널에서 `bash "/압축을 푼 폴더/install_macos.command"`를 실행한다.
+   기본 Steam 경로를 사용하지 않으면 게임 폴더를 추가 인수로 전달한다.
+3. Steam → 게임 **속성 → 일반 → 시작 옵션**에 설치 완료 메시지의 한 줄을 넣는다.
+   형식은 아래와 같다. 사용자명과 게임 경로는 자신의 환경에 맞춘다.
+
+   ```text
+   "/Users/사용자명/Library/Application Support/Steam/steamapps/common/Database Detective/DDKoreanPatch.app" %command%
+   ```
+
+4. Steam의 **플레이** 버튼으로 실행한다. 게임 폴더의 `DDKoreanPatch.app`을
+   직접 실행해도 된다. `copOS.app`을 직접 열면 패치 없이 실행된다.
+
+macOS 27의 Steam에서 스크립트를 시작 옵션으로 직접 지정하면 `OS Error 0`으로 실행이
+실패하는 경우가 있어, 별도의 universal 앱 실행기를 사용한다. 이 앱이 같은 폴더의
+`run_korean_patch.command`를 호출한다. 기존 `.command` 파일도 터미널에서 직접 실행할 수 있다.
+
+macOS 로더는 **BepInEx 5.4.23.6 universal**이며 Apple Silicon에서는 네이티브로 실행한다.
+설치 프로그램은 기존 로더·플러그인을 `.ddkorean-backups/`에 백업하고, 설정과 다른 모드는
+유지한다. 게임 앱 내부, 코드 서명, 세이브 파일은 수정하지 않는다.
+시작 옵션을 비우면 Steam에서 원본 게임으로 실행할 수 있다.
+
+현재 소스로 빌드한 패치는 `BepInEx/LogOutput.log`에서
+`번역 로드: UI 1088개, TextAsset 41개, 패턴 126개`와
+`한글 폰트 준비 완료: neodgm.ttf`를 확인할 수 있다. 시작 화면의 `welcome detective!`처럼
+번역 대상에 포함되지 않은 일부 그림 문구는 영어로 남는다.
+
+### macOS 배포판 빌드 (개발자)
+
+macOS, Xcode Command Line Tools, Python 3.10 이상과 UnityPy, .NET SDK 8 이상,
+설치된 macOS 게임이 필요하다.
+완성된 배포판을 설치·실행하는 사용자는 개발 도구가 필요 없다.
+
+```sh
+python3 tools/make_macos_release.py
+# 다른 Steam 라이브러리라면:
+python3 tools/make_macos_release.py --game-dir "/게임 폴더/Database Detective"
+# 빌드 결과를 기본 Steam 경로에 설치하는 예:
+unzip release/DDKoreanPatch-v1.0.1-macos.zip -d release/macos-install
+bash release/macos-install/install_macos.command
+```
+
+공식 배포본 두 개를 내려받아 SHA-256을 검증하고, 현재 C# 소스를 macOS 게임 DLL에 맞춰
+빌드한다. 그림·폰트·음원은 고정된 **v1.0.1 배포본**을 사용한다.
+텍스트는 설치된 게임에서 원문을 읽고 현재 `translation/`으로 다시 묶어 반영한다.
+대사는 이름과 원문 SHA-256으로 연결하며, 검수하지 않은 원문 변경은 빌드를 중단한다.
+게임 DLL은 배포 압축에 포함하지 않는다.
+출력은 `release/DDKoreanPatch-v1.0.1-macos.zip`과 체크섬 파일이다.
+
+근거: [BepInEx macOS 호환 릴리스](https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.6),
+[Steam 실행 옵션 안내](https://docs.bepinex.dev/articles/advanced/steam_interop.html).
 
 ---
 
@@ -44,6 +106,16 @@ BepInEx 플러그인으로 동작하며 **게임 원본 파일은 하나도 수�
 - 내장 폰트 전부 라틴 전용 — 한글 글리프 없음
 
 ## 수정한 버그
+
+### 첫 메시지를 들은 뒤 재실행하면 조수가 보이지 않음
+
+첫 메시지를 듣고 조수 튜토리얼을 마치기 전에 종료하면, 원본 게임은 재실행 시
+메시지 알림을 다시 띄운다. 이때 `열기`를 누르면 메시지를 이미 들었다는 기록
+(`0Messages`) 때문에 조수를 다시 부르지 않는다.
+
+`AssistantStartupPatches`는 이 상태에서 첫 메시지 알림을 건너뛰고 기존 조수
+튜토리얼을 재개한다. 새 게임, 튜토리얼을 마친 저장, 조수 끄기 설정은 그대로 따른다.
+Windows와 macOS에 공통 적용되며 저장 파일을 직접 수정하지 않는다.
 
 ### 쿼리창·메모장에서 Enter/Shift+Enter가 줄바꿈되지 않음
 
@@ -93,7 +165,7 @@ OS에 설치된 폰트를 `AtlasPopulationMode.DynamicOS`로 참조해 TMP 폴�
 글리프를 필요할 때 OS에서 가져오므로 **폰트 파일을 동봉하지 않아 재배포 라이선스 문제가 없다.**
 
 기본값은 동봉한 **Neo둥근모**(`FontFile = neodgm.ttf`)다. `FontFile`이 비어 있으면
-OS에 설치된 `FontFamily` 폰트(기본 맑은 고딕)로 돌아간다. 굴림(`Gulim`)으로 바꾸면
+OS에 설치된 `FontFamily` 폰트(Windows 기본 맑은 고딕, macOS 기본 Apple SD Gothic Neo)로 돌아간다. 굴림(`Gulim`)으로 바꾸면
 게임의 Windows 95풍 UI와 잘 어울린다.
 
 ## 동봉 폰트
@@ -162,6 +234,12 @@ python tools/make_templates.py    # 번역 템플릿 생성 -> translation/
 #   translation/textassets/*.txt  : 대사·힌트. 구분자를 두고 텍스트만 고친다.
 python tools/build_translation.py # dist/translation.json 으로 묶기
 ```
+
+추출 도구에는 `UnityPy`, UI 구조 추출에는 `TypeTreeGeneratorAPI`가 필요하다.
+macOS의 기본 Steam 경로를 자동으로 찾으며, 다른 경로는 `DDKOREAN_GAME_DIR` 환경 변수로 지정한다.
+`dynamic.json`의 `{0}`, `{1}` 문장은 빌드 시 정규식으로도 변환하므로 실제 값이
+들어간 오류 메시지에도 적용된다. 값 자체와 SQL 식별자는 그대로 유지한다.
+게임 업데이트로 TextAsset 번호가 달라져도 원문 해시가 같으면 기존 번역에 연결한다.
 
 화면에 찍히는 문자열이 코드 안에 박혀 있는 것도 많다. 생김새로 짐작하면 테이블 이름까지
 딸려 오므로, **호출 지점을 보고** 고른다 (`SetText`, `CreateQuestionAnswer`,
@@ -241,6 +319,18 @@ python tools/locate_text.py            # 번역한 문구가 게임 안 어느 �
 python tools/mark_skipped.py           # 일부러 안 옮긴 것을 이유와 함께 적어 두기
 ```
 
+번역 빌드 회귀 검사: `python -m unittest discover -s tools -p 'test_*.py'`.
+게임과 .NET SDK가 있으면 아래 명령으로 실제 번역기와 제목 비교 패치도 검사한다.
+테스트는 게임을 실행하거나 저장 파일을 변경하지 않는다.
+
+```sh
+python tools/build_translation.py
+dotnet run --project tests/runtime/TranslationChecks.csproj -- "$PWD"
+```
+
+기본 참조 경로는 macOS Steam 설치 폴더다. 다른 환경에서는 `-p:Game="게임 폴더"`와
+`-p:Managed="Managed 폴더"`를 `--` 앞에 지정한다.
+
 `locate_text.py`는 TMP 컴포넌트에서 부모를 타고 올라가 주소처럼 생긴 프리팹 이름을
 찾는다. 웹 화면은 프리팹 하나가 한 쪽이라 그 이름이 곧 주소다.
 결과는 `extracted/text_locations.json`에 쪽별로 모인다.
@@ -255,6 +345,10 @@ python tools/mark_skipped.py           # 일부러 안 옮긴 것을 이유와 �
 ```sh
 dotnet build src/DDKoreanPatch/DDKoreanPatch.csproj -c Release
 ```
+
+macOS에서는 `copOS.app/Contents/Resources/Data/Managed`, Windows에서는
+`copOS_Data/Managed`를 참조한다. 기본 경로와 다르면 `-p:GameDir="게임 폴더"`를 붙인다.
+`-p:ManagedDir="Managed 폴더"`, `-p:BepInExCore="BepInEx/core 폴더"`로 각각 지정할 수도 있다.
 
 `<게임폴더>/BepInEx/plugins/DDKoreanPatch/` 에 아래를 넣는다.
 
@@ -383,8 +477,8 @@ python tools/import_sheet.py 받은표.csv            # 제자리에 도로 넣�
 
 | 갈래 | 상태 |
 |---|---|
-| UI 문자열 (`ui.json`) | 886개 중 752개. 남긴 134개는 테이블명 등 일부러 둔 것 |
-| 코드 조립 문자열 (`dynamic.json`) | 214개 |
+| UI 문자열 (`ui.json`) | 886개 중 748개에 값이 있음. 빈 138개는 의도적인 원문 유지이며, 채운 값에도 고유명사 등 원문 유지 항목이 포함됨 |
+| 코드 조립 문자열 (`dynamic.json`) | 341개. 기존 214개에 127개 추가 |
 | TextAsset (대사·힌트·웹페이지) | 41개 |
 | 사진 단서 그림 | 21장 (+ 글자 없는 그림은 원본 유지) |
 | 사용 설명서 | **23쪽 전부** |

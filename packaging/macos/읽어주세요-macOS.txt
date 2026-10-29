@@ -1,0 +1,45 @@
+Database Detective 한글패치 v1.0.1 — macOS 호환 빌드
+
+필요한 것: Steam의 macOS판 게임(copOS.app).
+Apple Silicon과 Intel용 BepInEx 5.4.23.6을 함께 제공합니다.
+Apple Silicon에서는 Rosetta 없이 실행합니다. 설치에는 .NET이나 Python이 필요 없습니다.
+
+설치
+1. 게임을 종료하고 이 압축을 게임 폴더 밖에 풉니다.
+2. 터미널에서 아래 명령을 입력합니다. 경로에는 압축을 푼 폴더를 씁니다.
+   bash "/압축을 푼 폴더/install_macos.command"
+   외장 디스크 등 다른 Steam 라이브러리를 쓰면 마지막에 게임 폴더 경로를 붙입니다.
+   bash "/압축을 푼 폴더/install_macos.command" "/게임 폴더/Database Detective"
+3. Steam → 게임 속성 → 일반 → 시작 옵션에 설치 완료 메시지의 한 줄을 넣습니다.
+   예: "/Users/사용자명/Library/Application Support/Steam/steamapps/common/Database Detective/DDKoreanPatch.app" %command%
+4. Steam에서 플레이합니다. 게임 폴더의 DDKoreanPatch.app을 직접 실행해도 됩니다.
+
+macOS 27의 Steam에서 스크립트 직접 실행이 OS Error 0으로 실패하는 경우를 위해
+별도의 앱 실행기를 제공합니다. 이 앱이 run_korean_patch.command를 호출합니다.
+
+copOS.app을 직접 더블 클릭하면 로더를 거치지 않아 한글패치가 적용되지 않습니다.
+README나 src 폴더만 있는 GitHub Source code ZIP은 설치용 배포판이 아닙니다.
+
+이 배포판은 v1.0.1 번역 자산에 macOS 호환 코드를 빌드한 것입니다.
+공백·한글이 포함된 macOS 경로에서 타건음 파일을 읽는 오류도 수정했습니다.
+동봉 글꼴은 Neo둥근모이며 FontFile을 비우면 macOS 기본값 Apple SD Gothic Neo를 사용합니다.
+기존 설정이 있으면 유지되므로 FontFamily도 이전 값이 그대로 남습니다.
+
+진단
+게임 폴더/BepInEx/LogOutput.log에서 아래를 확인합니다.
+  Loading [Database Detective Korean Patch 1.0.1]
+  번역 로드: UI 961개, TextAsset 41개, 패턴 27개
+  한글 폰트 준비 완료: neodgm.ttf
+게임 업데이트 후 플러그인 오류가 생기면 시작 옵션을 비워 원본으로 실행할 수 있습니다.
+시작 화면의 welcome detective! 등 원본에 그림으로 그려진 일부 문구는 영어로 남습니다.
+
+제거·복원
+우선 Steam 시작 옵션을 지우면 패치 없이 실행됩니다.
+설치 프로그램은 게임 앱과 저장 파일을 수정하지 않습니다.
+기존 모드 파일을 교체할 때는 게임 폴더/.ddkorean-backups/날짜.임의문자/에 복사합니다.
+다른 모드가 없다면 BepInEx, libdoorstop.dylib, run_bepinex.sh,
+run_korean_patch.command, DDKoreanPatch.app을 제거하면 됩니다.
+다른 모드가 있다면 BepInEx/plugins/DDKoreanPatch만 제거하고 공용 로더는 유지하세요.
+이전에 설치한 로더로 되돌리려면 백업의 같은 경로 파일을 복원하세요.
+
+라이선스와 출처: NOTICE.txt 및 BepInEx/plugins/DDKoreanPatch/fonts/LICENSE.txt
