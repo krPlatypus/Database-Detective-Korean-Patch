@@ -49,6 +49,22 @@
 
  BepInEx만 따로 받고 싶으시면 위 주소에서 받으실 수 있습니다.
 
+ 맥판(macOS)에는 위 대신 다음이 들어 있습니다.
+
+   BepInEx/core/, changelog.txt
+     BepInEx 5.4.23.6 맥 빌드(BepInEx_macos_universal)를 그대로 담은
+     것입니다. 고치지 않았습니다.
+
+   libdoorstop.dylib, .doorstop_version
+     BepInEx 5.4.23.6 맥 빌드에 든 UnityDoorstop 4.6.0을 그대로 담은
+     것입니다. 고치지 않았습니다.
+     UnityDoorstop  -  LGPL-2.1 license
+     https://github.com/NeighTools/UnityDoorstop
+
+   run_bepinex.sh
+     BepInEx 5.4.23.6 맥 빌드의 실행 스크립트에 게임 이름
+     (executable_name="copOS.app") 한 줄만 적은 것입니다.
+
 
 --------------------------------------------------------------------
  3. Neo둥근모 (글꼴)

@@ -17,6 +17,18 @@ BepInEx 플러그인으로 동작하며 **게임 원본 파일은 하나도 수�
 지우려면 `winhttp.dll`, `doorstop_config.ini`, `.doorstop_version`, `changelog.txt`,
 `BepInEx` 폴더만 지우면 된다. 자세한 설명은 압축 파일 안의 `읽어주세요.txt`에 있다.
 
+### macOS
+
+1. `DDKoreanPatch-v<버전>-macos.zip`을 받는다
+2. 게임 폴더(`copOS.app`이 있는 곳)에 **전부 넣는다**
+3. 게임 폴더의 **`install_macos.command`를 실행한다** (경고가 뜨면 오른쪽 클릭 → 열기)
+   - 격리 표시를 떼고, 스팀 **실행 옵션**에 `run_bepinex.sh`를 적어 준다.
+   - 실행 옵션이 없으면 스팀이 게임을 바로 켜서 **영어로 나온다.** 윈도우와 달리
+     맥에는 폴더에 두기만 하면 자동으로 읽히는 `winhttp.dll` 같은 길이 없기 때문이다.
+   - 스팀은 꺼질 때 설정을 덮어쓰므로, 켜져 있으면 잠시 껐다가 다시 켠다.
+
+Apple Silicon 맥에서도 Rosetta 없이 **arm64 네이티브로** 실행된다(게임은 유니버설 바이너리).
+
 번역이 어색한 곳을 보시면 [이슈](https://github.com/krPlatypus/Database-Detective-Korean-Patch/issues)로
 알려 주십시오.
 
@@ -40,6 +52,9 @@ BepInEx 플러그인으로 동작하며 **게임 원본 파일은 하나도 수�
 
 - Unity **6000.5.5f1**, 스크립팅 백엔드 **Mono**
 - BepInEx **5.4.23.5** + HarmonyX
+- macOS: BepInEx **5.4.23.6** 맥 빌드. 5.4.23.5 이하는 맥에서 쓰면 안 된다.
+  동봉된 Doorstop 4.5.0이 Unity 6.3 이상의 chained fixups를 읽지 못하고(UnityDoorstop#117),
+  arm64 네이티브에서 플러그인이 올라오지 않는다(BepInEx#1402). 5.4.23.6은 Doorstop 4.6.0을 담고 둘 다 고쳤다.
 - 로컬라이제이션 프레임워크 없음 (영어 하드코딩)
 - 내장 폰트 전부 라틴 전용 — 한글 글리프 없음
 
