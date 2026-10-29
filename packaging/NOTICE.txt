@@ -52,18 +52,18 @@
  맥판(macOS)에는 위 대신 다음이 들어 있습니다.
 
    BepInEx/core/, changelog.txt
-     BepInEx 5.4.23.5 맥 빌드(BepInEx_macos_universal)를 그대로 담은
+     BepInEx 5.4.23.6 맥 빌드(BepInEx_macos_universal)를 그대로 담은
      것입니다. 고치지 않았습니다.
 
    libdoorstop.dylib, .doorstop_version
-     UnityDoorstop 4.6.0 맥 빌드를 그대로 담은 것입니다.
+     BepInEx 5.4.23.6 맥 빌드에 든 UnityDoorstop 4.6.0을 그대로 담은
+     것입니다. 고치지 않았습니다.
      UnityDoorstop  -  LGPL-2.1 license
      https://github.com/NeighTools/UnityDoorstop
 
    run_bepinex.sh
-     BepInEx 맥 빌드의 실행 스크립트에서 게임 이름을 적고,
-     Apple Silicon에서 Rosetta로 띄우도록 몇 줄 고친 것입니다.
-     고친 곳에는 [한글패치]라고 적어 두었습니다.
+     BepInEx 5.4.23.6 맥 빌드의 실행 스크립트에 게임 이름
+     (executable_name="copOS.app") 한 줄만 적은 것입니다.
 
 
 --------------------------------------------------------------------

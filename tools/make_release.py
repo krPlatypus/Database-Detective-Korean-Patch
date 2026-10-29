@@ -51,21 +51,16 @@ CACHE_DIR = os.path.join(OUT_DIR, "_cache")
 
 # 맥 전체판에 담을 공식 배포본. 바꿀 때는 sha256도 같이 고친다.
 #
-# BepInEx는 윈도우판과 같은 5.4.23.5의 맥 빌드다. core의 dll은 플랫폼마다
-# 빌드가 달라 윈도우판 것을 그대로 쓰면 안 된다.
+# BepInEx 5.4.23.6의 맥 빌드다. core의 dll은 플랫폼마다 빌드가 달라
+# 윈도우판 것을 그대로 쓰면 안 된다.
 #
-# libdoorstop.dylib만은 UnityDoorstop 4.6.0으로 바꿔 담는다. BepInEx에 든
-# 4.5.0은 Unity 6.3 이상의 chained fixups를 읽지 못해
-# "Failed to open current process PLT! ... unknown imports format 0"으로
-# 아무것도 하지 않는다. 4.6.0에서 고쳐졌다 (UnityDoorstop#117).
+# 5.4.23.6부터 UnityDoorstop 4.6.0이 들어 있어 Unity 6.3 이상의 chained
+# fixups를 읽고(UnityDoorstop#117), arm64 네이티브에서도 플러그인이
+# 올라온다(BepInEx#1402). 그래서 Doorstop을 따로 받지 않고 Rosetta도 쓰지 않는다.
 MACOS_BEPINEX = (
-    "https://github.com/BepInEx/BepInEx/releases/download/v5.4.23.5/"
-    "BepInEx_macos_universal_5.4.23.5.zip",
-    "01c2ae782eb016dfd6c345a18dbd2dcafffb3d9d318449d6486689f426b4a323")
-MACOS_DOORSTOP = (
-    "https://github.com/NeighTools/UnityDoorstop/releases/download/v4.6.0/"
-    "doorstop_macos_release_4.6.0.zip",
-    "8282e8ec37abc81bbf736d12c315fdb78b0418654fb57be9e40858649953ccb7")
+    "https://github.com/BepInEx/BepInEx/releases/download/v5.4.23.6/"
+    "BepInEx_macos_universal_5.4.23.6.zip",
+    "2e711e21f6570da964fce4654b1976500dbe043f61778bce0008500078564638")
 
 # 맥 전체판의 로더 파일. 어디서 가져오는지는 stage_macos()를 보라.
 MACOS_LOADER_FILES = ["run_bepinex.sh", "install_macos.command", "libdoorstop.dylib",
@@ -254,7 +249,7 @@ def unzip_member(zip_path, suffix):
 
 
 def stage_macos(version, dll):
-    """맥 전체판. 공식 BepInEx 맥 빌드 + Doorstop 4.6.0 + 고친 실행 스크립트."""
+    """맥 전체판. 공식 BepInEx 맥 빌드 + 게임 이름만 적은 실행 스크립트."""
     root = os.path.join(OUT_DIR, "_staging", "macos")
     if os.path.exists(root):
         shutil.rmtree(root)
@@ -262,7 +257,6 @@ def stage_macos(version, dll):
     stage_plugin(root, dll)
 
     bepinex = fetch(*MACOS_BEPINEX)
-    doorstop = fetch(*MACOS_DOORSTOP)
 
     core_out = os.path.join(root, "BepInEx", "core")
     os.makedirs(core_out)
@@ -273,12 +267,12 @@ def stage_macos(version, dll):
                     f.write(zf.read(name))
 
     sources = {
-        # 공식 run_bepinex.sh에서 실행 파일 이름과 Rosetta 실행만 고친 것.
+        # 공식 run_bepinex.sh에 executable_name만 적은 것.
         "run_bepinex.sh": lambda: open(os.path.join(MACOS_PACKAGING, "run_bepinex.sh"), "rb").read(),
         # 격리 표시 제거와 스팀 실행 옵션 설정을 대신 해 주는 설치 스크립트.
         "install_macos.command": lambda: open(os.path.join(MACOS_PACKAGING, "install_macos.command"), "rb").read(),
-        "libdoorstop.dylib": lambda: unzip_member(doorstop, "universal/libdoorstop.dylib"),
-        ".doorstop_version": lambda: unzip_member(doorstop, "universal/.doorstop_version"),
+        "libdoorstop.dylib": lambda: unzip_member(bepinex, "libdoorstop.dylib"),
+        ".doorstop_version": lambda: unzip_member(bepinex, ".doorstop_version"),
         "changelog.txt": lambda: unzip_member(bepinex, "changelog.txt"),
     }
     for name in MACOS_LOADER_FILES:

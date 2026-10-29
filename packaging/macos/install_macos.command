@@ -109,5 +109,4 @@ fi
 
 echo ""
 echo "  끝났습니다. 스팀에서 게임을 켜면 한글로 나옵니다."
-echo "  (Apple Silicon 맥은 Rosetta로 실행됩니다)"
 echo ""
